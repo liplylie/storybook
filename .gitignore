@@ -33,6 +33,7 @@ local.properties
 # node.js
 #
 node_modules
+
 npm-debug.log
 yarn-error.log
 package-lock.json
@@ -55,6 +56,7 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
+
 *.db
 .DS_Store
 flask_server/venv
@@ -71,3 +73,4 @@ client/static/gen
 ios
 android
 client/public/bundle.js
+
