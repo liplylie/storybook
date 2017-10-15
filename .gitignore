@@ -60,3 +60,4 @@ server/__pycache__
 server/blog_old.md
 server/*.pyc
 server/static/dist/bundle.js.map
+client/public/bundle.js
