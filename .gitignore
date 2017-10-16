@@ -58,7 +58,7 @@ server/venv
 server/env
 server/__pycache__
 server/blog_old.md
-server/*.pyc
+*.pyc
 server/static/dist/bundle.js.map
 client/public/bundle.js
 client/public/gen
