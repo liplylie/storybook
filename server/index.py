@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_assets import Environment, Bundle
 
 # app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
-app = Flask(__name__, static_folder="../client/public", template_folder="../client/public")
+app = Flask(__name__, static_folder="../client/static", template_folder="../client/static")
 app.config.from_object(BaseConfig)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

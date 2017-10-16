@@ -61,6 +61,7 @@ server/__pycache__
 server/blog_old.md
 *.pyc
 server/static/dist/bundle.js.map
-client/public/bundle.js
-client/public/gen
+client/static/bundle.js
+client/static/gen
 .vscode
+*.webassets-cache
