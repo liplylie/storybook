@@ -17,3 +17,5 @@ class ReduxApp extends Component {
     )
   }
 }
+
+export default ReduxApp; 
