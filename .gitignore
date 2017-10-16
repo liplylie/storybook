@@ -63,3 +63,4 @@ server/blog_old.md
 server/static/dist/bundle.js.map
 client/public/bundle.js
 client/public/gen
+.vscode
