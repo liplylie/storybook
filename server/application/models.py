@@ -1,24 +1,18 @@
 from index import db, bcrypt
 
 
-class User(db.Model):
+class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    email = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255))
+    tag_name = db.Column(db.String(255))
+    image_url = db.Column(db.String(255))
 
-    def __init__(self, email, password):
-        self.email = email
+    def __init__(self, tag_name, image_url):
+        self.tag_name = tag_name
         self.active = True
-        self.password = User.hashed_password(password)
+        self.image_url = image_url
+
 
     @staticmethod
-    def hashed_password(password):
-        return bcrypt.generate_password_hash(password)
-
-    @staticmethod
-    def get_user_with_email_and_password(email, password):
-        user = User.query.filter_by(email=email).first()
-        if user and bcrypt.check_password_hash(user.password, password):
-            return user
-        else:
-            return None
+    def get_tag_with_image_url(imageurl):
+        tag = Tag.query.filter_by(imageurl=image_url)
+        return tag
