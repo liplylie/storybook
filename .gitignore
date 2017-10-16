@@ -59,9 +59,9 @@ server/venv
 server/env
 server/__pycache__
 server/blog_old.md
-*.pyc
 server/static/dist/bundle.js.map
 client/static/bundle.js
 client/static/gen
 .vscode
 *.webassets-cache
+*.pyc
