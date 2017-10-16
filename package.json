@@ -40,7 +40,8 @@
     "request-promise": "^4.2.2",
     "sequelize": "^4.13.15",
     "test": "jest",
-    "webpack": "^3.7.1"
+    "webpack": "^3.7.1",
+    "react-native-fbsdk": "^0.6.3"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",
