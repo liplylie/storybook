@@ -1,4 +1,5 @@
-import { AppRegistry } from 'react-native';
-import ReduxApp from './mobile/components/reduxApp';
+import { AppRegistry } from 'react-native'
 
-AppRegistry.registerComponent('Storybook', () => ReduxApp);
+import ReduxApp from './mobile/components/reduxApp'
+
+AppRegistry.registerComponent('Storybook', () => ReduxApp); 

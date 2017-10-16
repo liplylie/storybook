@@ -32,9 +32,10 @@ local.properties
 
 # node.js
 #
-node_modules/
+node_modules
 npm-debug.log
 yarn-error.log
+package-lock.json
 
 # BUCK
 buck-out/
@@ -51,3 +52,16 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
+*.db
+.DS_Store
+server/venv
+server/env
+server/__pycache__
+server/blog_old.md
+server/static/dist/bundle.js.map
+client/static/bundle.js
+client/static/gen
+.vscode
+*.webassets-cache
+*.pyc
