@@ -12,4 +12,4 @@ const stackNavigatorConfig = {
   headerMode: 'none',
   initialRouteName: 'Camera'
 }
-export const CameraNav = StackNavigator(routeConfig,stackNavigatorConfig)
+export const CameraNavigator = StackNavigator(routeConfig,stackNavigatorConfig)
