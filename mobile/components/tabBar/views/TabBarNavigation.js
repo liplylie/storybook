@@ -1,47 +1,30 @@
-import React, { Component } from 'react'
-import { Image, Button } from 'react-native'
-import { TabNavigator, NavigationActions } from 'react-navigation'
+import React from 'react'
 
-class MyHomeScreen extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Home',
-    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
-    tabBarIcon: ({ tintColor }) => (
-      <Image
-        source={require('./chats-icon.png')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  };
+import { addNavigationHelpers } from 'react-navigation'
+import { TabBar } from '../navigationConfiguration'
 
-  render() {
+import { connect } from 'react-redux'
+
+class TabBarNavigation extends React.Component {
+render(){
+    const { dispatch, navigationState } = this.props
     return (
-      <Button
-        onPress={}
-        title=""
+      <TabBar
+        navigation={
+          addNavigationHelpers({
+            dispatch: dispatch,
+            state: navigationState,
+          })
+        }
       />
-    );
+    )
   }
 }
 
-const styles = StyleSheet.create({
-  icon: {
-    width: 26,
-    height: 26,
-  },
-});
+const mapStateToProps = (state) => {
+  return {
+   navigationState: state.tabBar,
+   }
+ }
 
-const MyApp = TabNavigator({
-  Home: {
-    screen: MyHomeScreen,
-  },
-  Notifications: {
-    screen: MyNotificationsScreen,
-  },
-}, {
-  tabBarPosition: 'top',
-  animationEnabled: true,
-  tabBarOptions: {
-    activeTintColor: '#e91e63',
-  },
-});
+export default connect(mapStateToProps)(TabBarNavigation)

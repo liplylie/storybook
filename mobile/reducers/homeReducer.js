@@ -1,0 +1,1 @@
+import { HomeNav } from '../components/homeTab/navigationConfig'

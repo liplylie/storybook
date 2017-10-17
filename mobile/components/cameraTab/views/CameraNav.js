@@ -3,13 +3,13 @@ import { StackNavigator } from 'react-navigation'
 // Screens
 import Camera from './views/Camera'
 import Post from './views/Post'
-const routeConfig = {
+const routeConfiguration = {
   Camera: { screen: Camera },
   Post: { screen: Post },
 }
 // going to disable the header for now
-const stackNavigatorConfig = {
+const stackNavigatorConfiguration = {
   headerMode: 'none',
   initialRouteName: 'Camera'
 }
-export const CameraNav = StackNavigator(routeConfig,stackNavigatorConfig)
+export const CameraNav = StackNavigator(routeConfiguration,stackNavigatorConfiguration)

@@ -11,8 +11,8 @@ const routeConfiguration = {
   Book: { screen: Book },
 }
 // going to disable the header for now
-const stackNavigatorConfig = {
+const stackNavigatorConfiguration = {
   headerMode: 'none',
   initialRouteName: 'Home'
 }
-export const HomeNav = StackNavigator(routeConfiguration,stackNavigatorConfig)
+export const HomeNav = StackNavigator(routeConfiguration,stackNavigatorConfiguration)
