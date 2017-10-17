@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 
 import store from '../store'
-import { App } from '../navigator/appNavigator'
+import App from './appNavigation'
 
 class ReduxApp extends Component {
   constructor(props) {
