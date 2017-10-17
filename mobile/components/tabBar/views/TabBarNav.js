@@ -1,19 +1,20 @@
 import React from 'react'
 
 import { addNavigationHelpers } from 'react-navigation'
-import { TabBar } from '../navigationConfiguration'
+import { TabBarNavigator } from '../navigationConfiguration'
 
 import { connect } from 'react-redux'
 
-class TabBarNavigation extends React.Component {
-render(){
-    const { dispatch, navigationState } = this.props
+class TabBarNav extends React.Component {
+ 
+  render() {
+    const { dispatch, tabBarState } = this.props
     return (
-      <TabBar
+      <TabBarNavigator
         navigation={
           addNavigationHelpers({
             dispatch: dispatch,
-            state: navigationState,
+            state: tabBarState,
           })
         }
       />
@@ -23,8 +24,8 @@ render(){
 
 const mapStateToProps = (state) => {
   return {
-   navigationState: state.tabBar,
+   tabBarState: state.TabBar,
    }
  }
 
-export default connect(mapStateToProps)(TabBarNavigation)
+export default connect(mapStateToProps)(TabBarNav)

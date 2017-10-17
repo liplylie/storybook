@@ -1,11 +1,11 @@
 'use strict'
 import { StackNavigator } from 'react-navigation'
 // Screens
-import Home from './Views/Home'
+import Home from './views/Home'
 import Collection from './views/Collection'
 import Book from './views/Book'
 
-const routeConfiguration = {
+const routeConfig = {
   Home: { screen: Home },
   Collection: { screen: Collection },
   Book: { screen: Book },
@@ -15,4 +15,4 @@ const stackNavigatorConfig = {
   headerMode: 'none',
   initialRouteName: 'Home'
 }
-export const HomeNav = StackNavigator(routeConfiguration,stackNavigatorConfig)
+export const HomeNavigator = StackNavigator(routeConfig,stackNavigatorConfig)

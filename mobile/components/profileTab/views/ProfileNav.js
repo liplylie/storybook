@@ -1,18 +1,34 @@
-'use strict'
-import { StackNavigator } from 'react-navigation'
-// Screens
-import Profile from './Views/Profile'
-import Friends from './views/Friends'
-import Messages from './views/Messages'
+import React from 'react'
 
-const routeConfiguration = {
-  Profile: { screen: Profile },
-  Friends: { screen: Friends },
-  Messages: { screen: Messages },
+import { addNavigationHelpers } from 'react-navigation'
+import { ProfileNavigator } from '../navigationConfig'
+
+import { connect } from 'react-redux'
+
+class ProfileNav extends React.Component {
+  static navigationOptions = {
+    tabBarIcon: ''
+  }
+
+  render() {
+    const { profileState, dispatch } = this.props
+    return (
+      <ProfileNavigator
+        navigation={
+          addNavigationHelpers({
+            dispatch: dispatch,
+            state: profileState
+          })
+        }
+      />
+    )
+  }
 }
-// going to disable the header for now
-const stackNavigatorConfiguration = {
-  headerMode: 'none',
-  initialRouteName: 'Profile'
-}
-export const ProfileNav = StackNavigator(routeConfiguration,stackNavigatorConfiguration)
+
+const mapStateToProps = (state) => {
+  return {
+   profileState: state.Profile
+   }
+ }
+
+export default connect(mapStateToProps)(ProfileNav)

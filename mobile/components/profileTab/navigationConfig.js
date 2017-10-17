@@ -1,6 +1,5 @@
-'use strict'
 import { StackNavigator } from 'react-navigation'
-// Screens
+
 import Profile from './Views/Profile'
 import Friends from './views/Friends'
 import Messages from './views/Messages'
@@ -15,4 +14,4 @@ const stackNavigatorConfig = {
   headerMode: 'none',
   initialRouteName: 'Profile'
 }
-export const ProfileNav = StackNavigator(routeConfig,stackNavigatorConfig)
+export const ProfileNavigator = StackNavigator(routeConfig,stackNavigatorConfig)

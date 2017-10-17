@@ -1,18 +1,35 @@
-'use strict'
-import { StackNavigator } from 'react-navigation'
-// Screens
-import Home from './Views/Home'
-import Collection from './views/Collection'
-import Book from './views/Book'
 
-const routeConfiguration = {
-  Home: { screen: Home },
-  Collection: { screen: Collection },
-  Book: { screen: Book },
+import React from 'react'
+
+import { addNavigationHelpers } from 'react-navigation'
+import { HomeNavigator } from '../navigationConfig'
+
+import { connect } from 'react-redux'
+
+class HomeNav extends React.Component {
+  static navigationOptions = {
+    tabBarIcon: ''
+  }
+
+  render() {
+    const { homeState, dispatch } = this.props
+    return (
+      <HomeNavigator
+        navigation={
+          addNavigationHelpers({
+            dispatch: dispatch,
+            state: homeState
+          })
+        }
+      />
+    )
+  }
 }
-// going to disable the header for now
-const stackNavigatorConfiguration = {
-  headerMode: 'none',
-  initialRouteName: 'Home'
-}
-export const HomeNav = StackNavigator(routeConfiguration,stackNavigatorConfiguration)
+
+const mapStateToProps = (state) => {
+  return {
+   homeState: state.Home
+   }
+ }
+
+export default connect(mapStateToProps)(HomeNav)

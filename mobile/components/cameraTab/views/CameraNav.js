@@ -1,15 +1,34 @@
-'use strict'
-import { StackNavigator } from 'react-navigation'
-// Screens
-import Camera from './views/Camera'
-import Post from './views/Post'
-const routeConfiguration = {
-  Camera: { screen: Camera },
-  Post: { screen: Post },
+import React from 'react'
+
+import { addNavigationHelpers } from 'react-navigation'
+import { CameraNavigator } from '../navigationConfig'
+
+import { connect } from 'react-redux'
+
+class CameraNav extends React.Component {
+  static navigationOptions = {
+    tabBarIcon: ''
+  }
+  
+  render() {
+    const { cameraState, dispatch } = this.props
+    return (
+      <CameraNavigator
+        navigation={
+          addNavigationHelpers({
+            dispatch: dispatch,
+            state: cameraState
+          })
+        }
+      />
+    )
+  }
 }
-// going to disable the header for now
-const stackNavigatorConfiguration = {
-  headerMode: 'none',
-  initialRouteName: 'Camera'
-}
-export const CameraNav = StackNavigator(routeConfiguration,stackNavigatorConfiguration)
+
+const mapStateToProps = (state) => {
+  return {
+   cameraState: state.Camera
+   }
+ }
+
+export default connect(mapStateToProps)(CameraNav)
