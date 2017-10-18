@@ -16,8 +16,8 @@ assets = Environment(app)
 js = Bundle('bundle.js', output='gen/packed.js')
 assets.register('js_all', js)
 
-#load views
-from app import views
+#load routes
+from app import routes
 
 #load configs
 app.config.from_object('config')
@@ -33,6 +33,8 @@ class Image(db.Model):
 
   def __repr__(self):
     return '<Image: %r>' % self.url + ' ' + '<Tags: %r>' % self.tags
+
+  
 
 db.create_all()
 
