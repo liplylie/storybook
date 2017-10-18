@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 
 import store from './mobile/store'
 
-import App from './mobile/components/App'
+import App from './mobile/components/app'
 
 class Storybook extends Component {
   constructor(props) {
