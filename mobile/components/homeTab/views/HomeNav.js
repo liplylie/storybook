@@ -1,12 +1,12 @@
 
-import React from 'react'
+import React, { Component } from 'react'
 
 import { addNavigationHelpers } from 'react-navigation'
 import { HomeNavigator } from '../navigationConfig'
 
 import { connect } from 'react-redux'
 
-class HomeNav extends React.Component {
+class HomeNav extends Component {
   static navigationOptions = {
     tabBarIcon: ''
   }

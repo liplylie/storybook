@@ -1,8 +1,8 @@
-'use strict'
 import { StackNavigator } from 'react-navigation'
-// Screens
+
 import Camera from './views/Camera'
 import Post from './views/Post'
+
 const routeConfig = {
   Camera: { screen: Camera },
   Post: { screen: Post },
@@ -12,4 +12,5 @@ const stackNavigatorConfig = {
   headerMode: 'none',
   initialRouteName: 'Camera'
 }
-export const CameraNavigator = StackNavigator(routeConfig,stackNavigatorConfig)
+
+export const CameraNavigator = StackNavigator(routeConfig, stackNavigatorConfig)

@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import { addNavigationHelpers } from 'react-navigation'
+// import FontAwesome, { Icons } from 'react-native-fontawesome';
 import { CameraNavigator } from '../navigationConfig'
 
 import { connect } from 'react-redux'
 
-class CameraNav extends React.Component {
+class CameraNav extends Component {
   static navigationOptions = {
     tabBarIcon: ''
   }

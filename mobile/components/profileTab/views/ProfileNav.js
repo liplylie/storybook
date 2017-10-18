@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import { addNavigationHelpers } from 'react-navigation'
 import { ProfileNavigator } from '../navigationConfig'
 
 import { connect } from 'react-redux'
 
-class ProfileNav extends React.Component {
+class ProfileNav extends Component {
   static navigationOptions = {
     tabBarIcon: ''
   }

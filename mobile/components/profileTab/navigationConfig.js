@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation'
 
-import Profile from './Views/Profile'
+import Profile from './views/Profile'
 import Friends from './views/Friends'
 import Messages from './views/Messages'
 

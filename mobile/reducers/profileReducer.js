@@ -1,3 +1,8 @@
-import { ProfileNav } from '../components/profileTab/navigationConfig'
+import ProfileNavigator from '../components/profileTab/navigationConfig'
+import { NavigationActions } from 'react-navigation';
 
-ProfileNav: (state,action) => NavigatorTabThree.router.getStateForAction(action,state),
+const ProfileReducer = (state, action) => {
+  return ProfileNavigator.router.getStateForAction(action, state);
+}
+
+export default ProfileReducer; 

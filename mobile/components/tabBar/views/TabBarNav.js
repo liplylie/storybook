@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import { addNavigationHelpers } from 'react-navigation'
-import { TabBarNavigator } from '../navigationConfiguration'
+import { TabBarNavigator } from '../navigationConfig'
 
 import { connect } from 'react-redux'
 
-class TabBarNav extends React.Component {
+class TabBarNav extends Component {
  
   render() {
     const { dispatch, tabBarState } = this.props
