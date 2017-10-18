@@ -26,8 +26,8 @@ from schema import Image
 
 db.create_all()
 
-db.session.add(Image(url="https://i.imgur.com/pa2dZUg.jpg", tags="[\"car\", \"yellow\", \"road\", \"transport\", \"sitting\", \"street\", \"parked\", \"driving\", \"truck\", \"city\", \"cat\", \"traffic\"]"))
-db.session.add(Image(url="https://i.imgur.com/nsilFww.jpg", tags="[\"car\", \"transport\", \"road\", \"blue\", \"surfing\", \"parked\", \"parking\", \"lot\", \"truck\", \"old\", \"bed\", \"meter\", \"mirror\", \"standing\", \"white\"]"))
+db.session.add(Image(image_url="https://i.imgur.com/pa2dZUg.jpg",  scn_code="123", user_id=0, location="123", likes_count=0, caption="123", image_tags_array="[\"car\", \"yellow\", \"road\", \"transport\", \"sitting\", \"street\", \"parked\", \"driving\", \"truck\", \"city\", \"cat\", \"traffic\"]"))
+db.session.add(Image(image_url="https://i.imgur.com/nsilFww.jpg", scn_code="123", user_id=1, location="123", likes_count=0, caption="123", image_tags_array="[\"car\", \"transport\", \"road\", \"blue\", \"surfing\", \"parked\", \"parking\", \"lot\", \"truck\", \"old\", \"bed\", \"meter\", \"mirror\", \"standing\", \"white\"]"))
 
 db.session.commit()
 
