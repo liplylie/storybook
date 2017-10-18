@@ -1,4 +1,4 @@
-import ProfileNavigator from '../components/profileTab/navigationConfig'
+import { ProfileNavigator } from '../components/profileTab/navigationConfig'
 import { NavigationActions } from 'react-navigation';
 
 const ProfileReducer = (state, action) => {

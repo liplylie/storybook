@@ -1,4 +1,4 @@
-import CameraNavigator from '../components/cameraTab/navigationConfig'
+import { CameraNavigator } from '../components/cameraTab/navigationConfig'
 import { NavigationActions } from 'react-navigation';
 
 const CameraReducer = (state, action) => {
