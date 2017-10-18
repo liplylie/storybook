@@ -22,15 +22,7 @@ if sqlalchemy_utils.functions.database_exists("sqlite:////tmp/test.db"):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
 
-class Image(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  url = db.Column(db.String(80))
-  tags = db.Column(db.String(120))
-
-  def __repr__(self):
-    return '<Image: %r>' % self.url + ' ' + '<Tags: %r>' % self.tags
-
-  
+from schema import Image
 
 db.create_all()
 
