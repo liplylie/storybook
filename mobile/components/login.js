@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet, Text, Button } from 'react-native';
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
+import { connect } from 'react-redux';
+import profileAction from '../actions/profileActions';
 
 class Login extends Component {
   constructor(props) {
@@ -33,6 +35,7 @@ class Login extends Component {
                       }
                       }, (err, res) => {
                           console.log('results: ', res);
+                          this.props.profileAction(res);
                           err ? console.log('error: ', err) : null;
                       }); 
                     new GraphRequestManager().addRequest(req).start();
@@ -59,8 +62,15 @@ class Login extends Component {
     )
   }
 }
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    profileAction: (info) =>{
+      dispatch(profileAction(info))
+    }
+  };
+}
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
 
