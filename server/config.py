@@ -1,20 +1,26 @@
-import os
+class Config(object):
+    """
+    Common configurations
+    """
 
-from setup import basedir
+    # Put any configurations here that are common across all environments
 
+class DevelopmentConfig(Config):
+    """
+    Development configurations
+    """
 
-class BaseConfig(object):
-    SECRET_KEY = "SO_SECURE"
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ECHO = True
 
+class ProductionConfig(Config):
+    """
+    Production configurations
+    """
 
-class TestingConfig(object):
-    """Development configuration."""
-    TESTING = True
-    DEBUG = True
-    WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    DEBUG_TB_ENABLED = True
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
+    DEBUG = False
+
+app_config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig
+}

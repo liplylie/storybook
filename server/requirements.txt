@@ -30,3 +30,4 @@ SQLAlchemy==1.0.14
 Werkzeug==0.11.10
 docstring==0.1.2.4
 Flask-Assets==0.12
+SQLAlchemy-Utils==0.32.18
