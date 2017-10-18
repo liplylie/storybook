@@ -8,9 +8,18 @@ import {
 } from 'react-native';
 
 import LoginView from './login.js';
+import SignupView from './signup.js';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const {} = this.props;
+
+    let showLogin = true;
+
     return (
       <View style={styles.container}>
         <Image 
@@ -19,7 +28,7 @@ class App extends Component {
           resizeMode='contain'
           source={require('../logo.jpg')} 
         />
-        <LoginView />
+        {showLogin ? <LoginView /> : <SignupView />}
       </View>
     );
   }
