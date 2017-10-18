@@ -22,16 +22,14 @@ from app import routes
 
 #load configs
 app.config.from_object('config')
-if sqlalchemy_utils.functions.database_exists("sqlite:////tmp/test.db"):
-    sqlalchemy_utils.functions.drop_database("sqlite:////tmp/test.db")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+# if sqlalchemy_utils.functions.database_exists("postgresql://localhost/test_db"):
+#     sqlalchemy_utils.functions.drop_database("postgresql://localhost/test_db")
 db = SQLAlchemy(app)
 
 from schema import Image
 
 db.create_all()
 for i in data:
-  print('--------------------------- i is: ', i)
   db.session.add(Image(i['image_url'],  i['scn_code'], i['user_id'], i['location'], i['likes_count'], i['caption'], i['image_tags_array']))
 
 db.session.commit()
