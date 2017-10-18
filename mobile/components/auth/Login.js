@@ -8,6 +8,26 @@ class Login extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    AccessToken.getCurrentAccessToken()
+    .then(data => {
+      const { accessToken, userID } = data;
+      AWS.config.region = "us-west-2";
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-west-2:ce49614a-87c5-48e2-95c9-343d38075481',
+        Logins: {
+          'graph.facebook.com': accessToken
+        }
+      });
+    })
+    .then(() => {
+      AWS.config.credentials.get(function() {
+        console.log('aws session token: ', AWS.config.credentials.sessionToken);
+        console.log('aws access key Id: ', AWS.config.credentials.accessKeyId);
+      })
+    })
+  }
+
   render() {
     return (
       <View>
