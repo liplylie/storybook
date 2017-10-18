@@ -2,8 +2,13 @@ from flask import Flask, g
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from config import app_config
+from pprint import pprint
 import sqlalchemy_utils
-import sqlite3
+import sqlite3 
+import json
+
+with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
+    data = json.load(data_file)
 
 #initialize app
 app = Flask(__name__, instance_relative_config=True, static_folder="../../client/static", template_folder="../../client/static")
