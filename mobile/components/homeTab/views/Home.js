@@ -7,8 +7,8 @@ import {
   Image
 } from 'react-native';
 
-import LoginView from '../../auth/Login'
-import SignupView from '../../auth/Signup';
+import LoginView from '../../auth/login.js';
+import SignupView from '../../auth/signup.js';
 
 class Home extends Component {
   constructor(props) {
