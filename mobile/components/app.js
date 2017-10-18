@@ -1,50 +1,27 @@
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Image
-} from 'react-native';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { View, Text } from 'react-native'
 
-import LoginView from './login.js';
-import SignupView from './signup.js';
+import TabBarNav from './tabBar/views/TabBarNav'
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props); 
   }
 
-  render() {
-    const {} = this.props;
 
-    let showLogin = true;
+  render() {
+    //if logging in, login page
+    //if signing up, signup page
+    //else return (
+    //   <TabBarNav /> 
+    // )
 
     return (
-      <View style={styles.container}>
-        <Image 
-          style={styles.image}
-          resizeMethod='resize'
-          resizeMode='contain'
-          source={require('../logo.jpg')} 
-        />
-        {showLogin ? <LoginView /> : <SignupView />}
-      </View>
-    );
+      <TabBarNav />
+    )
   }
 }
 
-export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  image: {
-    width: 400,
-    height: 200
-  }
-});
+export default App; 
+  
