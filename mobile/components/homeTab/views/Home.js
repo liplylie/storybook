@@ -7,10 +7,10 @@ import {
   Image
 } from 'react-native';
 
-import LoginView from '../../login';
-import SignupView from '../../signup.js';
+import LoginView from '../../auth/Login'
+import SignupView from '../../auth/Signup';
 
-class App extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
   }
@@ -34,7 +34,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
