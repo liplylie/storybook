@@ -39,6 +39,7 @@
   return YES;
 }
 
+<<<<<<< HEAD
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
@@ -46,6 +47,16 @@
                                                                 openURL:url
                                                       sourceApplication:sourceApplication
                                                              annotation:annotation
+=======
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  
+  BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                openURL:url
+                                                      sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                             annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+>>>>>>> photo and name from fb renders on profile view
                   ];
   // Add any custom logic here.
   return handled;
