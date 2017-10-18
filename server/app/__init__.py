@@ -8,10 +8,6 @@ import sqlite3
 #initialize app
 app = Flask(__name__, instance_relative_config=True, static_folder="../../client/static", template_folder="../../client/static")
 
-@app.route('/')
-def hello_world():
-  return 'Hello, World!'
-
 assets = Environment(app)
 js = Bundle('bundle.js', output='gen/packed.js')
 assets.register('js_all', js)
