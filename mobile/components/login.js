@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet, Text, Button } from 'react-native';
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
+require('dotenv').config();
 
 class Login extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class Login extends Component {
                     new GraphRequestManager().addRequest(req).start();
                     AWS.config.region = "us-west-2";
                     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                      IdentityPoolId: 'us-west-2:ce49614a-87c5-48e2-95c9-343d38075481',
+                      IdentityPoolId: process.env.AWS_IDENTITY_ID,
                       Logins: {
                         'graph.facebook.com': accessToken
                       }
