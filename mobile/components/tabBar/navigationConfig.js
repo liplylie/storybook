@@ -1,5 +1,4 @@
 import { TabNavigator } from 'react-navigation'
-
 import HomeNav from '../homeTab/views/HomeNav'
 import CameraNav from '../cameraTab/views/CameraNav'
 import ProfileNav from '../profileTab/views/ProfileNav'
