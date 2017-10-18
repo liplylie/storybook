@@ -18,9 +18,7 @@ class App extends Component {
     // )
 
     return (
-      <View>
-        <Text>Hello</Text>
-      </View>
+      <TabBarNav />
     )
   }
 }
