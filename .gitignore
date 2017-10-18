@@ -65,3 +65,4 @@ client/static/gen
 .vscode
 *.webassets-cache
 *.pyc
+*.log
