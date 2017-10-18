@@ -1,8 +1,15 @@
 import { combineReducers } from 'redux'
 // import Auth from './authReducer'
+import Camera from './cameraReducer'
+import Home from './homeReducer'
+import Profile from './profileReducer'
+import TabBar from './tabBarReducer'
 
-const Reducer = combineReducers({
-  
+const reducer = combineReducers({
+  Camera,
+  Home,
+  Profile,
+  TabBar
 });
 
-export default Reducer; 
+export default reducer; 

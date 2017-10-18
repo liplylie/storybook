@@ -1,3 +1,8 @@
-import { CameraNav } from '../components/cameraTab/navigationConfig'
+import CameraNavigator from '../components/cameraTab/navigationConfig'
+import { NavigationActions } from 'react-navigation';
 
-CameraNav: (state,action) => NavigatorTabTwo.router.getStateForAction(action,state)
+const CameraReducer = (state, action) => {
+  return CameraNavigator.router.getStateForAction(action, state);
+}
+
+export default CameraReducer; 

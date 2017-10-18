@@ -1,3 +1,8 @@
-import { HomeNav } from '../components/homeTab/navigationConfig'
+import HomeNavigator from '../components/homeTab/navigationConfig'
+import { NavigationActions } from 'react-navigation';
 
-HomeNav: (state,action) => NavigatorTabOne.router.getStateForAction(action,state)
+const HomeReducer = (state, action) => {
+  return HomeNavigator.router.getStateForAction(action, state);
+}
+
+export default HomeReducer; 
