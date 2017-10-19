@@ -24,6 +24,8 @@ app.config['SECRET_KEY'] = 'x_h7PkNBTqrc5CeucKQuTgByEq-D8lb8'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zdhbeaoe:x_h7PkNBTqrc5CeucKQuTgByEq-D8lb8@pellefant.db.elephantsql.com:5432/zdhbeaoe'
 
 db = SQLAlchemy()
+
+
 db.init_app(app)
 db.app = app
 
@@ -35,5 +37,5 @@ for i in data:
 db.session.commit()
 
 #http://docs.sqlalchemy.org/en/latest/orm/tutorial.html
-query = Image.query()
+query = Image.query.all()
 print(query)
