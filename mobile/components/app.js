@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet } from 'react-native'
+import { bindActionCreators } from 'redux'
 
 import TabBarNav from './tabBar/views/TabBarNav'
 import Login from './auth/Login.js'
+import * as AuthActions from '../actions/authActions.js'
 
 class App extends Component {
   constructor(props) {
     super(props); 
+  }
+
+  componentDidMount() {
+    const { actions, authorized } = this.props;
+
+    if(!authorized) {
+      actions.getFBToken();
+    }
   }
 
   render() {
@@ -22,13 +32,7 @@ class App extends Component {
             resizeMode='contain'
             source={require('../logo.jpg')} 
           />
-          <Login />
-        </View>
-      )
-    } else if(authorizing || loggingout) {
-      return (
-        <View style={styles.container}>
-          <Text>Loading...</Text>
+          {authorizing ? <Text>Loading</Text> :<Login />}
         </View>
       )
     } else {
@@ -43,11 +47,16 @@ const appState = (state) => {
   return {
     authorized: state.Auth.authorized,
     authorizing: state.Auth.authorizing,
-    loggingout: state.Auth.loggingOut
   }
 }
 
-export default connect(appState)(App); 
+const appDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  }
+}
+
+export default connect(appState, appDispatch)(App); 
 
 const styles = StyleSheet.create({
   container: {
