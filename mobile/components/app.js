@@ -10,7 +10,6 @@ class App extends Component {
     super(props); 
   }
 
-
   render() {
     const { authorized, authorizing } = this.props;
 
@@ -26,6 +25,12 @@ class App extends Component {
           <Login />
         </View>
       )
+    } else if(authorizing || loggingout) {
+      return (
+        <View style={styles.container}>
+          <Text>Loading...</Text>
+        </View>
+      )
     } else {
       return (
         <TabBarNav />
@@ -37,7 +42,8 @@ class App extends Component {
 const appState = (state) => {
   return {
     authorized: state.Auth.authorized,
-    authorizing: state.Auth.authorizing
+    authorizing: state.Auth.authorizing,
+    loggingout: state.Auth.loggingOut
   }
 }
 
@@ -55,4 +61,3 @@ const styles = StyleSheet.create({
     height: 200
   }
 });
-  
