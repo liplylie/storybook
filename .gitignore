@@ -37,6 +37,7 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 .env
+sensitive.json
 
 # BUCK
 buck-out/
