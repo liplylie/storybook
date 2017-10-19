@@ -1,10 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects import postgresql
 import sqlalchemy_utils
-import sqlite3
 from app import db
 
 class Image(db.Model):
-  __tablename__ = 'Image'
+  __tablename__ = 'image'
   id = db.Column(db.Integer, primary_key=True)
   image_url = db.Column(db.String(120))
   scn_code = db.Column(db.String(120))
@@ -12,7 +12,7 @@ class Image(db.Model):
   location = db.Column(db.String(120))
   likes_count = db.Column(db.Integer)
   caption = db.Column(db.Integer)
-  image_tags_array = db.Column(db.String(120))
+  image_tags_array = db.Column(postgresql.ARRAY(db.String(99999)))
 
   def __init__(self, image_url, scn_code, user_id, location, likes_count, caption, image_tags_array):
     self.image_url = image_url
