@@ -21,7 +21,7 @@ const Profile = ( props ) => {
       		Email: {email}
       	</Text>
       </View>
-      <View style={styles.profileBookCollection}>
+      <View style={styles.profileMap}>
       	<Text> 
       	Collection PlaceHolder
       	</Text>
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
 	},
 	profileEmail: {
 		paddingLeft: 10,
-		color:"red",
+		color:"red"
 	},
-	profileBookCollection: {
+	profileMap: {
 		flexDirection: 'column',
 		margin: 20,
 		flex: 3,
 		backgroundColor:"blue",
-		width: (Dimensions.get('window').width) - 40, 
+		width: (Dimensions.get('window').width) - 40
 	}
 })
 
