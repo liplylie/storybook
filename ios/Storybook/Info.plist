@@ -41,7 +41,6 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSAppTransportSecurity</key>
-	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -52,30 +51,25 @@
 			</dict>
 		</dict>
 	</dict>
-  
-  
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb350661945403929</string>
-      </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>350661945403929</string>
-  <key>FacebookDisplayName</key>
-  <string>Storybook</string>
-  
-  
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>fbapi</string>
-    <string>fb-messenger-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-  </array>
-  
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb350661945403929</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>304306413382671</string>
+	<key>FacebookDisplayName</key>
+	<string>Storybook</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 </dict>
 </plist>
