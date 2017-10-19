@@ -1,6 +1,7 @@
 const initialState = {
   authorizing: false,
   authorized: false,
+  loggingOut: false,
   authCreds: {},
   name: '',
   picture: '',
@@ -31,11 +32,13 @@ const authReducer = (state=initialState, action) => {
     case 'USER_LOGOUT_PENDING': {
       return Object.assign({}, state, {
         authorized: false,
+        loggingOut: true,
       })
     }
     case 'USER_LOGOUT_FULFILLED': {
       return Object.assign({}, state, {
         authorized: false,
+        loggingOut: false,
       })
     }
     case 'USER_INFO_RETRIEVED': {
