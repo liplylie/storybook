@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet, Text, Button } from 'react-native';
-import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as AuthActions from '../../actions/authActions.js';
 
 class Login extends Component {
   constructor(props) {
@@ -93,7 +95,20 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const loginState = (state) => {
+  return {
+    authorizing: state.Auth.authorizing,
+    authorized: state.Auth.authorized,
+  }
+}
+
+const loginDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  }
+}
+
+export default connect(loginState, loginDispatch)(Login);
 
 const styles = StyleSheet.create({
 
