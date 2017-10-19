@@ -1,27 +1,38 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import UserMap from './map.js'
 
 const Profile = ( props ) => {
 	console.log(props, 'profile props')
-	let name = '';
-	let picture = '';
 	if (props.profileInfo.name){
-		console.log('success')
-		name = props.profileInfo.name;
-		picture = props.profileInfo.picture.data.url
-	} 
-  return (
-<<<<<<< HEAD
-    <View style={{flex: 1, justifyContent: 'center'}}>
-      <Text>This is profile view</Text>
-=======
-    <View>
-    	<Image source={{uri:picture}} style={styles.profilePicture}/>
-      <Text style={styles.profileName}>{name}</Text>
->>>>>>> photo and name from fb renders on profile view
-    </View> 
-  )
+		let name = props.profileInfo.name;
+		let email = props.profileInfo.email;
+		let picture = props.profileInfo.picture.data.url;
+		let id = props.profileInfo.id;
+
+		return (
+	    <ScrollView style={styles.profileContainer}>
+	    	<View style ={styles.profileDetails}>
+	    		<Image source={{uri:picture}} style={styles.profilePicture}/>
+	      	<Text style={styles.profileName}>
+	      		Name: {name}
+	      		</Text>
+	      	<Text style={styles.profileEmail}>
+	      		Email: {email}
+	      	</Text>
+	      </View>
+	      <View style={styles.profileMap}>
+	      	<UserMap navigation={props.navigation}/>
+	      </View>
+	    </ScrollView> 
+	  )
+	}	else {
+		  return (
+		    <View>
+		    </View> 
+	  	)
+	}
 }
 
 const mapStateToProps = (store) =>{
@@ -33,27 +44,38 @@ const mapStateToProps = (store) =>{
 }
 
 const styles = StyleSheet.create({
-	profileName: {
-		textAlign: 'center',
-		padding: 10
+	profileContainer: {
+		flex: 1,
+		flexDirection: 'row',
+	},
+	profileDetails: {
+		margin: 20,
+		backgroundColor: 'rgba(0, 122, 255, 0.1)',
+		flex: 1
 	},
 	profilePicture: {
 		width: 60, 
 		height: 60,
 		justifyContent: 'center',
-		padding: 10,
+		alignItems: 'center',
 		borderRadius: 10
+	}, 
+	profileName: {
+		paddingLeft: 10,
+		paddingTop: 15
+	},
+	profileEmail: {
+		paddingLeft: 10,
+		color:"red"
+	},
+	profileMap: {
+		flexDirection: 'column',
+		margin: 20,
+		flex: 3,
+		backgroundColor:"blue",
+		width: (Dimensions.get('window').width) - 40
 	}
 })
 
-// const mapDispatchToProps = (dispatch) =>{
-//   return {
-//     addToDo: (todo) =>{
-//       dispatch(addTodo(todo))
-//     }
-//   };
-// }
-// {profileInfo.Profile.profileInfo.name}
-// src={{uri:profileInfo.Profile.profileInfo.picture.data.url}}
 
 export default connect(mapStateToProps, null)(Profile);
