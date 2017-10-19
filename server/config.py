@@ -1,22 +1,15 @@
-class Config(object):
-    """
-    Common configurations
-    """
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-    # Put any configurations here that are common across all environments
+class Config(object):
+    """general app-wide settings"""
 
 class DevelopmentConfig(Config):
-    """
-    Development configurations
-    """
 
     DEBUG = True
     SQLALCHEMY_ECHO = True
 
 class ProductionConfig(Config):
-    """
-    Production configurations
-    """
 
     DEBUG = False
 
