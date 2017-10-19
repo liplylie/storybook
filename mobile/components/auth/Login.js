@@ -11,15 +11,6 @@ class Login extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    const { actions, authorized } = this.props;
-
-    if(!authorized) {
-      actions.getFBToken();
-      actions.getUserInfo();
-    }
-  }
-
   render() {
     const { authorized, actions }  = this.props;
 
@@ -42,7 +33,6 @@ class Login extends Component {
                 )
               } else {
                 actions.getFBToken();
-                actions.getUserInfo();
               }
             }
           }
