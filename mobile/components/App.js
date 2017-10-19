@@ -1,27 +1,72 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
+import { bindActionCreators } from 'redux'
 
 import TabBarNav from './tabBar/views/TabBarNav'
+import Login from './auth/Login.js'
+import * as AuthActions from '../actions/authActions.js'
 
 class App extends Component {
   constructor(props) {
     super(props); 
   }
 
+  componentDidMount() {
+    const { actions, authorized } = this.props;
+
+    if(!authorized) {
+      actions.getFBToken();
+    }
+  }
 
   render() {
-    //if logging in, login page
-    //if signing up, signup page
-    //else return (
-    //   <TabBarNav /> 
-    // )
+    const { authorized, authorizing } = this.props;
 
-    return (
-      <TabBarNav />
-    )
+    if(!authorized) {
+      return (
+        <View style={styles.container}>
+          <Image 
+            style={styles.image}
+            resizeMethod='resize'
+            resizeMode='contain'
+            source={require('../logo.jpg')} 
+          />
+          {authorizing ? <Text>Loading</Text> :<Login />}
+        </View>
+      )
+    } else {
+      return (
+        <TabBarNav />
+      )
+    }
   }
 }
 
-export default App; 
-  
+const appState = (state) => {
+  return {
+    authorized: state.Auth.authorized,
+    authorizing: state.Auth.authorizing,
+  }
+}
+
+const appDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  }
+}
+
+export default connect(appState, appDispatch)(App); 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  image: {
+    width: 400,
+    height: 200
+  }
+});
