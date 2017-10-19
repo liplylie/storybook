@@ -28,6 +28,7 @@ class Image(db.Model):
 
 
 class User(db.Model):
+  __tablename__ = 'user'
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(250))
   friends_count = db.Column(db.Integer)
@@ -54,10 +55,15 @@ class Tags(db.Model):
   def __repr__(self):
     return '<Tags: %r>' % self.url + ' ' + '<Tags: %r>' % self.tags_array
 
-class Friendslist(db.Model):
+class Relationship(db.Model):
+  __tablename__ = 'relationship'
   id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer) #foreign key
-  friend_id = db.Column(db.Integer)
+  relating_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+  related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+  friend_type = db.Column(db.String(250)) # [friend, block, etc]
+
+  relating_user = db.relationship("User", foreign_keys=[relating_user_id])
+  related_user = db.relationship("User", foreign_keys=[related_user_id])
 
   def __init__(self, user_id, friend_id):
     self.user_id = user_id
