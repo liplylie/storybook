@@ -15,6 +15,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
+import userLocation from "../../../actions/userLocationAction.js"
+
+
 const { width, height } =  Dimensions.get('window');
 const SCREEN_HEIGHT = height;
 const SCREEN_WIDTH = width;
@@ -26,7 +29,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 class UserMap extends Component {
   constructor(props){
     super(props)
-    console.log(props,'usermap')
+    console.log(props,'usermap props')
     this.state = {
       initialPosition: {
         latitude: 0,
@@ -70,7 +73,7 @@ class UserMap extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       }
-
+      this.props.actions({latitude: lat, longitude: long})
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     })
@@ -152,5 +155,11 @@ const mapStateToProps = (store) =>{
   }
 }
 
-export default connect(mapStateToProps)(UserMap)
+const mapDispatch = (dispatch) => {
+  return {
+    actions: (location) => dispatch(userLocation(location)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatch)(UserMap)
 
