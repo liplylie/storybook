@@ -9,22 +9,25 @@ import json
 with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
     data = json.load(data_file)
 
-#initialize app
+#############################
+#initialize app:
 app = Flask(__name__, instance_relative_config=True, static_folder="../../client/static", template_folder="../../client/static")
 
+#############################
+#load compiled assets:
 assets = Environment(app)
 js = Bundle('bundle.js', output='gen/packed.js')
 assets.register('js_all', js)
 
-#load routes
-from app import routes
-
+#############################
+#app configs:
 app.config.from_object('config')
 app.config['SECRET_KEY'] = 'x_h7PkNBTqrc5CeucKQuTgByEq-D8lb8'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zdhbeaoe:x_h7PkNBTqrc5CeucKQuTgByEq-D8lb8@pellefant.db.elephantsql.com:5432/zdhbeaoe'
 
+#############################
+#load database:
 db = SQLAlchemy()
-
 db.init_app(app)
 db.app = app
 
@@ -40,3 +43,7 @@ db.session.commit()
 
 query = Image.query.all()
 print(query)
+
+##############################
+#load Routes:
+from app import routes
