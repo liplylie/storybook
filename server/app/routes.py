@@ -20,4 +20,4 @@ def index():
 def fetchImages():
   print('HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA')
   data = dict(request.args)
-  print(data)
+  print(data['location'])
