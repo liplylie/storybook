@@ -6,18 +6,24 @@ from app import db
 class Image(db.Model):
   __tablename__ = 'image'
   id = db.Column(db.Integer, primary_key=True)
-  image_url = db.Column(db.String(120))
-  scn_code = db.Column(db.String(120))
-  user_id = db.Column(db.Integer)
-  location = db.Column(db.String(120))
+  image_url = db.Column(db.String(250))
+  scn_code = db.Column(db.String(250))
+  location = db.Column(db.String(250))
   likes_count = db.Column(db.Integer)
   caption = db.Column(db.Integer)
-  image_tags_array = db.Column(postgresql.ARRAY(db.String(99999)))
+  image_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
 
-  def __init__(self, image_url, scn_code, user_id, location, likes_count, caption, image_tags_array):
+  #foreign keys (this table belongs to...)
+  image_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))  
+
+  #database relationships (this table has many...)
+  image_comments = db.relationship("Comments", backref='image', lazy=True)
+  image_likes = db.relationship("Likes", backref='image', lazy=True)
+
+  def __init__(self, image_url, scn_code, image_user_id, location, likes_count, caption, image_tags_array):
     self.image_url = image_url
     self.scn_code = scn_code
-    self.user_id = user_id
+    self.image_user_id = image_user_id
     self.location = location
     self.likes_count = likes_count
     self.caption = caption
@@ -26,21 +32,117 @@ class Image(db.Model):
   def __repr__(self):
     return '<Image tags: %r>' % self.image_tags_array + ' ' + '<image url: %r>' % self.image_url
 
-
 class User(db.Model):
+  __tablename__ = 'user'
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(120))
+  name = db.Column(db.String(250))
   friends_count = db.Column(db.Integer)
-  uer_tags_array = db.Column(db.String(120))
+  user_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
+
+  #database relationships (this table has many...)
+  user_images = db.relationship("Image", backref='user', lazy=True)
+  user_messages = db.relationship("Messages", backref='user', lazy=True)
+  user_relationships = db.relationship("Relationship", backref='user', lazy=True)
+  user_comments = db.relationship("Comments", backref='user', lazy=True)
+  user_likes = db.relationship("Likes", backref='user', lazy=True)
+
+  def __init__(self, name, friends_count, user_tags_array):
+    self.name = name
+    self.friends_count = friends_count
+    self.user_tags_array = user_tags_array
 
   def __repr__(self):
-    return '<User: %r>' % self.name + ' ' + '<fuser riends count: %r>' % self.friends_count + ' ' + '<user tags: %r>' % self.tags_array
+    return '<User: %r>' % self.name + ' ' + '<fuser riends count: %r>' % self.friends_count + ' ' + '<user tags: %r>' % self.user_tags_array
 
-
-class Tags(db.Model):
+class Relationship(db.Model):
+  __tablename__ = 'relationship'
   id = db.Column(db.Integer, primary_key=True)
-  url = db.Column(db.String(120))
-  tags_array = db.Column(db.String(120))
+  friend_type = db.Column(db.String(250)) # [friend, block, etc]
+  #foreign keys (this table belongs to...)
+  related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+  def __init__(self, user_id, friend_id):
+    self.user_id = user_id
+    self.friend_id = friend_id
 
   def __repr__(self):
-    return '<Tags: %r>' % self.url + ' ' + '<Tags: %r>' % self.tags_array
+    return '<user_id: %r>' % self.user_id + ' ' + '<friend_id: %r>' % self.friend_id
+
+class Chatroom(db.Model):
+  __tablename__ = 'chatroom'
+  id = db.Column(db.Integer, primary_key=True)
+  admin = db.Column(db.String(250))
+
+  #database relationships (this table has many...)
+  chatroom_messages = db.relationship("Messages", backref='chatroom', lazy=True)
+
+  def __init__(self, admin):
+    self.admin = admin
+
+  def __repr__(self):
+    return '<image_id: %r>' % self.sender_name
+
+class Messages(db.Model):
+  __tablename__ = 'messages'
+  id = db.Column(db.Integer, primary_key=True)
+  message = db.Column(db.String(250))
+  room_id = db.Column(db.Integer)
+
+  #foreign keys (this table belongs to...)
+  message_chatroom = db.Column(db.Integer, db.ForeignKey("chatroom.id"))
+  sender = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+  def __init__(self, user_id, message, room_id):
+    self.user_id = user_id
+    self.message = message
+    self.room_id = room_id
+
+  def __repr__(self):
+    return '<user_id: %r>' % self.user_id + ' ' + '<message: %r>' % self.message + ' ' + '<room_id: %r>' % self.room_id
+
+class Comments(db.Model):
+  __tablename__ = 'comments'
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer) #foreign key
+  image_id = db.Column(db.Integer) #foreign key
+  text = db.Column(db.String(250))
+  likes_count = db.Column(db.Integer)
+
+  #foreign keys (this table belongs to...)
+  comment_user_id = db.Column(db.Integer, db.ForeignKey("user.id")) 
+  comment_image_id = db.Column(db.Integer, db.ForeignKey("image.id")) 
+
+  #database relationships (this table has many...)
+  comment_likes = db.relationship("Likes", backref='comments', lazy=True)
+  
+
+  def __init__(self, user_id, image_id, text, likes_count):
+    self.user_id = user
+    self.image_id = image_id
+    self.text = text
+    self.likes_count = likes_count
+
+  def __repr__(self):
+    return '<image_id: %r>' % self.image_id + ' ' + '<Comment text: %r>' % self.text
+
+class Likes(db.Model):
+  __tablename__ = 'likes'
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer) #foreign key
+  image_id = db.Column(db.Integer) #foreign key
+  comment_id = db.Column(db.Integer) #foreign key
+  like_type = db.Column(db.String(250))
+
+  #foreign keys (this table belongs to...)
+  like_user_id = db.Column(db.Integer, db.ForeignKey("user.id")) 
+  like_image_id = db.Column(db.Integer, db.ForeignKey("image.id")) 
+  like_comment_id = db.Column(db.Integer, db.ForeignKey("comments.id")) 
+
+  def __init__(self, user_id, image_id, comment_id, like_type):
+    self.user_id = user_id
+    self.image_id = image_id
+    self.comment_id = comment_id
+    self.like_type = like_type
+
+  def __repr__(self):
+    return '<Like_image_id: %r>' % self.image_id + ' ' + '<Tags: %r>' % self.tags_array

@@ -24,16 +24,19 @@ app.config['SECRET_KEY'] = 'x_h7PkNBTqrc5CeucKQuTgByEq-D8lb8'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zdhbeaoe:x_h7PkNBTqrc5CeucKQuTgByEq-D8lb8@pellefant.db.elephantsql.com:5432/zdhbeaoe'
 
 db = SQLAlchemy()
+
 db.init_app(app)
 db.app = app
 
-from schema import Image
+from schema import Image, User
 
+db.drop_all()
 db.create_all()
+db.session.add(User("hello", 0, ["yes"]))
+
 for i in data:
-  db.session.add(Image(i['image_url'],  i['scn_code'], i['user_id'], i['location'], i['likes_count'], i['caption'], i['image_tags_array']))
+  db.session.add(Image(i['image_url'],  i['scn_code'], i['image_user_id'], i['location'], i['likes_count'], i['caption'], i['image_tags_array']))
 db.session.commit()
 
-#http://docs.sqlalchemy.org/en/latest/orm/tutorial.html
-query = Image.query()
+query = Image.query.all()
 print(query)
