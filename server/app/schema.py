@@ -45,6 +45,8 @@ class User(db.Model):
   user_relationships = db.relationship("Relationship", backref='user', lazy=True)
   user_comments = db.relationship("Comments", backref='user', lazy=True)
   user_likes = db.relationship("Likes", backref='user', lazy=True)
+  # user_sender = db.relationship("Chatroom", backref='user', lazy=True)
+  # user_recipient = db.relationship("Chatroom", backref='user', lazy=True)
 
   def __init__(self, name, friends_count, user_tags_array):
     self.name = name
@@ -72,6 +74,10 @@ class Chatroom(db.Model):
   __tablename__ = 'chatroom'
   id = db.Column(db.Integer, primary_key=True)
   admin = db.Column(db.String(250))
+
+  #foreign keys (this table belongs to...)
+  chatroom_sender = db.Column(db.Integer, db.ForeignKey("user.id"))
+  chatroom_recipient = db.Column(db.Integer, db.ForeignKey("user.id"))
 
   #database relationships (this table has many...)
   chatroom_messages = db.relationship("Messages", backref='chatroom', lazy=True)
