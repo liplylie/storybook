@@ -13,23 +13,21 @@ const Profile = ( props ) => {
 		let id = props.profileInfo.id;
 
 		return (
-    <ScrollView style={styles.profileContainer}>
-    	<View style ={styles.profileDetails}>
-    		<Image source={{uri:picture}} style={styles.profilePicture}/>
-      	<Text style={styles.profileName}>
-      		Name: {name}
-      		</Text>
-      	<Text style={styles.profileEmail}>
-      		Email: {email}
-      	</Text>
-      </View>
-      <View style={styles.profileMap}>
-      	<Text> 
-      	Collection PlaceHolder
-      	</Text>
-      </View>
-    </ScrollView> 
-  )
+	    <ScrollView style={styles.profileContainer}>
+	    	<View style ={styles.profileDetails}>
+	    		<Image source={{uri:picture}} style={styles.profilePicture}/>
+	      	<Text style={styles.profileName}>
+	      		Name: {name}
+	      		</Text>
+	      	<Text style={styles.profileEmail}>
+	      		Email: {email}
+	      	</Text>
+	      </View>
+	      <View style={styles.profileMap}>
+	      	<UserMap navigation={props.navigation}/>
+	      </View>
+	    </ScrollView> 
+	  )
 	}	else {
 		  return (
 		    <View>
