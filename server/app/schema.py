@@ -8,16 +8,18 @@ class Image(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   image_url = db.Column(db.String(250))
   scn_code = db.Column(db.String(250))
-  user_id = db.Column(db.Integer)
   location = db.Column(db.String(250))
   likes_count = db.Column(db.Integer)
   caption = db.Column(db.Integer)
   image_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
 
-  def __init__(self, image_url, scn_code, user_id, location, likes_count, caption, image_tags_array):
+  #foreign keys
+  image_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+  def __init__(self, image_url, scn_code, image_user_id, location, likes_count, caption, image_tags_array):
     self.image_url = image_url
     self.scn_code = scn_code
-    self.user_id = user_id
+    self.image_user_id = image_user_id
     self.location = location
     self.likes_count = likes_count
     self.caption = caption
@@ -32,7 +34,9 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(250))
   friends_count = db.Column(db.Integer)
-  user_tags_array = db.Column(db.String(250))
+  user_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
+  #database relationships
+  user_images = db.relationship("Image", backref='user', lazy=True)
 
   def __init__(self, name, friends_count, user_tags_array):
     self.name = name
@@ -40,7 +44,7 @@ class User(db.Model):
     self.user_tags_array = user_tags_array
 
   def __repr__(self):
-    return '<User: %r>' % self.name + ' ' + '<fuser riends count: %r>' % self.friends_count + ' ' + '<user tags: %r>' % self.tags_array
+    return '<User: %r>' % self.name + ' ' + '<fuser riends count: %r>' % self.friends_count + ' ' + '<user tags: %r>' % self.user_tags_array
 
 
 class Tags(db.Model):
@@ -58,10 +62,14 @@ class Tags(db.Model):
 class Relationship(db.Model):
   __tablename__ = 'relationship'
   id = db.Column(db.Integer, primary_key=True)
+  friend_type = db.Column(db.String(250)) # [friend, block, etc]
+  #foreign keys
   relating_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
   related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-  friend_type = db.Column(db.String(250)) # [friend, block, etc]
 
+  #database relationships:
+  #relating user is the one logged in
+  #related user is the other person (the one in the friends list / blocked list / etc...)
   relating_user = db.relationship("User", foreign_keys=[relating_user_id])
   related_user = db.relationship("User", foreign_keys=[related_user_id])
 
@@ -74,9 +82,16 @@ class Relationship(db.Model):
 
 class Messages(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer) #foreign key
   message = db.Column(db.String(250))
   room_id = db.Column(db.Integer)
+
+  #foreign keys
+  sender_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+  recipient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+  #database relationships
+  sender = db.relationship("User", foreign_keys=[sender_id])
+  recipient = db.relationship("User", foreign_keys=[recipient_id])
 
   def __init__(self, user_id, message, room_id):
     self.user_id = user_id
