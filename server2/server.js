@@ -4,7 +4,9 @@ const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
 
-const router = require('./router')
+//const db = require(''); 
+
+// const router = require('./router')
 const PORT = 3000;
 
 const app = express();
@@ -15,7 +17,7 @@ const io = socketIo(server);
 
 app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
-app.use('/api', router)
+// app.use('/api', router)
 app.use(express.static(path.resolve(__dirname, '../client/static')))
 
 app.get('/*', function (req, res) {
@@ -29,10 +31,12 @@ io.on('connection', socket => {
     socket.broadcast.to(message.room.toString()).emit('message', {
       text: message.text,
       from: message.from,
+      createdAt: message.createdAt,
       room: message.room
     })
+    //db.insert(message);
   })
-  socket.on('subscribe', function(room) {
+  socket.on('subscribe', room => {
     // console.log('joining room', room);
     socket.join(room);
   })

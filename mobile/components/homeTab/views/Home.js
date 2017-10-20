@@ -7,12 +7,7 @@ import {
   Image
 } from 'react-native';
 
-<<<<<<< HEAD
 import Login from '../../auth/Login.js'
-=======
-import LoginView from '../../login'
-import SignupView from '../../signup';
->>>>>>> Add Python and pip.
 
 class Home extends Component {
   constructor(props) {
