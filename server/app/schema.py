@@ -17,8 +17,8 @@ class Image(db.Model):
   image_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))  
 
   #database relationships (this table has many...)
-  image_comments = db.relationship("Comments", backref='image', lazy=True)
-  image_likes = db.relationship("Likes", backref='image', lazy=True)
+  # image_comments = db.relationship("Comments", backref='image', lazy=True)
+  # image_likes = db.relationship("Likes", backref='image', lazy=True)
 
   def __init__(self, image_url, scn_code, image_user_id, location, likes_count, caption, image_tags_array):
     self.image_url = image_url
@@ -40,11 +40,11 @@ class User(db.Model):
   user_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
 
   #database relationships (this table has many...)
-  user_images = db.relationship("Image", backref='user', lazy=True)
-  user_messages = db.relationship("Messages", backref='user', lazy=True)
-  user_relationships = db.relationship("Relationship", backref='user', lazy=True)
-  user_comments = db.relationship("Comments", backref='user', lazy=True)
-  user_likes = db.relationship("Likes", backref='user', lazy=True)
+  # user_images = db.relationship("Image", backref='user', lazy=True)
+  # user_messages = db.relationship("Messages", backref='user', lazy=True)
+  # user_relationships = db.relationship("Relationship", backref='user', lazy=True)
+  # user_comments = db.relationship("Comments", backref='user', lazy=True)
+  # user_likes = db.relationship("Likes", backref='user', lazy=True)
   # user_sender = db.relationship("Chatroom", backref='user', lazy=True)
   # user_recipient = db.relationship("Chatroom", backref='user', lazy=True)
 
@@ -80,7 +80,7 @@ class Chatroom(db.Model):
   chatroom_recipient = db.Column(db.Integer, db.ForeignKey("user.id"))
 
   #database relationships (this table has many...)
-  chatroom_messages = db.relationship("Messages", backref='chatroom', lazy=True)
+  # chatroom_messages = db.relationship("Messages", backref='chatroom', lazy=True)
 
   def __init__(self, admin):
     self.admin = admin
@@ -119,7 +119,7 @@ class Comments(db.Model):
   comment_image_id = db.Column(db.Integer, db.ForeignKey("image.id")) 
 
   #database relationships (this table has many...)
-  comment_likes = db.relationship("Likes", backref='comments', lazy=True)
+  # comment_likes = db.relationship("Likes", backref='comments', lazy=True)
   
 
   def __init__(self, user_id, image_id, text, likes_count):
