@@ -1,38 +1,37 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import UserMap from './map.js'
 
 const Profile = ( props ) => {
 	console.log(props, 'profile props')
 	if (props.profileInfo.name){
-		console.log('success')
 		let name = props.profileInfo.name;
 		let email = props.profileInfo.email;
 		let picture = props.profileInfo.picture.data.url;
 		let id = props.profileInfo.id;
+
 		return (
-    <ScrollView style={styles.profileContainer}>
-    	<View style ={styles.profileDetails}>
-    		<Image source={{uri:picture}} style={styles.profilePicture}/>
-      	<Text style={styles.profileName}>
-      		Name: {name}
-      		</Text>
-      	<Text style={styles.profileEmail}>
-      		Email: {email}
-      	</Text>
-      </View>
-      <View style={styles.profileMap}>
-      	<Text> 
-      	Collection PlaceHolder
-      	</Text>
-      </View>
-    </ScrollView> 
-  )
+	    <ScrollView style={styles.profileContainer}>
+	    	<View style ={styles.profileDetails}>
+	    		<Image source={{uri:picture}} style={styles.profilePicture}/>
+	      	<Text style={styles.profileName}>
+	      		Name: {name}
+	      		</Text>
+	      	<Text style={styles.profileEmail}>
+	      		Email: {email}
+	      	</Text>
+	      </View>
+	      <View style={styles.profileMap}>
+	      	<UserMap navigation={props.navigation}/>
+	      </View>
+	    </ScrollView> 
+	  )
 	}	else {
-	  return (
-	    <View>
-	    </View> 
-  )
+		  return (
+		    <View>
+		    </View> 
+	  	)
 	}
 }
 
@@ -48,11 +47,10 @@ const styles = StyleSheet.create({
 	profileContainer: {
 		flex: 1,
 		flexDirection: 'row',
-		backgroundColor: 'yellow'
 	},
 	profileDetails: {
 		margin: 20,
-		backgroundColor: 'green',
+		backgroundColor: 'rgba(0, 122, 255, 0.1)',
 		flex: 1
 	},
 	profilePicture: {
@@ -79,14 +77,5 @@ const styles = StyleSheet.create({
 	}
 })
 
-// const mapDispatchToProps = (dispatch) =>{
-//   return {
-//     addToDo: (todo) =>{
-//       dispatch(addTodo(todo))
-//     }
-//   };
-// }
-// {profileInfo.Profile.profileInfo.name}
-// src={{uri:profileInfo.Profile.profileInfo.picture.data.url}}
 
 export default connect(mapStateToProps, null)(Profile);
