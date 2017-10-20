@@ -5,10 +5,8 @@ from flask import request
 from werkzeug.datastructures import ImmutableMultiDict
 import sqlalchemy_utils
 import json
-# from app.app import db
-# from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
-from app import app
-# from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
+from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
+from app import app, db
 
 @app.route('/')
 def index():
@@ -20,4 +18,6 @@ def index():
 def fetchImages():
   print('HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA')
   data = dict(request.args)
-  print(data['location'])
+  datalocation = data['location'][0]
+  print(data['location'][0])
+  print(Image.query.get(1))
