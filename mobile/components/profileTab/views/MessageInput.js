@@ -15,7 +15,7 @@ class MessageInput extends Component {
   }
 
   handleSubmit() {
-    socket.emit('message', {
+    this.socket.emit('message', {
       message: this.state.input,
       from: this.state.user,
       room: this.state.room,

@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router() 
-const controller = require ('./controller.js')
+const roomController = require('./roomController')
+const friendController = require('./friendController')
 
-router.get('/chat', controller.getChat)
-router.get('/messages', controller.getMessages)
-router.post('/chat', controller.sendMessage)
+router.get('/chats', messageController.getAllRooms);
 
+//only use from friends view
+router.post('/chat/:user2Id', roomController.createRoom);
+
+router.get('/friends', friendController.getFriendList);
