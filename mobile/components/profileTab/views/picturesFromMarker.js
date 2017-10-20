@@ -20,7 +20,6 @@ const PicturesFromMarker = ( props ) => {
 	    	</View>
 	    	<Image source={{uri:img}} style={styles.image} />
 	      <Text>This is pictures from marker view</Text>
-	      
 	    </ScrollView> 
 	  )	
 }
