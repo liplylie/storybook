@@ -53,29 +53,17 @@
 		</dict>
 	</dict>
   
-<<<<<<< HEAD
-  
-=======
->>>>>>> photo and name from fb renders on profile view
   <key>CFBundleURLTypes</key>
   <array>
     <dict>
       <key>CFBundleURLSchemes</key>
       <array>
-<<<<<<< HEAD
-        <string>fb350661945403929</string>
-=======
         <string>fb304306413382671</string>
->>>>>>> photo and name from fb renders on profile view
       </array>
     </dict>
   </array>
   <key>FacebookAppID</key>
-<<<<<<< HEAD
-  <string>350661945403929</string>
-=======
   <string>304306413382671</string>
->>>>>>> photo and name from fb renders on profile view
   <key>FacebookDisplayName</key>
   <string>Storybook</string>
   
@@ -87,12 +75,9 @@
     <string>fbauth2</string>
     <string>fbshareextension</string>
   </array>
-<<<<<<< HEAD
-=======
   <key>NSPhotoLibraryUsageDescription</key>
   <string>Need to access photo library</string>
   
->>>>>>> photo and name from fb renders on profile view
   
 </dict>
 </plist>

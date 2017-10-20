@@ -6,11 +6,11 @@ import UserMap from './map.js'
 
 const Profile = ( props ) => {
 	console.log(props, 'profile props')
-	if (props.profileInfo.name){
-		let name = props.profileInfo.name;
-		let email = props.profileInfo.email;
-		let picture = props.profileInfo.picture.data.url;
-		let id = props.profileInfo.id;
+	if (props.profileInfo.Auth.name){
+		let name = props.profileInfo.Auth.name;
+		let email = props.profileInfo.Auth.email;
+		let picture = props.profileInfo.Auth.picture;
+		let id = props.profileInfo.Auth.id;
 
 		return (
 	    <ScrollView style={styles.profileContainer}>
@@ -40,7 +40,7 @@ const mapStateToProps = (store) =>{
   console.log(store, 'profile js state')
  
   return {
-    profileInfo: store.Profile
+    profileInfo: store
   }
 }
 
