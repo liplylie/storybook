@@ -6,8 +6,8 @@ const initialState = {
 }
 const ProfileReducer = (state, action) => {
 	console.log(state, 'profile Reducer')
-	if (action.type === 'PROFILE_INFO'){
-		return Object.assign({}, state, action.payload )
+	if (action.type === 'USER_LOCATION'){
+		return Object.assign({}, state, {userLocation:action.payload} )
 	}
   return ProfileNavigator.router.getStateForAction(action, state);
 }
