@@ -11,6 +11,10 @@ class Login extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.getFBToken();
+  }
+
   render() {
     const { authorized, actions }  = this.props;
 
