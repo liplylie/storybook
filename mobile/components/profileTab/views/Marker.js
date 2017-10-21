@@ -10,12 +10,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import markerAction from "../../../actions/markerAction.js"
-// give lat and long to this
 
 class Marker extends Component {
-// give lat and long to this
-
-export default class Marker extends Component {
 	constructor(props){
 		super(props)
 		console.log(props, "marker props yooooooooo")
@@ -44,7 +40,6 @@ export default class Marker extends Component {
         coordinate={this.props.location}>
       </MapView.Marker>
 			)
-		}			
 	}
 }
 
@@ -55,7 +50,3 @@ const locationDispatch = (dispatch) => {
 }
 
 export default connect(null, locationDispatch)(Marker)
-	}
-			
-}
-
