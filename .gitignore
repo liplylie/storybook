@@ -40,7 +40,6 @@ yarn-error.log
 package-lock.json
 .env
 sensitive.json
-ios
 
 # BUCK
 buck-out/
