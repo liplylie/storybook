@@ -7,9 +7,8 @@ const routeConfig = {
   Camera: { screen: Camera },
   Post: { screen: Post },
 }
-// going to disable the header for now
+
 const stackNavigatorConfig = {
-  headerMode: 'none',
   initialRouteName: 'Camera'
 }
 
