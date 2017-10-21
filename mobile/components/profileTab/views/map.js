@@ -13,6 +13,7 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native';
+import Marker from './Marker.js'
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import userLocation from "../../../actions/userLocationAction.js"
@@ -42,12 +43,14 @@ class UserMap extends Component {
         longitude: 0,
       }
     }
+    this.location = [{latitude:34.0430180, longitude:-118.2672540}]
     this.viewTargetPictures = this.viewTargetPictures.bind(this)
   }
 
   markerID: ?number = null;
 
   componentDidMount(){
+
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude);
       var long = parseFloat(position.coords.longitude);
@@ -57,12 +60,22 @@ class UserMap extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       }
+      // make get request to server for all locations (do not need pictures)
+      //axios.get() ...
+        // receive location coordinates
+        //.then(locations) 
+      
+          // put infointo this.location
+            // this.location = [...locations]
 
+    // map through this.location and put each element into a new Marker
+      
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     }, 
     (error) => alert(JSON.stringify(error)),
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 })
+    
 
     this.watchID = navigator.geolocation.watchPosition((position) =>{
       var lat = parseFloat(position.coords.latitude);
@@ -77,8 +90,8 @@ class UserMap extends Component {
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     })
-
   }
+    
 
   componentWillUnmount(){
     navigator.geolocation.clearWatch(this.watchID)
@@ -91,6 +104,9 @@ class UserMap extends Component {
 
 
   }
+
+
+   
   render() {
     return (
       <View style={styles.container}>
@@ -98,13 +114,16 @@ class UserMap extends Component {
           style={styles.map}
            region={this.state.initialPosition}>
           <MapView.Marker
+            id = 'userMarker'
             onPress={e => this.viewTargetPictures(e)}
             coordinate={this.state.markerPosition}>
               <View style={styles.radius}>
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
-         
+         {this.location.map((element, i) => {
+          return <Marker key={i} location={element} navigation={this.props.navigation}/>
+         })}
         </MapView>
       </View>
     );
