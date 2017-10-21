@@ -3,14 +3,16 @@ import ioClient from 'socket.io-client'
 import { TextInput, Button } from 'react-native'
 
 class MessageInput extends Component {
-  constuctor(props) {
+  constructor(props) {
     super(props);
+
     this.state = {
       input: '',
       user: '',
       room: '', 
       createdAt: '',
     }
+
     this.socket = ioClient('')
   }
 

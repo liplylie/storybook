@@ -1,15 +1,20 @@
 import React from 'react';
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+
+import CameraView from './CameraView.js';
 
 class Camera extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  static navigationOptions = {
+    header: null,
+  }
+
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text>This is camera view</Text>
-      </View> 
+      <CameraView navigation={this.props.navigation}/>
     )
   }
 }
