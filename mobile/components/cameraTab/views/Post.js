@@ -16,7 +16,8 @@ class Post extends Component {
         <TextInput />
         <TextInput />
         <TextInput />
-        <Button />
+        <Button
+        title="Post" />
       </View>
     )
   }
