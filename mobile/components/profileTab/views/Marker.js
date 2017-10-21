@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MapView from 'react-native-maps';
+import { connect } from 'react-redux';
 import {
   Platform,
   StyleSheet,
@@ -8,9 +9,10 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native';
+import markerAction from "../../../actions/markerAction.js"
 // give lat and long to this
 
-export default class Marker extends Component {
+class Marker extends Component {
 	constructor(props){
 		super(props)
 		console.log(props, "marker props yooooooooo")
@@ -19,8 +21,11 @@ export default class Marker extends Component {
 
 	 viewTargetPictures(e){
     // e contains coordinate info
-    console.log(e.nativeEvent, ' second marker pressed')
+    console.log(e.nativeEvent.coordinate, ' second marker pressed')
+    let lat = e.nativeEvent.coordinate.latitude;
+    let long = e.nativeEvent.coordinate.longitude;
     this.props.navigation.navigate("PicturesFromMarker")
+    this.props.actions({latitude: lat, longitude: long})
 
 
   }
@@ -32,34 +37,17 @@ export default class Marker extends Component {
 					// where pictures are from this.props.location
 		return(
 			<MapView.Marker
-				style={styles.marker}
         onPress={e => this.viewTargetPictures(e)}
         coordinate={this.props.location}>
       </MapView.Marker>
 			)
-	}
-			
+	}			
 }
 
-const styles = StyleSheet.create({
-  radius:{
-    height: 50,
-    width: 50,
-    borderRadius: 50 / 2,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(0, 112, 255, 0.3)',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }, 
-  marker: {
-    height: 20,
-    width: 20,
-    borderWidth: 3,
-    borderColor: 'white',
-    borderRadius: 20 / 2,
-    overflow: 'hidden',
-    backgroundColor: '#007AFF'
+const locationDispatch = (dispatch) => {
+  return {
+    actions: (location) => dispatch(markerAction(location)),
   }
-});
+}
+
+export default connect(null, locationDispatch)(Marker)
