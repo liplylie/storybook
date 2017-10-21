@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableHighlight, Button } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
-class CameraView extends React.Component {
+class CameraView extends Component {
   constructor(props) {
     super(props);
   }
