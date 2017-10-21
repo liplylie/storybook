@@ -12,7 +12,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.getFBToken();
+    this.props.actions.getFBToken();
   }
 
   render() {
