@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet } from 'react-native'
 import { bindActionCreators } from 'redux'
 
 import TabBarNav from './tabBar/views/TabBarNav'
-import Login from './auth/Login.js'
+import Login from './auth/login.js'
 import * as AuthActions from '../actions/authActions.js'
 
 class App extends Component {

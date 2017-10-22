@@ -6,6 +6,15 @@ import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.rnfs.RNFSPackage;
@@ -43,6 +52,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new MapsPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
+            new MapsPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
+            new MapsPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
           new PickerPackage(),
           new RCTCameraPackage(),
           new MainReactPackage(),

@@ -7,7 +7,7 @@ import {
   Image
 } from 'react-native';
 
-import Login from '../../auth/Login.js'
+import Login from '../../auth/login.js'
 
 class Home extends Component {
   constructor(props) {
