@@ -23,6 +23,7 @@ export const getFBToken = () => {
           const authCreds = {
             sessionToken: AWS.config.credentials.sessionToken,
             accessKey: AWS.config.credentials.accessKeyId,
+            secretKey: AWS.config.credentials.secretAccessKey,
           }
           dispatch({type: 'USER_AUTHORIZED', payload: authCreds})
         })
