@@ -1,6 +1,6 @@
 const initialState = {
   uploading: false,
-  image: '',
+  image: null,
 }
 
 const cameraPostReducer = (state=initialState, action) => {
