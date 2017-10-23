@@ -17,7 +17,7 @@ class Post extends Component {
   }
 
   render() {
-    const { image, creds, actions } = this.props;
+    const { image, creds, actions, navigation } = this.props;
     const { name, description, tags } = this.state;
 
     return (
@@ -25,7 +25,6 @@ class Post extends Component {
         <TextInput 
           placeholder="Title"
           onChangeText={(text) => {
-            console.log(text);
             this.setState({
               name: text,
             })
@@ -33,10 +32,15 @@ class Post extends Component {
         />
         <TextInput
           placeholder="Description"
+          onChangeText={(text) => {
+            this.setState({
+              description: text,
+            })
+          }}
         />
-        <TextInput
+        {/* <TextInput
           placeholder="Tags"
-        />
+        /> */}
         <Button
           title="Post"
           onPress={() => {
@@ -44,9 +48,9 @@ class Post extends Component {
               name,
               image: image,
               description,
-              tags
             }
             actions.postImage(postObj, creds);
+            navigation.navigate('Camera');
           }}
         />
       </View>
