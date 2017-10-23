@@ -20,8 +20,8 @@ class CameraView extends Component {
           title="click to add picture"
           onPress={() => {
             ImagePicker.openPicker({
-              width: 720,
-              height: 1280,
+              width: 1350,
+              height: 1080,
               cropping: true,
               includeBase64: true,
             })
@@ -38,8 +38,8 @@ class CameraView extends Component {
           title="click to take picture"
           onPress={() => {
             ImagePicker.openCamera({
-              width: 720,
-              height: 1280,
+              width: 1350,
+              height: 1080,
               cropping: true
             })
               .then(image => {
