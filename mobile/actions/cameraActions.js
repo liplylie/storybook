@@ -6,16 +6,24 @@ export const saveImage = (image) => {
   }
 }
 
-export const postImage = (obj) => {
-  let s3 = new AWS.S3({
-    params: {Bucket: 'storybooknativeapp'}
-  })
+export const postImage = (obj, creds) => {
+  return function(dispatch) {
+    let s3 = new AWS.S3({
+      params: {Bucket: 'storybooknativeapp'}
+    })
   
-  s3.listObjects({Delimiter: '/'}, function(err, data) {
-    if(err) {
-      console.log('s3 error: ', err);
-    } else {
-      console.log('s3 data: ', data);
-    }
-  })
+    let albumPhotosKey = encodeURIComponent('pictures') + '/' + creds.accessKey + '/';
+    let photoKey = albumPhotosKey + obj.name;
+    
+    s3.upload({
+      Key: photoKey,
+      Body: obj.image.data,
+      ACL: 'public-read',
+      ContentType: obj.image.mime
+    }, (err, data) => {
+      err ? 
+        console.log('Error uploading photo to AWS: ', err)
+        : console.log('Successfully uploaded photo: ', data);
+    })
+  }
 }
