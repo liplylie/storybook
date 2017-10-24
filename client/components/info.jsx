@@ -13,7 +13,7 @@ class Info extends Component {
           <div className="col align-self-center">
             <div style={{textAlign: 'center', margin: 'auto'}}>
               <h1>Storybook</h1>
-              <p>Storybook synopsis goes here</p>
+              <p>Share your story with the world as you write it.</p>
             </div>
           </div>
         </div>
