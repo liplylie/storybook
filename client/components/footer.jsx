@@ -7,7 +7,19 @@ class Footer extends Component {
   }
 
   render() {
-
+    return (
+      <div className="container" style={{marginTop: 50}}>
+        <div className="row">
+          <div className="col align-self-center">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+          </div>
+          <div className="col" style={{textAlign: 'right'}}>
+            <h2>STORYBOOK</h2>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 
