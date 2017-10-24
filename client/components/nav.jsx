@@ -9,7 +9,7 @@ class Nav extends Component {
 
   render() {
     return (
-      <div className="fixed-top">
+      <div className="fixed-top" style={{backgroundColor: 'white'}}>
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
             <span className="navbar-brand mb-0">
