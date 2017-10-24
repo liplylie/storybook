@@ -37,6 +37,7 @@ class App extends Component {
       )
     } else {
       return (
+        
         <TabBarNav />
       )
     }
