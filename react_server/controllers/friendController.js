@@ -1,3 +1,5 @@
+const db = require('../db/config')
+
 module.exports = { 
   getFriendList: (req, res) => {
     //return array of friend ids using req.params.userId

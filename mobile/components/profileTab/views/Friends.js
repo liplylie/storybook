@@ -11,7 +11,12 @@ class Friends extends Component {
       friends: []
     }
   }
+  
+  componentDidMount() {
+    axios.get()
+  }
 }
+
 
 
 
