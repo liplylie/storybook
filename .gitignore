@@ -70,3 +70,4 @@ client/static/gen
 *.log
 ios
 android
+client/public/bundle.js

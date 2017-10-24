@@ -8,16 +8,51 @@ import * as CameraActions from '../../../actions/cameraActions';
 class Post extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      name: '',
+      description: '',
+      tags: []
+    }
   }
 
   render() {
+    const { image, creds, actions, navigation } = this.props;
+    const { name, description, tags } = this.state;
+
     return (
       <View>
-        <TextInput />
-        <TextInput />
-        <TextInput />
+        <TextInput 
+          placeholder="Title"
+          onChangeText={(text) => {
+            this.setState({
+              name: text,
+            })
+          }}
+        />
+        <TextInput
+          placeholder="Description"
+          onChangeText={(text) => {
+            this.setState({
+              description: text,
+            })
+          }}
+        />
+        {/* <TextInput
+          placeholder="Tags"
+        /> */}
         <Button
-        title="Post" />
+          title="Post"
+          onPress={() => {
+            const postObj = {
+              name,
+              image: image,
+              description,
+            }
+            actions.postImage(postObj, creds);
+            navigation.navigate('Camera');
+          }}
+        />
       </View>
     )
   }
@@ -26,6 +61,7 @@ class Post extends Component {
 const postState = (state) => {
   return {
     image: state.CameraPost.image,
+    creds: state.Auth.authCreds
   }
 }
 

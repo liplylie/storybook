@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "compile": "webpack",
     "compile-watch": "webpack --watch",
+    "start-node": "nodemon server2/server.js",
     "test": "jest"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "react-dom": "^16.0.0",
     "react-native": "^0.49.3",
     "react-native-aws-cognito-js": "0.0.7",
+    "react-native-aws3": "0.0.8",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-fbsdk": "^0.6.3",
     "react-native-fontawesome": "^5.7.0",
@@ -40,6 +42,7 @@
     "react-navigation": "^1.0.0-beta.13",
     "react-redux": "^5.0.6",
     "react-transform-hmr": "^1.0.4",
+    "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^4.4.1",

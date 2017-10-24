@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableHighlight, Button } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as CameraActions from '../../../actions/cameraActions';
 
 class CameraView extends Component {
   constructor(props) {
@@ -8,19 +12,22 @@ class CameraView extends Component {
   }
   
   render() {
+    const { actions, navigation } = this.props;    
+
     return (
       <View>
         <Button
           title="click to add picture"
           onPress={() => {
             ImagePicker.openPicker({
-              width: 720,
-              height: 1280,
-              cropping: true
+              width: 1350,
+              height: 1080,
+              cropping: true,
+              includeBase64: true,
             })
               .then(image => {
-                console.log('image: ', image, image.path);
-                this.props.navigation.navigate('Post');
+                actions.saveImage(image);
+                navigation.navigate('Post');
               })
               .catch(err => {
                 console.log('image picker error: ', err);
@@ -31,13 +38,12 @@ class CameraView extends Component {
           title="click to take picture"
           onPress={() => {
             ImagePicker.openCamera({
-              width: 720,
-              height: 1280,
+              width: 1350,
+              height: 1080,
               cropping: true
             })
               .then(image => {
-                console.log('image: ', image, image.path);
-                this.props.navigation.navigate('Post');
+                navigation.navigate('Post');
               })
               .catch(err => {
                 console.log('capture picker error: ', err);
@@ -49,4 +55,10 @@ class CameraView extends Component {
   }
 }
 
-export default CameraView;
+const cameraDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(CameraActions, dispatch),
+  }
+}
+
+export default connect(null, cameraDispatch)(CameraView);
