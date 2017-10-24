@@ -25,6 +25,7 @@ class Team extends Component {
             <p>Project Owner</p>
             <h1>Daniel Chong</h1>
             <p>Description</p>
+            <a href="http://github.com/dzefa" target="blank">GitHub</a>
           </div>
         </div>
         <div className="row justify-content-center" style={{height: '100vh', backgroundColor: 'lightcyan'}}>
@@ -32,6 +33,7 @@ class Team extends Component {
             <p>Scrum Master</p>
             <h1>Angie Tang</h1>
             <p>Description</p>
+            <a href="http://github.com/atang167" target="blank">GitHub</a>
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
@@ -47,6 +49,7 @@ class Team extends Component {
             <p>Developer</p>
             <h1>Jaafar Skafi</h1>
             <p>Description</p>
+            <a href="http://github.com/jaafarskafi1" target="blank">GitHub</a>
           </div>
         </div>
         <div className="row justify-content-center" style={{height: '100vh', backgroundColor: 'lightcyan'}}>
@@ -54,6 +57,7 @@ class Team extends Component {
             <p>Developer</p>
             <h1>Jordan Daniels</h1>
             <p>Description</p>
+            <a href="http://github.com/liplylie" target="blank">GitHub</a>
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
