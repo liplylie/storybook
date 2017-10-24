@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "compile": "webpack",
     "compile-watch": "webpack --watch",
+    "start-node": "nodemon server2/server.js",
     "test": "jest"
   },
   "dependencies": {
