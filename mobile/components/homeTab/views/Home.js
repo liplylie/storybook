@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Collection from './Collection';
 import { connect } from 'react-redux';
+import Spinner from 'react-native-spinkit';
 
 import Login from '../../auth/login.js'
 
@@ -19,7 +20,9 @@ const Home = (props) => {
       return (
           <View style={styles.container}>
             <View>
-              <Login />
+              <View style={styles.logout} >
+                <Login />
+              </View>
               <Image 
                 style={styles.image}
                 resizeMethod='resize'
@@ -34,9 +37,10 @@ const Home = (props) => {
       );
     } else {
       return (
-        <View>
+        <View style={styles.spinnerContainer}>
+          <Spinner type='FadingCircle' style={styles.spinner}/>
         </View>
-        )
+      )
     }
   }
 
@@ -54,6 +58,19 @@ const styles = StyleSheet.create({
   collection: {
     backgroundColor: 'skyblue',
     flex:1
+  },
+  logout:{
+    marginLeft: 15,
+    width: 10
+  }, 
+  spinnerContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner:{
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
