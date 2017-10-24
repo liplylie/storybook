@@ -48,32 +48,44 @@ class PicturesFromMarker extends Component {
 	let mapIcon = "https://cdn4.iconfinder.com/data/icons/flatified/512/map.png"
 	console.log(this.state.images, 'this images in render')
 	  return (
-	    <ScrollView>
+	    <View style={styles.container}>
 	    	<View style={styles.backNav}>
 		    	<TouchableHighlight onPress={() => {this.props.navigation.dispatch(this.backAction)}}>
 		    		<Image source={{uri:backIcon}} style={styles.backIcon}/>
 		    	</TouchableHighlight>
-	    		<Image source={{uri:mapIcon}} style={styles.image}/>
+	    		<Image source={{uri:mapIcon}} style={styles.mapIcon}/>
 	    	</View>
-	    	<Image source={{uri:img1}} style={styles.image} />
-	      {this.state.images.map((img, i) => { return <Images key={i} url={img.url}/> }) }
-
+	    	<ScrollView>
+	    		<View style={styles.imageContainer}>
+	      	{this.state.images.map((img, i) => { return <Images key={i} url={img.url}/> }) }
+	      	</View>
 	    </ScrollView> 
+	    </View>
 	  )	
 	}
 }
 
 const styles = StyleSheet.create({
-	image:{
-		width: 60, 
-		height: 60,
-		justifyContent: 'center',
+	container: {
 		alignItems: 'center',
-		borderRadius: 10
-	},
-	backNav:{
+    flex:1
+  },
+	imageContainer: {
+    width: 330,
+    marginTop: 15,
+    flexDirection:'row', 
+		flexWrap:'wrap',
+		backgroundColor: 'yellow'
+  },
+  backNav:{
 		flexDirection: 'row',
 		padding: 10,
+	},
+	mapIcon:{
+		marginTop: 10,
+		width: 40, 
+		height: 50,
+		borderRadius: 10
 	},
 	backIcon:{
 		width: 45,

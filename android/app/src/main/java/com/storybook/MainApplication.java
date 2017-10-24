@@ -4,6 +4,18 @@ import android.app.Application;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.rnfs.RNFSPackage;
 import com.airlabsinc.RNAWSCognitoPackage;
@@ -52,6 +64,18 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSpinkitPackage(),
+            new MapsPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
+            new RNSpinkitPackage(),
+            new MapsPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
+            new RNSpinkitPackage(),
+            new MapsPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
             new MapsPackage(),
             new RNFSPackage(),
             new RNAWSCognitoPackage(),
