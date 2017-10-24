@@ -3,6 +3,10 @@ package com.storybook;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
+import com.rnfs.RNFSPackage;
+import com.airlabsinc.RNAWSCognitoPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -37,6 +41,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
+            new RNFSPackage(),
+            new RNAWSCognitoPackage(),
           new PickerPackage(),
           new RCTCameraPackage(),
             // new FBSDKPackage(),
