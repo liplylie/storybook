@@ -8,8 +8,8 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
+      <div className="container" style={{marginTop: 40}}>
+        <div className="row" style={{paddingTop: 40}}>
           <div className="col" style={{textAlign: 'right'}}>
             <img src="http://via.placeholder.com/300x500" />
           </div>
