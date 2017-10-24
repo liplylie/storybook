@@ -23,14 +23,14 @@ class Info extends Component {
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
-            <h1>Name 1</h1>
-            <p>Description</p>
+            <h1>Your Story Begins Here</h1>
+            <p>Share your story with the world.</p>
           </div>
         </div>
         <div className="row justify-content-center" style={{height: '100vh', backgroundColor: 'lightcyan'}}>
           <div className="col align-self-center" style={{textAlign: 'right'}}>
-            <h1>Name 2</h1>
-            <p>Description</p>
+            <h1>Location Based Chapters</h1>
+            <p>Each chapter of your story will be saved to its location.</p>
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
@@ -43,13 +43,14 @@ class Info extends Component {
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
-            <h1>Name 3</h1>
-            <p>Description</p>
+            <h1>Relive your Past Memories</h1>
+            <p>Get push notifications when you revisit a past chapter.</p>
           </div>
         </div>
         <div className="row" style={{backgroundColor: 'lightgoldenrodyellow', height: 300, width: '100vw'}}>
           <div className="col align-self-center" style={{textAlign: 'center'}}>
-            <p>Final description goes here</p>
+            <h3>What are you waiting for?</h3>
+            <p>Download the app and start sharing your story!</p>
           </div>
         </div>
       </div>
