@@ -40,6 +40,8 @@ yarn-error.log
 package-lock.json
 .env
 sensitive.json
+android
+ios
 
 # BUCK
 buck-out/
