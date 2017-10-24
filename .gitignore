@@ -69,3 +69,4 @@ client/static/gen
 *.pyc
 *.log
 ios
+android

@@ -3,13 +3,13 @@ import { StackNavigator } from 'react-navigation'
 import Profile from './views/Profile'
 import Friends from './views/Friends'
 import Messages from './views/Messages'
-import Chat from './views/Chat'
+// import Chat from './views/Chat'
 
 const routeConfig = {
   Profile: { screen: Profile },
   Friends: { screen: Friends },
   Messages: { screen: Messages },
-  Chat: { screen: Chat },
+  // Chat: { screen: Chat },
 }
 // going to disable the header for now
 const stackNavigatorConfig = {
