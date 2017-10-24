@@ -12,8 +12,7 @@ class Team extends Component {
         <div className="row" style={{backgroundColor: 'lightcoral', height: '100vh', width: '100vw'}}>
           <div className="col align-self-center">
             <div style={{textAlign: 'center', margin: 'auto'}}>
-              <h1>Meet the Team</h1>
-              <p>TEAM SLOGAN AND WHATEVER GOES HERE</p>
+              <h1>MEET THE TEAM</h1>
             </div>
           </div>
         </div>
@@ -23,13 +22,15 @@ class Team extends Component {
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
-            <h1>Name 1</h1>
+            <p>Project Owner</p>
+            <h1>Daniel Chong</h1>
             <p>Description</p>
           </div>
         </div>
         <div className="row justify-content-center" style={{height: '100vh', backgroundColor: 'lightcyan'}}>
           <div className="col align-self-center" style={{textAlign: 'right'}}>
-            <h1>Name 2</h1>
+            <p>Scrum Master</p>
+            <h1>Angie Tang</h1>
             <p>Description</p>
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
@@ -43,13 +44,15 @@ class Team extends Component {
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
-            <h1>Name 3</h1>
+            <p>Developer</p>
+            <h1>Jaafar Skafi</h1>
             <p>Description</p>
           </div>
         </div>
         <div className="row justify-content-center" style={{height: '100vh', backgroundColor: 'lightcyan'}}>
           <div className="col align-self-center" style={{textAlign: 'right'}}>
-            <h1>Name 4</h1>
+            <p>Developer</p>
+            <h1>Jordan Daniels</h1>
             <p>Description</p>
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
