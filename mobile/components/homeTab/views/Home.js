@@ -11,7 +11,7 @@ import Collection from './Collection';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
 
-import Login from '../../auth/login.js'
+import Login from '../../auth/Login.js'
 
 const Home = (props) => {
   console.log(props, 'home props')
