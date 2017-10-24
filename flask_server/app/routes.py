@@ -1,63 +1,80 @@
-from flask import Flask, g, render_template
+from flask import Flask, g, render_template, request
 from flask_assets import Environment, Bundle
-from pprint import pprint
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
-from flask import request
+from app import app, db
+from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
+from azure_get_tags import get_tags
 from werkzeug.datastructures import ImmutableMultiDict
+from pprint import pprint
 import sqlalchemy_utils
 import json
-from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
-from app import app, db
-
-#import api keys
-with open('../sensitive.json') as data_file:    
-    sensitive = json.load(data_file)
-    azure_key = sensitive['AZURE_KEY']
-    print('azure key: ', azure_key)
 
 @app.route('/')
 def index():
   """This module renders main page"""
   return render_template('index.html')
 
-
-@app.route('/api/images', methods=['GET'])
-def fetchImages():
-  print('HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA')
-  fetch_images_data = dict(request.args)
-  print(Image.query.get(1))
-
-
+#add image
 @app.route('/api/addurl', methods=['POST'])
 def add_photo():
-  print('adding photo...')
   #request.args, .forms, .files, .values also exist. look them up in the docs
-  add_photo_data = dict(request.form)
-  photo_url = add_photo_data["url"][0]
-  photo_url = photo_url.encode('utf-8')
-  body = "{'url': '" + photo_url + "'}"
+  request_data = dict(request.form)
+  url = request_data["url"][0]
+  parsed_url = url.encode('utf-8')
+  request_body = "{'url': '" + parsed_url + "'}"
 
-  import httplib, urllib, base64
+  tags = get_tags(request_body)
+  db.session.add(Image('','',1,0,0,0,0,tags)) #replace later with actual values
+  db.session.commit()
 
-  headers = {
-      # Request headers
-      'Content-Type': 'application/json',
-      'Ocp-Apim-Subscription-Key': azure_key
-  }
+#add user
+@app.route('/api/adduser', methods=['POST'])
+def add_user():
+  #request.args, .forms, .files, .values also exist. look them up in the docs
+  request_data = dict(request.form)
 
-  params = urllib.urlencode({
-      # Request parameters
-      'visualFeatures': 'Categories,Description,Color',
-      'language': 'en',
-  })
+  name = request_data["name"][0]
+  parsed_name = name.encode('utf-8')
 
-  try:
-      conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
-      conn.request("POST", "/vision/v1.0/analyze?%s" % params, body, headers)
-      response = conn.getresponse()
-      data = response.read()
-      print("received data is: ", data)
-      conn.close()
-  except Exception as e:
-      print("[Errno {0}] {1}".format(e.errno, e.strerror))
+  friends_count = request_data["friends_count"][0]
+  user_tags = ['none']
+
+  db.session.add(User(parsed_name, friends_count, user_tags)) #replace later with actual values
+  db.session.commit()
+
+@app.route('/api/addcomment', methods=['POST'])
+def add_comment():
+  #request.args, .forms, .files, .values also exist. look them up in the docs
+  request_data = dict(request.form)
+
+  text = request_data["text"][0]
+  parsed_text = name.encode('utf-8')
+  likes_count = 0
+  comment_user_id = request_data["comment_user_id"][0]
+  comment_image_id = request_data["comment_image_id"][0]
+
+  db.session.add(Comments(parsed_text, likes_count, comment_user_id, comment_image_id)) #replace later with actual values
+  db.session.commit()
+
+@app.route('/api/addlike', methods=['POST'])
+def add_like():
+  #request.args, .forms, .files, .values also exist. look them up in the docs
+  request_data = dict(request.form)
+
+  like_type = request_data["text"][0]
+  parsed_like_type = name.encode('utf-8')
+
+  like_user_id = request_data["like_user_id"][0]
+  like_image_id = request_data["like_image_id"][0]
+  like_comment_id = request_data["like_comment_id"][0]
+
+  db.session.add(Likes(parsed_like_type, like_user_id, like_image_id, like_comment_id)) #replace later with actual values
+  db.session.commit()
+
+
+# @app.route('/api/get_img_by_loc', methods=['GET'])
+# def grab_photo():
+#     print("grabbing photo...")
+#     #get all photos where latitude === request latitude and longitude === request longitude
+

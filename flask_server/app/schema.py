@@ -6,12 +6,13 @@ from app import db
 class Image(db.Model):
   __tablename__ = 'image'
   id = db.Column(db.Integer, primary_key=True)
-  image_url = db.Column(db.String(250))
-  scn_code = db.Column(db.String(250))
-  location = db.Column(db.String(250))
-  likes_count = db.Column(db.Integer)
-  caption = db.Column(db.Integer)
-  image_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
+  image_url = db.Column(db.String(250), unique=True)
+  scn_code = db.Column(db.String(250), nullable=True)
+  longitude = db.Column(db.Integer)
+  latitude = db.Column(db.Integer)
+  likes_count = db.Column(db.Integer, nullable=True)
+  caption = db.Column(db.String(250), nullable=True)
+  image_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
   #foreign keys (this table belongs to...)
   image_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))  
@@ -20,11 +21,12 @@ class Image(db.Model):
   image_comments = db.relationship("Comments", backref='image', lazy=True)
   image_likes = db.relationship("Likes", backref='image', lazy=True)
 
-  def __init__(self, image_url, scn_code, image_user_id, location, likes_count, caption, image_tags_array):
+  def __init__(self, image_url, scn_code, image_user_id, latitude, longitude, likes_count, caption, image_tags_array):
     self.image_url = image_url
     self.scn_code = scn_code
     self.image_user_id = image_user_id
-    self.location = location
+    self.latitude = latitude
+    self.longitude = longitude
     self.likes_count = likes_count
     self.caption = caption
     self.image_tags_array = image_tags_array
@@ -35,9 +37,9 @@ class Image(db.Model):
 class User(db.Model):
   __tablename__ = 'user'
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(250))
-  friends_count = db.Column(db.Integer)
-  user_tags_array = db.Column(postgresql.ARRAY(db.String(250)))
+  name = db.Column(db.String(250), unique=True)
+  friends_count = db.Column(db.Integer, nullable=True)
+  user_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
   #database relationships (this table has many...)
   user_images = db.relationship("Image", backref='user', lazy=True)
@@ -109,10 +111,8 @@ class Messages(db.Model):
 class Comments(db.Model):
   __tablename__ = 'comments'
   id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer) #foreign key
-  image_id = db.Column(db.Integer) #foreign key
   text = db.Column(db.String(250))
-  likes_count = db.Column(db.Integer)
+  likes_count = db.Column(db.Integer, nullable=True)
 
   #foreign keys (this table belongs to...)
   comment_user_id = db.Column(db.Integer, db.ForeignKey("user.id")) 
@@ -122,11 +122,11 @@ class Comments(db.Model):
   comment_likes = db.relationship("Likes", backref='comments', lazy=True)
   
 
-  def __init__(self, user_id, image_id, text, likes_count):
-    self.user_id = user
-    self.image_id = image_id
+  def __init__(self,text, likes_count, comment_user_id, comment_image_id):
     self.text = text
     self.likes_count = likes_count
+    self.comment_user_id = comment_user_id
+    self.comment_image_id = comment_image_id
 
   def __repr__(self):
     return '<image_id: %r>' % self.image_id + ' ' + '<Comment text: %r>' % self.text
@@ -134,9 +134,6 @@ class Comments(db.Model):
 class Likes(db.Model):
   __tablename__ = 'likes'
   id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer) #foreign key
-  image_id = db.Column(db.Integer) #foreign key
-  comment_id = db.Column(db.Integer) #foreign key
   like_type = db.Column(db.String(250))
 
   #foreign keys (this table belongs to...)
@@ -144,11 +141,11 @@ class Likes(db.Model):
   like_image_id = db.Column(db.Integer, db.ForeignKey("image.id")) 
   like_comment_id = db.Column(db.Integer, db.ForeignKey("comments.id")) 
 
-  def __init__(self, user_id, image_id, comment_id, like_type):
-    self.user_id = user_id
-    self.image_id = image_id
-    self.comment_id = comment_id
+  def __init__(self, like_type, like_user_id, like_image_id, like_comment_id):
     self.like_type = like_type
+    self.like_user_id = like_user_id
+    self.like_image_id = like_image_id
+    self.like_comment_id = like_comment_id
 
   def __repr__(self):
     return '<Like_image_id: %r>' % self.image_id + ' ' + '<Tags: %r>' % self.tags_array

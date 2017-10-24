@@ -57,11 +57,11 @@ buck-out/
 
 *.db
 .DS_Store
-server/venv
-server/env
-server/__pycache__
-server/blog_old.md
-server/static/dist/bundle.js.map
+flask_server/venv
+flask_server/env
+flask_server/__pycache__
+flask_server/blog_old.md
+flask_server/static/dist/bundle.js.map
 client/static/bundle.js
 client/static/gen
 .vscode
