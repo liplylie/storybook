@@ -9,7 +9,7 @@ class Info extends Component {
   render() {
     return (
       <div style={{marginTop: 53}}>
-        <div className="row" style={{backgroundColor: 'lightcoral', height: '100vh', width: '100vw'}}>
+        <div className="row" style={{backgroundColor: 'lightpink', height: '100vh', width: '100vw'}}>
           <div className="col align-self-center">
             <div style={{textAlign: 'center', margin: 'auto'}}>
               <h1>Storybook</h1>
