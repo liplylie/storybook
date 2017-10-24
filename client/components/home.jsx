@@ -19,7 +19,7 @@ class Home extends Component {
               <button type="button" className="btn btn-outline-dark">
                 App Store
               </button>
-              <button type="button" className="btn btn-outline-dark">
+              <button type="button" className="btn btn-outline-dark" style={{marginLeft: 20}}>
                 Play Store
               </button>
             </div>

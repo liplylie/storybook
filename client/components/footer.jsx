@@ -12,7 +12,7 @@ class Footer extends Component {
         <div className="row">
           <div className="col align-self-center">
             <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <a href="#" style={{paddingLeft: 20}}>Terms of Service</a>
           </div>
           <div className="col" style={{textAlign: 'right'}}>
             <h2>STORYBOOK</h2>
