@@ -25,7 +25,7 @@ class PicturesFromMarker extends Component {
 		axios.get('https://jsonplaceholder.typicode.com/photos')
 		.then(function ({data}) {
     	console.log(data[0]);
-    	let useData = data.splice(0,10)
+    	let useData = data.splice(0,100)
     	that.setState({
     		images: [...useData]
     	})
@@ -55,11 +55,11 @@ class PicturesFromMarker extends Component {
 		    	</TouchableHighlight>
 	    		<Image source={{uri:mapIcon}} style={styles.mapIcon}/>
 	    	</View>
-	    	<ScrollView>
-	    		<View style={styles.imageContainer}>
+	    	<ScrollView >
+	    	<View style={styles.imageContainer}>
 	      	{this.state.images.map((img, i) => { return <Images key={i} url={img.url}/> }) }
-	      	</View>
-	    </ScrollView> 
+	      </View>
+	    	</ScrollView> 
 	    </View>
 	  )	
 	}
@@ -68,14 +68,14 @@ class PicturesFromMarker extends Component {
 const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
-    flex:1
+    flex:1,
   },
 	imageContainer: {
     width: 330,
     marginTop: 15,
     flexDirection:'row', 
 		flexWrap:'wrap',
-		backgroundColor: 'yellow'
+		backgroundColor: 'skyblue'
   },
   backNav:{
 		flexDirection: 'row',
