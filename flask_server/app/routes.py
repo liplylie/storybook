@@ -73,8 +73,7 @@ def add_like():
   db.session.commit()
 
 
-# @app.route('/api/get_img_by_loc', methods=['GET'])
-# def grab_photo():
-#     print("grabbing photo...")
-#     #get all photos where latitude === request latitude and longitude === request longitude
-
+@app.route('/api/get_loc_user', methods=['GET'])
+def grab_photo():
+    print("grabbing photo...")
+    #get all photos where latitude === request latitude and longitude === request longitude
