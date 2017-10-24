@@ -29,9 +29,9 @@ class Nav extends Component {
                 <li className="nav-item">
                   <Link to="/team" className="nav-link">Team</Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a href="#" className="nav-link">Login</a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
