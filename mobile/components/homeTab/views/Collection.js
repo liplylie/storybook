@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import Book from './Book'
 
@@ -12,23 +12,39 @@ export default class Collection extends Component{
 	componentDidMount(){
 		// make axios get request for all nearby friends and one photo from each nearby friend.
 			// put username and location in get request
-			console.log(this.props, 'collection maps in mount')
 	}
 
 	render(){
-		// if (this.props.Profile.userLocation){
-		// 	latitude = this.props.Profile.userLocation.latitude
-		// }
+		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
 		var test = [];
 		 for (var i=0; i < 100; i++){
-	      test.push(<Text>This is collection view{this.props.location.latitude}</Text>)
+	      test.push(<Image source={{uri:img1}} style={styles.image}/>)
 	    }
 
 	  return (
-	    <ScrollView>
+	    <ScrollView >
+	    <View style={styles.container}>
 	    	{test}
 	      <Book/>
+	    </View>
 	    </ScrollView> 
   	)
 	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+    flex: 1,
+    marginTop: 15,
+    backgroundColor: 'yellow',
+    flexWrap: 'wrap'
+  },
+	image:{
+		width: 100, 
+		height: 100,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10,
+		
+	},
+	})

@@ -72,6 +72,5 @@ client/static/gen
 *.webassets-cache
 *.pyc
 *.log
-ios
-android
+
 
