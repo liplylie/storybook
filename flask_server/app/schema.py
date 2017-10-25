@@ -65,9 +65,9 @@ class Relationship(db.Model):
   #foreign keys (this table belongs to...)
   related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-  def __init__(self, user_id, friend_id):
-    self.user_id = user_id
-    self.friend_id = friend_id
+  def __init__(self, related_user_id, friend_type):
+    self.user_id = related_user_id
+    self.friend_id = friend_type
 
   def __repr__(self):
     return '<user_id: %r>' % self.user_id + ' ' + '<friend_id: %r>' % self.friend_id
