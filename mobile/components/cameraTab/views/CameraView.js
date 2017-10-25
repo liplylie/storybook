@@ -43,6 +43,7 @@ class CameraView extends Component {
               cropping: true
             })
               .then(image => {
+                actions.saveImage(image);
                 navigation.navigate('Post');
               })
               .catch(err => {
