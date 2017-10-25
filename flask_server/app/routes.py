@@ -75,5 +75,35 @@ def add_like():
 
 @app.route('/api/get_loc_user', methods=['GET'])
 def grab_photo():
-    print("grabbing photo...")
+    print("grabbing locations for the user...")
     #get all photos where latitude === request latitude and longitude === request longitude
+    #i log in, get me a list of all my locations
+    
+    #request.args, .forms, .files, .values also exist. look them up in the docs
+    request_data = dict(request.form)
+
+    like_type = request_data["text"][0]
+    parsed_like_type = name.encode('utf-8')
+
+    like_user_id = request_data["like_user_id"][0]
+    like_image_id = request_data["like_image_id"][0]
+    like_comment_id = request_data["like_comment_id"][0]
+
+    db.session.add(Likes(parsed_like_type, like_user_id, like_image_id, like_comment_id)) #replace later with actual values
+    db.session.commit()
+
+@app.route('/api/get_imgs_by_loc', methods=['GET'])
+def grab_photo():
+    print("grabbing photos by specific location...")
+    #given a location, get all the photos for that location. (there's a range of coordinates)
+
+@app.route('/api/get_loc_user', methods=['GET'])
+def grab_photo():
+    print("grabbing photo...")
+    #get all photos within a 10 mile radius,
+    #get all photos at the location,
+
+@app.route('/api/get_loc_user', methods=['GET'])
+def grab_photo():
+    print("grabbing photo...")
+    #get all friends at location, and 1 photo from each friend
