@@ -26,10 +26,10 @@ module.exports = {
       where: Sequelize.Or(
         {
           chatroom_sender: req.body.userId, 
-          chatroom_recipient: req.params.friendId
+          chatroom_recipient: req.body.friendId
         },
         {
-          chatroom_sender: req.params.friendId, 
+          chatroom_sender: req.body.friendId, 
           chatroom_recipient: req.body.userId
         },
     )})

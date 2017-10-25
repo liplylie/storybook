@@ -7,11 +7,14 @@ router.get('/chats/:userId', roomController.getRooms);
 router.get('/chats/:roomId', roomController.getRoomInfo)
 
 //only use from friends view
-router.post('/chat/:friendId', roomController.createRoom);
+router.post('/chat', roomController.createRoom);
 
 router.get('/friends/:userId', friendController.getFriends)
 router.get('/friends/:friendId', friendController.getFriendInfo) 
 
-router.post('/addFriend/:friendId', friendController.addFriend)
+router.post('/addFriend', friendController.addFriend)
 router.get('/requests/:userId', friendController.getRequests)
-router.post('/acceptRequest/:friendId', friendController.acceptFriend)
+router.post('/acceptRequest', friendController.acceptFriend)
+
+router.post('/blockFriend', friendController.blockUser)
+

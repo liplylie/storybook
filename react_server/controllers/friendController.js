@@ -37,8 +37,9 @@ module.exports = {
   sendRequest: (req, res) => {
     //add req.body.userId to req.params.friendId friend's pending friend requests
     db.Relationships.create({ 
-      user_id: req.body.userId,
-      friend_id: req.body.friendId, 
+      user_id: req.body.friendId,
+      friend_id: req.body.userId, 
+      type: 'pending'
     })
   },
   getRequests: (req, res) => {
@@ -46,7 +47,7 @@ module.exports = {
     db.Relationships.findAll({
       where: {
         user_id: req.params.userId,
-        type: pending
+        type: 'pending'
       }
     })
     
@@ -56,10 +57,24 @@ module.exports = {
     db.Relationships.update({
       where: {
         user_id: req.body.userId,
-        friend_id: req.params.friendId,
-        type: friend
+        friend_id: req.body.friendId,
+        type: 'friend'
       }
     })
+  },
+  blockUser: (req, res) => {
+    db.Relationships.update({
+      where: Sequelize.Or(
+        {
+          user_id: req.body.userId,
+          friend_id: req.body.friendId,
+          type: 'blocked'
+        },
+        {
+          user_id: req.body.friendId,
+          friend_id: req.body.userId,
+          type: 'blocked'
+        },
+    )})
   }
-
 }
