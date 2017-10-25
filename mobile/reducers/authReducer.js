@@ -3,6 +3,7 @@ const initialState = {
   authorized: false,
   authCreds: {},
   name: '',
+  userId: '',
   picture: '',
   email: '',
   error: null
@@ -45,7 +46,8 @@ const authReducer = (state=initialState, action) => {
         authorized: true,
         name: action.payload.name,
         picture: action.payload.picture.data.url,
-        email: action.payload.email
+        email: action.payload.email,
+        userId: action.payload.id
       })
     }
     case 'USER_INFO_FAIL': {
