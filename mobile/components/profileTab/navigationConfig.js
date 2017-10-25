@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation'
 import Profile from './views/Profile'
 import Friends from './views/Friends'
 import Messages from './views/Messages'
+// import Search from './views/Search'
 // import Chat from './views/Chat'
 
 const routeConfig = {

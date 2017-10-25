@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native'
+import { View, Button } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -25,8 +25,10 @@ class Friends extends Component {
   }
 
   render() {
+    // const {navigate} = this.props.navigation; 
     return (
       <View>
+        <SearchBar /> 
         <Collection users={this.state.friends}/> 
       </View> 
     )
