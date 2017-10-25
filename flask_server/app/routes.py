@@ -74,19 +74,10 @@ def add_like():
 
 
 @app.route('/api/get_locs_user', methods=['GET'])
-def grab_locations():
-    #get all photos where latitude === request latitude and longitude === request longitude
-    #i log in, get me a list of all my locations
-
-    #request.args, .forms, .files, .values also exist. look them up in the docs
-    request_data = dict(request.form)
-
-    # longitude = request_data["longitude"][0]
-    # latitude = request_data["latitude"][0]
-
-    image_query = db.session.query(Image) #returns all images
+def grab_all_locations():
+    get_locs_user_query = db.session.query(Image) #returns all images
     coords = []
-    for i in image_query:
+    for i in get_locs_user_query:
       new_loc = {
         "latitude": i.latitude,
         "longitude": i.longitude
@@ -95,10 +86,25 @@ def grab_locations():
       print(coords)
     return coords
 
-# @app.route('/api/get_imgs_by_loc', methods=['GET'])
-# def grab_photo():
-#     print("grabbing photos by specific location...")
-#     #given a location, get all the photos for that location. (there's a range of coordinates)
+@app.route('/api/get_imgs_by_loc', methods=['GET'])
+def get_imgs_by_loc():
+    print("grabbing photos by specific location...")
+    print(request.args)
+    request_data = dict(request.args)
+    print(request_data)
+    #http://127.0.0.1:5000/api/get_imgs_by_loc?longitude=12&latitude=23.000005
+    get_imgs_by_loc_latitude = request_data["latitude"][0]
+    get_imgs_by_loc_latitude = float(get_imgs_by_loc_latitude)
+    print('~~~~~~~~~~~~~~~~~~~~', get_imgs_by_loc_latitude)
+    get_imgs_by_loc_longitude = request_data["longitude"][0]
+    get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
+    
+    get_imgs_by_loc_query = db.session.query(Image).filter((Image.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Image.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Image.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Image.longitude < (get_imgs_by_loc_longitude + 0.001)))
+    all_images = []
+    for j in get_imgs_by_loc_query:
+      all_images.append(j.image_url)
+      print(all_images)
+    return all_images  
 
 
 # @app.route('/api/get_loc_user', methods=['GET'])
@@ -107,7 +113,9 @@ def grab_locations():
 #     #get all photos within a 10 mile radius,
 #     #get all photos at the location,
 
+
 # @app.route('/api/get_loc_user', methods=['GET'])
 # def grab_photo():
 #     print("grabbing photo...")
 #     #get all friends at location, and 1 photo from each friend
+
