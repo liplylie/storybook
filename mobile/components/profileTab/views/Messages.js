@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native'
 
+import
 
-const MessagesList = (props) => {
-  return (
-    <View>
-      <Text>This is messages view</Text>
-    </View> 
-  )
+class Messages extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: [],
+      results: {} 
+    }
+  } 
+
+  render() {
+    return (
+      <View>
+      </View> 
+    )
+  }
 }
 
-export default MessagesList;
+export default Messages;
