@@ -3,13 +3,14 @@ import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-//import Convo
+import SearchBar from './SearchBar'
 
 class Friends extends Component {
   constructor(props) {
     super(props); 
     this.state = {
-      friends: []
+      friends: [], 
+      results: [] 
     }
   }
   
@@ -23,11 +24,37 @@ class Friends extends Component {
     })
   }
 
+  searchFriends (firstName, lastName) {
+    axios.get('/search/' + firstName + lastName)
+    .then(({ data }) => {
+      this.setState({results: data})
+    })
+    .catch(err => {
+      console.log('failed to search friends', err);
+    })
+  }
+
+  clearSearches () {
+    this.setState({results: []})
+  }
+
   render() {
-    <View>
-      <Search friends={this.state.friends}/> 
-      <Collection users={this.state.friends}/> 
-    </View> 
+    if (this.state.results) {
+      return ( 
+        <View>
+          <SearchBar searchFriends={this.searchFriends.bind(this)}/> 
+          <Collection users={this.state.results}/> 
+        </View> 
+      ) 
+    }
+    else {
+      return (
+        <View>
+          <SearchBar searchFriends={this.searchFriends.bind(this)} /> 
+          <Collection users={this.state.friends}/> 
+        </View> 
+      )
+    }
   }
 }
 

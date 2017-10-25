@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const key = require('../../')
 
 const db = new Sequelize(process.env.DATABASE_URL);
 

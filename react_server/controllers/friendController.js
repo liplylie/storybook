@@ -76,5 +76,31 @@ module.exports = {
           type: 'blocked'
         },
     )})
+  },
+  search: (req, res) => {
+    if (!req.params.lastName) {
+      db.Relationships.findAll({
+        where: {first_name: req.params.firstName}
+      })
+      .then(data => {
+        res.send(data); 
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      })
+    } else {
+      db.Relationships.findAll({
+        where: {
+          first_name: req.params.firstName,
+          last_name: req.params.lastName
+        }
+      }) 
+      .then(data => {
+        res.send(data); 
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      })
+    }
   }
 }

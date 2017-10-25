@@ -18,3 +18,4 @@ router.post('/acceptRequest', friendController.acceptFriend)
 
 router.post('/blockFriend', friendController.blockUser)
 
+router.get('/search/:firstName/:lastName')
