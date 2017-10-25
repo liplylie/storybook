@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 const FriendsEntry = (props) => {
   return (
     <View>
-      <Text>Search entry</Text> 
+      <Text>{props.name}</Text> 
     </View> 
   )
 }
