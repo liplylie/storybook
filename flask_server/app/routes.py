@@ -116,22 +116,15 @@ def get_friends_list():
     print(request.args)
     request_data = dict(request.args)
     print(request_data)
-    #http://127.0.0.1:5000/api/get_imgs_by_loc?longitude=12&latitude=23.000005
 
     get_friends_list_user_id = request_data["user_id"][0]
-    get_friends_list_user_id = float(get_friends_list_user_id)
-    get_friends_list_latitude = request_data["latitude"][0]
-    get_friends_list_latitude = float(get_friends_list_latitude)
-    get_friends_list_longitude = request_data["longitude"][0]
-    get_friends_list_longitude = float(get_friends_list_longitude)
     
-    get_friends_list_query = db.session.query(User).filter((Image.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Image.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Image.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Image.longitude < (get_imgs_by_loc_longitude + 0.001)))
+    get_friends_list_query = db.session.query(Relationship).filter_by(author_id=get_friends_list_user_id)
     all_images = []
     for k in get_imgs_by_loc_query:
       all_images.append(k.image_url)
       print(all_images)
     return all_images
-
 
 
 #also a new route: get all photos of a friend when you select that friend
