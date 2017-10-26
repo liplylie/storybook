@@ -3,17 +3,18 @@ import { NavigationActions } from 'react-navigation'
 import { View, Text, Image, StyleSheet, ScrollView, TouchableHighlight } from 'react-native'
 import axios from 'axios'
 import Images from './images'
+import { connect } from 'react-redux'
+import parser from '../../../parser.js'
 
 
 
 class PicturesFromMarker extends Component {
 	constructor(props){
 		super(props)
+		console.log(props, 'PicturesFromMarker props')
 		this.state = {
-			images:[]
+			images: []
 		}
-
-
 	this.backAction = NavigationActions.navigate({routeName:'Profile'});
 	console.log(props, 'PicturesFromMarker props')
 	
@@ -22,18 +23,36 @@ class PicturesFromMarker extends Component {
 	// make get request, get photos from location
 	componentDidMount(){
 		let that = this;
-		axios.get('https://jsonplaceholder.typicode.com/photos')
+		let latitude = this.props.markerLocation.latitude
+		let longitude = this.props.markerLocation.longitude
+		axios.get('http://localhost:5000/api/get_imgs_by_loc', {
+			params:{
+				latitude: latitude,
+				longitude: longitude
+			}
+			// that.setState({
+			// 	images:
+			// })
+		})
 		.then(function ({data}) {
-    	console.log(data[0]);
-    	let useData = data.splice(0,100)
+    	console.log( data, 'data from PicturesFromMarker axios');
+    	var splitData = data.replace('[u','[');
+    	console.log(splitData, 'splitData')
+    	splitData = splitData.split('\'').join('"')
+    	console.log(splitData, 'split split join')
+    	// splitData = splitData.map(e =>{ return JSON.parse(e)})
+    	// console.log(splitData, 'split data parse'
+    	splitData = splitData.substr(1, splitData.length-2)
+    	splitData = JSON.parse(splitData)
+    	console.log(splitData, 'final splitData')
     	that.setState({
-    		images: [...useData]
+    		images:[splitData]
     	})
-  	})
+  	 })
   	.catch(function (error) {
-    	console.log(error, 'error');
+    	console.log(error, 'error from PicturesFromMarker');
   	});
-  	console.log(this.images, 'thisimages in componentDidMount')
+  	//console.log(this.images, 'thisimages in componentDidMount')
 	}
 		//props.markerLocation
 	// store images in an array 
@@ -47,6 +66,7 @@ class PicturesFromMarker extends Component {
 	let backIcon = "https://vignette3.wikia.nocookie.net/lionheart-tactics/images/b/b9/Back.png/revision/latest?cb=20150218040942"
 	let mapIcon = "https://cdn4.iconfinder.com/data/icons/flatified/512/map.png"
 	console.log(this.state.images, 'this images in render')
+	console.log(Array.isArray(this.state.images), 'this images array is ')
 	  return (
 	    <View style={styles.container}>
 	    	<View style={styles.backNav}>
@@ -57,7 +77,7 @@ class PicturesFromMarker extends Component {
 	    	</View>
 	    	<ScrollView >
 	    	<View style={styles.imageContainer}>
-	      	{this.state.images.map((img, i) => { return <Images key={i} url={img.url}/> }) }
+	      	{this.state.images.map((img, i) => { return <Images key={i} url={img}/> }) }
 	      </View>
 	    	</ScrollView> 
 	    </View>
@@ -96,7 +116,15 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default PicturesFromMarker;
+const mapStateToProps = (store) =>{
+  console.log(store, 'map js state')
+ 
+  return {
+    markerLocation: store.Profile.markerLocation
+  }
+}
+
+export default connect(mapStateToProps)(PicturesFromMarker);
 
 
 

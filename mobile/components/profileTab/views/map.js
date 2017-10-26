@@ -85,15 +85,13 @@ class UserMap extends Component {
     var that = this
     axios.get('http://localhost:5000/api/get_locs_user')
   .then(function ({data}) {
-    console.log(data, 'api response');
+    console.log(data, 'api map response');
     let locations = parser(data)
     console.log(locations, 'locations asdfasdfasdf')
-    // castro is for testing purpose only
-    var castro = {latitude:37.773972, longitude:-122.43129};
-    that.location = [...locations, castro] ;
+    that.location = [...locations]
   })
   .catch(function (error) {
-    console.log(error, 'api response');
+    console.log(error, 'api map response');
   })
 
  

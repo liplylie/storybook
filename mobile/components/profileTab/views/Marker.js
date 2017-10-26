@@ -25,8 +25,6 @@ class Marker extends Component {
     let long = e.nativeEvent.coordinate.longitude;
     this.props.navigation.navigate("PicturesFromMarker")
     this.props.actions({latitude: lat, longitude: long})
-
-
   }
 
 	render(){
