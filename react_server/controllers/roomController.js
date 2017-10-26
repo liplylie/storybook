@@ -7,8 +7,12 @@ module.exports = {
       where: { [Op.or] : [
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
-      ]
-    }})
+      ]},
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
+    })
     .then(data => {
       res.send(data);
     })
@@ -32,8 +36,12 @@ module.exports = {
           chatroom_sender: req.body.friendId, 
           chatroom_recipient: req.body.userId
         },
-      ]
-    }})
+      ]},
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
+    })
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -41,6 +49,12 @@ module.exports = {
         db.Chatroom.create({
           chatroom_sender: req.body.userId,
           chatroom_recipient: req.params.friendId,
+        }, 
+        {
+          include: [{
+            model: User,
+            attributes: [name, profile_image_url],
+          }]
         })
         .then(data => {
           res.send(data);
@@ -59,7 +73,11 @@ module.exports = {
     db.Messages.findAll({
       limit: 1,
       where: {room_id: req.params.roomId},
-      order: [[ 'createdAt', 'DESC' ]]
+      order: [[ 'createdAt', 'DESC' ]],
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
     })
     .then(data => {
       res.send(data);
