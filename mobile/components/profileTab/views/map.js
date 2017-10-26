@@ -17,6 +17,7 @@ import Marker from './Marker.js'
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import userLocation from "../../../actions/userLocationAction.js"
+import axios from 'axios'
 
 
 const { width, height } =  Dimensions.get('window');
@@ -60,23 +61,12 @@ class UserMap extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       }
-      // make get request to server for all locations (do not need pictures)
-      //axios.get() ...
-        // receive location coordinates
-        //.then(locations) 
-      
-          // put infointo this.location
-            // this.location = [...locations]
-
-    // map through this.location and put each element into a new Marker
-      
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     }, 
     (error) => alert(JSON.stringify(error)),
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 })
     
-
     this.watchID = navigator.geolocation.watchPosition((position) =>{
       var lat = parseFloat(position.coords.latitude);
       var long = parseFloat(position.coords.longitude);
@@ -90,7 +80,27 @@ class UserMap extends Component {
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     })
+
+    var that = this
+    axios.get('http://localhost:5000/api/get_locs_user')
+  .then(function (response) {
+    console.log(response, 'api response');
+  })
+  .catch(function (error) {
+    console.log(error, 'api response');
+  })
   }
+      // make get request to server for all locations (do not need pictures)
+      // this.state.initialPosition.latitude,
+      //axios.get() ...
+        // receive location coordinates
+        //.then(locations) 
+      
+          // put infointo this.location
+            // this.location = [...locations]
+
+    // map through this.location and put each element into a new Marker
+      
     
 
   componentWillUnmount(){
