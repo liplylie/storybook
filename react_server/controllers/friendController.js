@@ -25,8 +25,8 @@ module.exports = {
   getFriendInfo: (req, res) => {
     //get user info as object using req.params.friendId
     db.User.findAll({
-      where: {user_id: req.params.friendId},
-      attributes: [],
+      where: {id: req.params.friendId},
+      attributes: [id, name, profile_image_url],
     })
     .then(data => {
       res.send(data);
@@ -95,7 +95,7 @@ module.exports = {
         },
       ]}
       .then(data => {
-        res.send(data);
+        res.json('User successfully blocked');
       })
       .catch(err => {
         res.status(500).send(err);
@@ -133,5 +133,16 @@ module.exports = {
         res.status(500).send(err);
       })
     }
+  },
+  getFriendProfile: (req, res) => {
+    db.User.findAll({
+      where: {id: req.params.friendId}
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send(data);
+    })
   }
 }

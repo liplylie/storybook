@@ -11,12 +11,13 @@ class Friends extends Component {
     super(props); 
     this.state = {
       friends: [], 
-      results: [] 
+      results: [],
+      input: ''
     }
   }
   
   searchFriends(firstName, lastName) {
-    axios.get('/search/' + firstName + lastName)
+    axios.get('api/search/' + firstName + '/' + lastName)
     .then(({ data }) => {
       this.setState({results: data})
     })
@@ -26,7 +27,7 @@ class Friends extends Component {
   }
 
   componentDidMount() {
-    axios.get('/friends/' + this.props.userId)
+    axios.get('api/friends/' + this.props.userId)
     .then(({ data }) => {
       this.setState({friends: data})
     })
@@ -40,7 +41,11 @@ class Friends extends Component {
     if (this.state.results.length) {
       return (
         <View>
-          <SearchBar searchFriends={this.searchFriends.bind(this)} /> 
+          <SearchBar
+            placeholder="Search friends"
+            onChangeText={(text) => {this.setState({input: text})}}
+            onSubmitEditing={this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1])}
+          /> 
           <Button
             onPress={() => navigate('Messages')}
             title="Messages"
@@ -50,19 +55,19 @@ class Friends extends Component {
           })}
       </View> 
       )
-    } else {
-      return (
-        <View>
-          <SearchBar searchFriends={this.searchFriends.bind(this)} />
-          <Button
-            onPress={() => navigate('Messages')}
-            title="Messages"
-          /> 
-          {this.state.friends.map(friend => {
-            <FriendsEntry img={friend.img} name={friend.name} /> 
-          })} 
-        </View> 
-      )
+    // } else {
+    //   return (
+    //     <View>
+    //       <SearchBar searchFriends={this.searchFriends.bind(this)} />
+    //       <Button
+    //         onPress={() => navigate('Messages')}
+    //         title="Messages"
+    //       /> 
+    //       {this.state.friends.map(friend => {
+    //         <FriendsEntry img={friend.img} name={friend.name} /> 
+    //       })} 
+    //     </View> 
+    //   )
     }
   }
 }

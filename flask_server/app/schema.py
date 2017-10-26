@@ -109,10 +109,9 @@ class Messages(db.Model):
   __tablename__ = 'messages'
   id = db.Column(db.Integer, primary_key=True)
   message = db.Column(db.String(250))
-  room_id = db.Column(db.Integer)
 
   #foreign keys (this table belongs to...)
-  message_chatroom = db.Column(db.Integer, db.ForeignKey("chatroom.id"))
+  room_id = db.Column(db.Integer, db.ForeignKey("chatroom.id"))
   sender = db.Column(db.Integer, db.ForeignKey("user.id"))
 
   def __init__(self, user_id, message, room_id):

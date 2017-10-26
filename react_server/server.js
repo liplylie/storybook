@@ -40,7 +40,7 @@ io.on('connection', socket => {
     socket.join(roomId);
     let messages = db.Messages.findAll({
       where: {room_id: roomId},
-      order: [ [ 'createdAt', 'DESC' ]]
+      order: [[ 'createdAt', 'DESC' ]]
     });
     socket.emit('message', messages);
   })

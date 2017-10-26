@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 
-import SearchBar from './SearchBar'
+import SearchBar from 'react-native-elements'
 
 class Messages extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Messages extends Component {
   } 
 
   componentDidMount() {
-    axios.get('/chats/' + this.props.userId)
+    axios.get('api/chats/' + this.props.userId)
     .then(({ data }) => {
       this.setState({rooms: data})
     })
@@ -24,6 +24,7 @@ class Messages extends Component {
   render() {
     return (
       <View>
+        <SearchBar /> 
         {this.state.rooms.forEach(() => {
           axios.get('/')
         })}
