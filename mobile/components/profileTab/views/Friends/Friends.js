@@ -78,19 +78,23 @@ class Friends extends Component {
           })}
       </View> 
       )
-    // } else {
-    //   return (
-    //     <View>
-    //       <SearchBar searchFriends={this.searchFriends.bind(this)} />
-    //       <Button
-    //         onPress={() => navigate('Messages')}
-    //         title="Messages"
-    //       /> 
-    //       {this.state.friends.map(friend => {
-    //         <FriendsEntry img={friend.img} name={friend.name} /> 
-    //       })} 
-    //     </View> 
-    //   )
+    } else {
+      return (
+        <View>
+          <SearchBar 
+            searchFriends={this.searchFriends.bind(this)} 
+            onChangeText={(text) => {this.setState({input: text})}}
+            onSubmitEditing={this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1])}
+          />
+          <Button
+            onPress={() => navigate('Messages')}
+            title="Messages"
+          /> 
+          {this.state.friends.map(friend => {
+            <FriendsEntry img={friend.profile_img_url} name={friend.name} /> 
+          })} 
+        </View> 
+      )
     }
   }
 }
