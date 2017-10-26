@@ -88,14 +88,18 @@ class Friends extends Component {
           <SearchBar 
             searchFriends={this.searchFriends.bind(this)} 
             onChangeText={(text) => {this.setState({input: text})}}
-            onSubmitEditing={this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1])}
+
+            onSubmitEditing={() => {
+              this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1]);
+              clear();
+            }}
           />
           <Button
             onPress={() => navigate('Messages')}
             title="Messages"
           /> 
           {this.state.friends.map(friend => {
-            <FriendsEntry img={friend.profile_img_url} name={friend.name} /> 
+            <FriendsEntry img={friend.profile_img_url} name={friend.name} clearSearch={this.clearSearch.bind(this)}/> 
           })} 
         </View> 
       )
