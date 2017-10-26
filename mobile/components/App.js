@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { bindActionCreators } from 'redux'
-
 import TabBarNav from './tabBar/views/TabBarNav'
 import Login from './auth/Login.js'
 import * as AuthActions from '../actions/authActions.js'

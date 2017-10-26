@@ -16,8 +16,9 @@ import {
 import Marker from './Marker.js'
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
-import userLocation from "../../../actions/userLocationAction.js"
+import userLocation from '../../../actions/userLocationAction.js'
 import axios from 'axios'
+import parser from '../../../parser.js'
 
 
 const { width, height } =  Dimensions.get('window');
@@ -85,15 +86,11 @@ class UserMap extends Component {
     axios.get('http://localhost:5000/api/get_locs_user')
   .then(function ({data}) {
     console.log(data, 'api response');
-    var arr = data.split('\'').join('"')
-    arr = arr.substr(1, arr.length-2)
-    arr = arr.substr(1, arr.length-2)
-    arr = arr.split("}, {").map((element)=>{return "{" + element+"}"})
-    arr = arr.map((e)=>{ return JSON.parse(e) })
-    console.log(arr, 'arr')
+    let locations = parser(data)
+    console.log(locations, 'locations asdfasdfasdf')
     // castro is for testing purpose only
     var castro = {latitude:37.773972, longitude:-122.43129};
-    that.location = [...arr, castro] ;
+    that.location = [...locations, castro] ;
   })
   .catch(function (error) {
     console.log(error, 'api response');
