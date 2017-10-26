@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node react_server/server.js",
-    "compile": "webpack -d",
+    "compile": "webpack",
     "compile-watch": "webpack --watch",
     "start-node": "nodemon react_server/server.js",
     "test": "jest",
-    "ebs": "npm run compile && npm run start-node"
+    "ebs": "npm run compile && npm run start-node",
+    "postinstall": "npm run compile"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.21.0",
