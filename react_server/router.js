@@ -1,6 +1,5 @@
-const express = require('express')
-const router = express.Router() 
-const roomController = require('./controllers/friendController')
+const router = require('express').Router()
+const roomController = require('./controllers/roomController')
 const friendController = require('./controllers/friendController')
 
 router.get('/chats/:userId', roomController.getRooms);
@@ -9,13 +8,15 @@ router.get('/chats/:roomId', roomController.getPreview)
 //only use from friends view
 router.post('/chat', roomController.createRoom);
 
-router.get('/friends/:userId', friendController.getFriends)
+router.get('/friends/:userId', friendController.getFriendList)
 router.get('/friends/:friendId', friendController.getFriendInfo) 
 
-router.post('/addFriend', friendController.addFriend)
+router.post('/addFriend', friendController.sendRequest)
 router.get('/requests/:userId', friendController.getRequests)
-router.post('/acceptRequest', friendController.acceptFriend)
+router.post('/acceptRequest', friendController.acceptRequest)
 
-router.post('/blockFriend', friendController.blockUser)
+router.post('/blockUser', friendController.blockUser)
 
-router.get('/search/:firstName/:lastName')
+router.get('/search/:firstName/:lastName', friendController.search)
+
+module.exports = router; 

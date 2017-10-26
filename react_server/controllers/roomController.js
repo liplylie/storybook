@@ -1,14 +1,14 @@
-const sequelize = require('sequelize')
-const db = require('')
+const db = require('../db/config')
 
 module.exports = {
   getRooms: (req, res) => {
     //get a user's array of room IDs using req.params.userId
     db.Chatroom.findAll({
-      where: Sequelize.or(
+      where: { [Op.or] : [
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
-    )})
+      ]
+    }})
     .then(data => {
       res.send(data);
     })
@@ -23,7 +23,7 @@ module.exports = {
     //else create room
       //return roomId
     db.Chatroom.findAll({
-      where: Sequelize.or(
+      where: { [Op.or]: [
         {
           chatroom_sender: req.body.userId, 
           chatroom_recipient: req.body.friendId
@@ -32,7 +32,8 @@ module.exports = {
           chatroom_sender: req.body.friendId, 
           chatroom_recipient: req.body.userId
         },
-    )})
+      ]
+    }})
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -58,7 +59,7 @@ module.exports = {
     db.Messages.findAll({
       limit: 1,
       where: {room_id: req.params.roomId},
-      order: [ [ 'createdAt', 'DESC' ]]
+      order: [[ 'createdAt', 'DESC' ]]
     })
     .then(data => {
       res.send(data);

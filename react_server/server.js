@@ -6,7 +6,7 @@ const socketIo = require('socket.io');
 
 const db = require('./db/config'); 
 
-// const router = require('./router')
+const router = require('./router')
 const PORT = 3000;
 
 const app = express();
@@ -17,7 +17,7 @@ const io = socketIo(server);
 
 app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
-// app.use('/api', router)
+app.use('/api', router)
 app.use(express.static(path.resolve(__dirname, '../client/public')))
 
 app.get('/*', function (req, res) {

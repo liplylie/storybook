@@ -4,7 +4,7 @@ module.exports = {
   getFriendList: (req, res) => {
     //return array of friend ids using req.params.userId
     db.Relationships.findAll({
-      where: Sequelize.or(
+      where: { [Op.or]: [
         {
           user_id: req.params.userId,
           friend_type: 'friend'
@@ -13,7 +13,8 @@ module.exports = {
           friend_id: req.params.userId,
           friend_type: 'friend'
         },
-    )})
+      ]
+      }})
     .then(data => {
       res.send(data);
     })
@@ -25,7 +26,7 @@ module.exports = {
     //get user info as object using req.params.friendId
     db.User.findAll({
       where: {user_id: req.params.friendId},
-      attributes: []
+      attributes: [],
     })
     .then(data => {
       res.send(data);
@@ -41,6 +42,12 @@ module.exports = {
       friend_id: req.body.userId, 
       type: 'pending'
     })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
   },
   getRequests: (req, res) => {
     //get all pending where userId = req.params.userId
@@ -50,7 +57,12 @@ module.exports = {
         type: 'pending'
       }
     })
-    
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
   }, 
   acceptRequest: (req, res) => {
     //add req.params.friendId to current user's friend list and vice versa
@@ -61,11 +73,16 @@ module.exports = {
         type: 'friend'
       }
     })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
   },
   blockUser: (req, res) => {
     db.Relationships.update({
-      where: {
-        [Op.or]: [
+      where: { [Op.or]: [
         {
           user_id: req.body.userId,
           friend_id: req.body.friendId,
@@ -76,7 +93,19 @@ module.exports = {
           friend_id: req.body.userId,
           type: 'blocked'
         },
-      ]
+      ]}
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      })
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send(err);
     })
   },
   search: (req, res) => {
