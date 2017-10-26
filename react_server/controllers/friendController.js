@@ -92,6 +92,7 @@ module.exports = {
       res.status(500).send(err);
     })
   },
+  //delete request
   blockUser: (req, res) => {
     db.Relationships.update({
       where: { [Op.or]: [
@@ -114,6 +115,7 @@ module.exports = {
       })
     })
   },
+  //remove friend
   search: (req, res) => {
     if (!req.params.lastName) {
       db.Relationships.findAll({
