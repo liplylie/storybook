@@ -44,7 +44,7 @@ class UserMap extends Component {
         longitude: 0,
       }
     }
-    this.location = [{latitude:34.0430180, longitude:-118.2672540}]
+    this.location = [];
     this.viewTargetPictures = this.viewTargetPictures.bind(this)
   }
 
@@ -83,15 +83,27 @@ class UserMap extends Component {
 
     var that = this
     axios.get('http://localhost:5000/api/get_locs_user')
-  .then(function (response) {
-    console.log(response, 'api response');
+  .then(function ({data}) {
+    console.log(data, 'api response');
+    var arr = data.split('\'').join('"')
+    arr = arr.substr(1, arr.length-2)
+    arr = arr.substr(1, arr.length-2)
+    arr = arr.split("}, {").map((element)=>{return "{" + element+"}"})
+    arr = arr.map((e)=>{ return JSON.parse(e) })
+    console.log(arr, 'arr')
+    // castro is for testing purpose only
+    var castro = {latitude:37.773972, longitude:-122.43129};
+    that.location = [...arr, castro] ;
   })
   .catch(function (error) {
     console.log(error, 'api response');
   })
+
+ 
   }
       // make get request to server for all locations (do not need pictures)
       // this.state.initialPosition.latitude,
+      //http://localhost:5000/api/get_locs_user
       //axios.get() ...
         // receive location coordinates
         //.then(locations) 
@@ -118,6 +130,7 @@ class UserMap extends Component {
 
    
   render() {
+     console.log(this.location, 'this location')
     return (
       <View style={styles.container}>
         <MapView
