@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request
+from flask import Flask, g, render_template, request, make_response
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
@@ -84,7 +84,10 @@ def grab_all_locations():
       }
       coords.append(new_loc)
       print(coords)
-    return coords
+    coords = str(coords)
+    resp = make_response(coords, 200)
+    # return coords
+    return resp
 
 @app.route('/api/get_imgs_by_loc', methods=['GET'])
 def get_imgs_by_loc():
