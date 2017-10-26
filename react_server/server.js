@@ -18,11 +18,11 @@ const io = socketIo(server);
 app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
 // app.use('/api', router)
-app.use(express.static(path.resolve(__dirname, '../client/public')))
+// app.use(express.static(path.resolve(__dirname, '../client/public')))
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
-})
+// app.get('/*', function (req, res) {
+//   res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
+// })
 
 io.on('connection', socket => {
   socket.on('message', message => {
