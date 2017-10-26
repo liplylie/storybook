@@ -34,7 +34,7 @@ class Messages extends Component {
           }
           axios.get('/chats/' + room.id)
           .then(({ data }) => {
-            <MessageEntry message={data.message} friendId={friendId}/> 
+            <MessageEntry navigation={this.props.navigation} message={data.message} friendId={friendId}/> 
           })
           .catch(err => {
             console.log('error getting previews', err);

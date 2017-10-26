@@ -71,14 +71,24 @@ class Friends extends Component {
           <SearchBar
             placeholder="Search friends"
             onChangeText={(text) => {this.setState({input: text})}}
-            onSubmitEditing={this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1])}
+            onSubmitEditing={() => {
+              this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1]);
+              clear(); 
+            }}
+            //add icon to clear searches
           /> 
           <Button
             onPress={() => navigate('Messages')}
             title="Messages"
           /> 
           {this.state.results.map(result => {
-            <FriendsEntry sendRequest={this.sendRequest.bind(this)} friends={this.state.friends} id={result.id} img={result.profile_img_url} name={result.name} /> 
+            <FriendsEntry 
+              sendRequest={this.sendRequest.bind(this)} 
+              friends={this.state.friends} 
+              id={result.id} 
+              img={result.profile_img_url} 
+              name={result.name}
+            /> 
           })}
       </View> 
       )
@@ -92,13 +102,17 @@ class Friends extends Component {
               this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1]);
               clear();
             }}
+            //add icon to clear searches
           />
           <Button
             onPress={() => navigate('Messages')}
             title="Messages"
           /> 
           {this.state.friends.map(friend => {
-            <FriendsEntry img={friend.profile_img_url} name={friend.name} clearSearch={this.clearSearch.bind(this)}/> 
+            <FriendsEntry 
+              img={friend.profile_img_url} 
+              name={friend.name}
+            /> 
           })} 
         </View> 
       )

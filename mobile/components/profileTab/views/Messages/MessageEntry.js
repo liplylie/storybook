@@ -22,14 +22,13 @@ class MessageEntry extends Component {
     })
   }
 
-  showChat() {
-
-  }
-
   render() {
+    const {navigate} = this.props.navigation;
     return (
-      <TouchableWithoutFeedback onPress={this.showChat.bind(this)}>
-
+      <TouchableWithoutFeedback onPress={()=> navigate('Chat')}>
+        <Text>{this.state.name}</Text>
+        <Text>{this.props.message}</Text>
+        <Image source={this.state.img}/>
       </TouchableWithoutFeedback> 
     )
   }
