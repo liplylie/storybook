@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
     "compile": "webpack",
     "compile-watch": "webpack --watch",
     "start-node": "nodemon server2/server.js",
     "test": "jest",
-    "ebs": "npm run compile && npm run start-node"
+    "ebs": "npm run compile && npm run start-node",
+    "postinstall": "npm run compile"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.21.0",
