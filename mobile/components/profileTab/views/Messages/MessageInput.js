@@ -30,6 +30,7 @@ class MessageInput extends Component {
       /> 
       <Button 
         onPress={this.handleSubmit.bind(this)}
+        name="Send"
       />
     </View> 
   }
