@@ -22,7 +22,7 @@
       "irure"
     ],
     "company": "PORTALINE",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Debra"
   },
   {
@@ -48,7 +48,7 @@
       "ut"
     ],
     "company": "OCTOCORE",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Gay"
   },
   {
@@ -74,7 +74,7 @@
       "duis"
     ],
     "company": "RETRACK",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Lenore"
   },
   {
@@ -100,7 +100,7 @@
       "labore"
     ],
     "company": "EMERGENT",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Wallace"
   },
   {
@@ -126,7 +126,7 @@
       "esse"
     ],
     "company": "SENMAO",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Britt"
   },
   {
@@ -152,7 +152,7 @@
       "culpa"
     ],
     "company": "EQUITOX",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Odessa"
   },
   {
@@ -178,7 +178,7 @@
       "nulla"
     ],
     "company": "HYPLEX",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Erma"
   },
   {
@@ -204,7 +204,7 @@
       "nulla"
     ],
     "company": "CYTREX",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Jordan"
   },
   {
@@ -230,7 +230,7 @@
       "laborum"
     ],
     "company": "EVIDENDS",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Noemi"
   },
   {
@@ -256,7 +256,7 @@
       "mollit"
     ],
     "company": "FITCORE",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Lindsay"
   },
   {
@@ -282,7 +282,7 @@
       "culpa"
     ],
     "company": "STREZZO",
-    "img_url": "http://placehold.it/32x32",
+    "image_url": "http://placehold.it/32x32",
     "name": "Sharp"
   }
 ]
