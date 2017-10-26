@@ -1,3 +1,6 @@
 flask_server/
 mobile/
 index.js
+
+react_server/controllers/
+react_server/db/
