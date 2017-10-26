@@ -9,7 +9,6 @@
     "start-node": "nodemon react_server/server.js",
     "test": "jest",
     "ebs": "npm run compile && npm run start-node",
-    "postinstall": "node react_server/server.js"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.21.0",
