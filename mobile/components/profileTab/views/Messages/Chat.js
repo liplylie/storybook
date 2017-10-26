@@ -8,15 +8,14 @@ import MessageInput from './MessageInput'
 class Chat extends Component { 
   constructor(props) {
     super(props);
-    this.state = {
-      room: '', 
+    this.state = { 
       messages: [],
     }
-    this.socket = io('')
+    this.socket = io('http://localhost:3000')
   }
   
   componentDidMount() {
-    this.socket.emit('subscription', this.state.room);
+    this.socket.emit('subscription', this.props.room);
     this.socket.on('message', message => {
       this.setState({messages: this.state.messages.concat(message)})
     }); 

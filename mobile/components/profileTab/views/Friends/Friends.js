@@ -88,7 +88,6 @@ class Friends extends Component {
           <SearchBar 
             searchFriends={this.searchFriends.bind(this)} 
             onChangeText={(text) => {this.setState({input: text})}}
-
             onSubmitEditing={() => {
               this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1]);
               clear();

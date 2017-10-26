@@ -10,7 +10,7 @@ class MessageInput extends Component {
       input: '',
     }
 
-  this.socket = ioClient('')
+  this.socket = ioClient('http://localhost:3000')
   }
 
   handleSubmit() {

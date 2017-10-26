@@ -26,7 +26,7 @@ module.exports = {
     //get user info as object using req.params.friendId
     db.User.findAll({
       where: {id: req.params.friendId},
-      attributes: [id, name, profile_image_url],
+      attributes: [name, profile_image_url],
     })
     .then(data => {
       res.send(data);
