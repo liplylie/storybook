@@ -1,0 +1,307 @@
+[
+  {
+    "favoriteFruit": "apple",
+    "greeting": "Hello, Cohen! You have 9 unread messages.",
+    "friends": [
+      {
+        "name": "Rachel Deleon",
+        "id": 0
+      },
+      {
+        "name": "Goldie Klein",
+        "id": 1
+      },
+      {
+        "name": "Page Baldwin",
+        "id": 2
+      }
+    ],
+    "range": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "tags": [
+      "do",
+      "officia",
+      "consequat",
+      "enim",
+      "culpa"
+    ],
+    "longitude": "82.61765",
+    "latitude": "50.732501",
+    "registered": "Tuesday, January 6, 2015 2:39 PM",
+    "about": "Aliquip elit ipsum ad exercitation. Deserunt voluptate nulla cillum ex qui ad veniam anim tempor cupidatat irure. Do magna sunt elit aliquip elit nulla consequat dolor amet aute excepteur aute dolor adipisicing. Ea est deserunt non Lorem voluptate esse culpa irure dolore est veniam eiusmod cupidatat eu.",
+    "address": "987 Everett Avenue, Coloma, Minnesota, 7696",
+    "phone": "+1 (914) 426-2121",
+    "user_tags_array": [
+      "ZANYMAX",
+      "Cohen",
+      "Holt"
+    ],
+    "email": "cohen.holt@zanymax.org",
+    "company": "ZANYMAX",
+    "last_name": "Holt",
+    "first_name": "Cohen",
+    "eyeColor": "brown",
+    "friends_count": 35,
+    "age": 24,
+    "profile_image_url": "http://placehold.it/32x32",
+    "balance": "$3,093.95",
+    "isActive": true,
+    "guid": "bfe7ddb4-ea12-4cc4-a8ec-ef75dc78073e",
+    "index": 0,
+    "_id": "59f13af2bb23d59e726374af"
+  },
+  {
+    "favoriteFruit": "strawberry",
+    "greeting": "Hello, Dickson! You have 7 unread messages.",
+    "friends": [
+      {
+        "name": "Nicole Cooley",
+        "id": 0
+      },
+      {
+        "name": "Durham Bates",
+        "id": 1
+      },
+      {
+        "name": "Evangelina Perkins",
+        "id": 2
+      }
+    ],
+    "range": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "tags": [
+      "nisi",
+      "proident",
+      "anim",
+      "Lorem",
+      "aute"
+    ],
+    "longitude": "39.306682",
+    "latitude": "35.117935",
+    "registered": "Thursday, December 4, 2014 12:58 AM",
+    "about": "Consequat laboris anim aute duis et officia consequat non. Irure dolor fugiat ipsum adipisicing esse fugiat elit irure ipsum exercitation nulla enim labore. Fugiat id non ea ad consequat. Id non excepteur commodo exercitation anim exercitation ullamco do reprehenderit occaecat laborum aute do exercitation. Amet adipisicing elit labore commodo voluptate magna. Incididunt sint commodo exercitation voluptate nostrud occaecat est duis exercitation reprehenderit in adipisicing ex aliqua.",
+    "address": "608 Elm Avenue, Shepardsville, Illinois, 1063",
+    "phone": "+1 (945) 596-2139",
+    "user_tags_array": [
+      "MEDESIGN",
+      "Dickson",
+      "Rios"
+    ],
+    "email": "dickson.rios@medesign.biz",
+    "company": "MEDESIGN",
+    "last_name": "Rios",
+    "first_name": "Dickson",
+    "eyeColor": "brown",
+    "friends_count": 26,
+    "age": 21,
+    "profile_image_url": "http://placehold.it/32x32",
+    "balance": "$2,134.00",
+    "isActive": false,
+    "guid": "96beb3fc-52fe-4d45-969f-3c3565599f56",
+    "index": 1,
+    "_id": "59f13af24dd893d8da125aab"
+  },
+  {
+    "favoriteFruit": "strawberry",
+    "greeting": "Hello, Levine! You have 10 unread messages.",
+    "friends": [
+      {
+        "name": "Addie Gross",
+        "id": 0
+      },
+      {
+        "name": "Hammond Black",
+        "id": 1
+      },
+      {
+        "name": "Callie Ramos",
+        "id": 2
+      }
+    ],
+    "range": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "tags": [
+      "aliquip",
+      "excepteur",
+      "sint",
+      "incididunt",
+      "ullamco"
+    ],
+    "longitude": "-34.839928",
+    "latitude": "-2.461356",
+    "registered": "Tuesday, February 11, 2014 2:05 AM",
+    "about": "Sint occaecat ad deserunt et adipisicing fugiat sit mollit nulla laborum exercitation cupidatat sit ipsum. Lorem fugiat anim culpa eu incididunt enim sit. Dolor quis amet aliquip eiusmod irure in aliqua ex ipsum. Ullamco nostrud Lorem quis ipsum laboris. Aute et exercitation occaecat minim culpa id ea id duis. Fugiat laboris non consectetur duis.",
+    "address": "410 Townsend Street, Wiscon, New York, 2797",
+    "phone": "+1 (922) 478-2256",
+    "user_tags_array": [
+      "OULU",
+      "Levine",
+      "Lawson"
+    ],
+    "email": "levine.lawson@oulu.ca",
+    "company": "OULU",
+    "last_name": "Lawson",
+    "first_name": "Levine",
+    "eyeColor": "green",
+    "friends_count": 35,
+    "age": 29,
+    "profile_image_url": "http://placehold.it/32x32",
+    "balance": "$2,008.30",
+    "isActive": false,
+    "guid": "b181d82b-6f9b-4651-bcea-904ae173bd71",
+    "index": 2,
+    "_id": "59f13af2a8f553a9adffc5a7"
+  },
+  {
+    "favoriteFruit": "banana",
+    "greeting": "Hello, Nanette! You have 7 unread messages.",
+    "friends": [
+      {
+        "name": "Morgan Rogers",
+        "id": 0
+      },
+      {
+        "name": "Duffy Pena",
+        "id": 1
+      },
+      {
+        "name": "Keri Stephens",
+        "id": 2
+      }
+    ],
+    "range": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "tags": [
+      "pariatur",
+      "sint",
+      "voluptate",
+      "nostrud",
+      "dolor"
+    ],
+    "longitude": "141.875738",
+    "latitude": "-26.94793",
+    "registered": "Sunday, December 4, 2016 3:20 PM",
+    "about": "Cillum officia ad reprehenderit velit quis elit ipsum fugiat aute est excepteur labore do. Consectetur occaecat sit laboris quis voluptate in minim mollit ex magna anim. Non adipisicing proident aute aliquip reprehenderit id eu labore elit dolore.",
+    "address": "854 Keap Street, Curtice, Louisiana, 8423",
+    "phone": "+1 (830) 502-3718",
+    "user_tags_array": [
+      "COMVOY",
+      "Nanette",
+      "Castaneda"
+    ],
+    "email": "nanette.castaneda@comvoy.us",
+    "company": "COMVOY",
+    "last_name": "Castaneda",
+    "first_name": "Nanette",
+    "eyeColor": "green",
+    "friends_count": 28,
+    "age": 25,
+    "profile_image_url": "http://placehold.it/32x32",
+    "balance": "$1,261.39",
+    "isActive": true,
+    "guid": "3b549e82-e5b9-48ab-b394-0c5fba123d69",
+    "index": 3,
+    "_id": "59f13af26af5942b5745dd79"
+  },
+  {
+    "favoriteFruit": "banana",
+    "greeting": "Hello, Watson! You have 5 unread messages.",
+    "friends": [
+      {
+        "name": "Kasey Kim",
+        "id": 0
+      },
+      {
+        "name": "Carole Ingram",
+        "id": 1
+      },
+      {
+        "name": "Saundra Santos",
+        "id": 2
+      }
+    ],
+    "range": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "tags": [
+      "proident",
+      "sint",
+      "anim",
+      "in",
+      "nulla"
+    ],
+    "longitude": "-172.634899",
+    "latitude": "26.944865",
+    "registered": "Sunday, July 16, 2017 6:38 AM",
+    "about": "Consequat irure tempor velit dolore exercitation ullamco nulla tempor velit cillum ut fugiat veniam esse. Aute anim ea ipsum veniam sit. Deserunt dolore laboris aute amet velit quis reprehenderit voluptate magna. Anim laboris officia Lorem fugiat ipsum nulla ad id ea ad culpa et tempor consequat. Reprehenderit sunt commodo eiusmod officia et consectetur ipsum laborum aliquip quis esse.",
+    "address": "827 Juliana Place, Cliffside, Alabama, 9127",
+    "phone": "+1 (935) 528-2045",
+    "user_tags_array": [
+      "TURNLING",
+      "Watson",
+      "Vazquez"
+    ],
+    "email": "watson.vazquez@turnling.me",
+    "company": "TURNLING",
+    "last_name": "Vazquez",
+    "first_name": "Watson",
+    "eyeColor": "green",
+    "friends_count": 33,
+    "age": 30,
+    "profile_image_url": "http://placehold.it/32x32",
+    "balance": "$1,585.88",
+    "isActive": false,
+    "guid": "b711ad48-c8ad-4fb6-902c-c497f1aeaf68",
+    "index": 4,
+    "_id": "59f13af20d5e3ca73c5c462f"
+  }
+]
