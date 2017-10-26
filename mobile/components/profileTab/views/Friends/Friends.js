@@ -40,6 +40,10 @@ class Friends extends Component {
     })
   }
 
+  clearSearch() {
+    this.setState({results: []});
+  }
+
   componentDidMount() {
     axios.get('api/friends/' + this.props.userId)
     .then(({ data }) => {
