@@ -29,12 +29,11 @@ io.on('connection', socket => {
     // console.log('server received message ', io.engine.clientsCount);
     // console.log('this is the message room', message);
     socket.broadcast.to(message.roomId).emit('message', {
-      text: message.text,
-      from: message.userId,
-      createdAt: message.createdAt,
-      roomId: message.roomId
+      message: message.message,
+      sender: message.userId,
+      room_id: message.roomId
     })
-    // db.insert(message);
+    db.Messages.create(message);
   })
   socket.on('subscribe', roomId => {
     // console.log('joining room', room);

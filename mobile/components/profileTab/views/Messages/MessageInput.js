@@ -8,10 +8,9 @@ class MessageInput extends Component {
 
     this.state = {
       input: '',
-      // createdAt: '',
     }
 
-    this.socket = ioClient('')
+  this.socket = ioClient('')
   }
 
   handleSubmit() {
@@ -19,7 +18,6 @@ class MessageInput extends Component {
       message: this.state.input,
       from: this.props.user,
       room: this.props.roomId,
-      // createdAt: this.state.createdAt
     });
   }
 
