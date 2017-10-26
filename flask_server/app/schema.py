@@ -2,6 +2,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 import sqlalchemy_utils
 from app import db
+from sqlalchemy import Integer, Table, Column, ForeignKey, \
+    create_engine, String, select
+from sqlalchemy.orm import Session, relationship
+from sqlalchemy.ext.declarative import declarative_base
 
 class Image(db.Model):
   __tablename__ = 'image'
@@ -32,7 +36,7 @@ class Image(db.Model):
     self.image_tags_array = image_tags_array
 
   def __repr__(self):
-    return '<Image tags: %r>' % self.image_tags_array + ' ' + '<image url: %r>' % self.image_url
+    return '<<<Image tags: %r>>>' % self.image_tags_array + ' ' + '<<<image url: %r>>>' % self.image_url
 
 class User(db.Model):
   __tablename__ = 'user'
@@ -40,7 +44,7 @@ class User(db.Model):
   first_name = db.Column(db.String(250))
   last_name = db.Column(db.String(250))
   email = db.Column(db.String(250), unique=True)
-  profile_image_url = db.Column(db.String(250), unique=True)
+  profile_image_url = db.Column(db.String(250))
   friends_count = db.Column(db.Integer, nullable=True)
   user_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
@@ -53,27 +57,35 @@ class User(db.Model):
   # user_sender = db.relationship("Chatroom", backref='user', lazy=True)
   # user_recipient = db.relationship("Chatroom", backref='user', lazy=True)
 
-  def __init__(self, name, friends_count, user_tags_array):
-    self.name = name
+  def __init__(self, first_name, last_name, email, profile_image_url, friends_count, user_tags_array):
+    self.first_name = first_name
+    self.last_name = last_name
+    self.email = email
+    self.profile_image_url = profile_image_url
     self.friends_count = friends_count
     self.user_tags_array = user_tags_array
 
   def __repr__(self):
-    return '<User: %r>' % self.name + ' ' + '<fuser riends count: %r>' % self.friends_count + ' ' + '<user tags: %r>' % self.user_tags_array
+    return '| User: %r>>>' % self.first_name + ' ' + '<<<user friends count: %r>>>' % self.friends_count + ' ' + '<<<user tags: %r>>>' % self.user_tags_array
 
 class Relationship(db.Model):
   __tablename__ = 'relationship'
   id = db.Column(db.Integer, primary_key=True)
-  friend_type = db.Column(db.String(250)) # [friend, block, etc]
+  relationship_type = db.Column(db.String(250)) # [friend, block, etc]
   #foreign keys (this table belongs to...)
-  related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-  def __init__(self, related_user_id, friend_type):
-    self.user_id = related_user_id
-    self.friend_id = friend_type
+  relating_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+  # related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+  #select * 
+
+  def __init__(self, relating_user_id, related_user_id, relationship_type):
+    self.relating_user_id = relating_user_id
+    self.related_user_id = related_user_id
+    self.relationship_type = relationship_type
 
   def __repr__(self):
-    return '<user_id: %r>' % self.user_id + ' ' + '<friend_id: %r>' % self.friend_id
+    return '| relating_user_id: %r>>>' % self.relating_user_id + ' ' + '<<< related_user_id: %r>>>' % self.related_user_id + ' ' + '<<<relationship_type: %r>>>' % self.relationship_type
 
 class Chatroom(db.Model):
   __tablename__ = 'chatroom'
@@ -91,7 +103,7 @@ class Chatroom(db.Model):
     self.admin = admin
 
   def __repr__(self):
-    return '<image_id: %r>' % self.sender_name
+    return '<<<image_id: %r>>>' % self.sender_name
 
 class Messages(db.Model):
   __tablename__ = 'messages'
@@ -109,7 +121,7 @@ class Messages(db.Model):
     self.room_id = room_id
 
   def __repr__(self):
-    return '<user_id: %r>' % self.user_id + ' ' + '<message: %r>' % self.message + ' ' + '<room_id: %r>' % self.room_id
+    return '<<<user_id: %r>>>' % self.user_id + ' ' + '<<<message: %r>>>' % self.message + ' ' + '<<<room_id: %r>>>' % self.room_id
 
 class Comments(db.Model):
   __tablename__ = 'comments'
@@ -132,7 +144,7 @@ class Comments(db.Model):
     self.comment_image_id = comment_image_id
 
   def __repr__(self):
-    return '<image_id: %r>' % self.image_id + ' ' + '<Comment text: %r>' % self.text
+    return '<<<image_id: %r>>>' % self.image_id + ' ' + '<<<Comment text: %r>>>' % self.text
 
 class Likes(db.Model):
   __tablename__ = 'likes'
@@ -151,4 +163,4 @@ class Likes(db.Model):
     self.like_comment_id = like_comment_id
 
   def __repr__(self):
-    return '<Like_image_id: %r>' % self.image_id + ' ' + '<Tags: %r>' % self.tags_array
+    return '<<<Like_image_id: %r>>>' % self.image_id + ' ' + '<<<Tags: %r>>>' % self.tags_array
