@@ -26,15 +26,15 @@ class Messages extends Component {
       <View>
         <SearchBar /> 
         {this.state.rooms.forEach((room) => {
-          const friendId; 
-          if (room.user_id !== this.props.userId) {
-            friendId = room.userId; 
+          const friend; 
+          if (room.chatroom_sender !== this.props.userId) {
+            friend = room.chatroom_sender; 
           } else {
-            friendId = room.friendId; 
+            friend = room.chatroom_recepient; 
           }
           axios.get('/chats/' + room.id)
           .then(({ data }) => {
-            <MessageEntry navigation={this.props.navigation} message={data.message} friendId={friendId}/> 
+            <MessageEntry navigation={this.props.navigation} message={data.message} friend={friend.User.name} img={friend.User.img}/> 
           })
           .catch(err => {
             console.log('error getting previews', err);

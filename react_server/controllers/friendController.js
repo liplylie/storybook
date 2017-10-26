@@ -59,7 +59,11 @@ module.exports = {
       where: {
         user_id: req.params.userId,
         type: 'pending'
-      }
+      },
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
     })
     .then(data => {
       res.send(data);
@@ -75,7 +79,11 @@ module.exports = {
         user_id: req.body.userId,
         friend_id: req.body.friendId,
         type: 'friend'
-      }
+      },
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
     })
     .then(data => {
       res.send(data);
