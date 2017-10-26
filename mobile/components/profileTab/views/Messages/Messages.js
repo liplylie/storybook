@@ -24,7 +24,9 @@ class Messages extends Component {
   render() {
     return (
       <View>
-
+        {this.state.rooms.forEach(() => {
+          axios.get('/')
+        })}
       </View> 
     )
   }

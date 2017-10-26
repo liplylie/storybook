@@ -39,11 +39,10 @@ io.on('connection', socket => {
   socket.on('subscribe', roomId => {
     // console.log('joining room', room);
     socket.join(roomId);
-    // let messages = db.collection('messages').find({
-    //   roomId: roomId // We want all the messages for that room.
-    // }).sort({
-    //   createdAt: -1 // It's best not to assume that it is in order.
-    // });
+    let messages = db.Messages.findAll({
+      where: {room_id: roomId},
+      order: [ [ 'createdAt', 'DESC' ]]
+    });
     socket.emit('message', messages);
   })
   console.log('user connected', io.engine.clientsCount)
