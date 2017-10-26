@@ -25,6 +25,9 @@ class Chat extends Component {
   render () {
     <View>
       <MessageInput /> 
+      {this.state.messages.map(message => {
+        <ChatBubble message={message.message} sender={message.sender}/> 
+      })}
     </View>
   }
 }

@@ -53,11 +53,12 @@ module.exports = {
       res.status(500).send(err);
     })
   },
-  getRoomInfo: (req, res) => {
+  getPreview: (req, res) => {
     //get an object using req.params.roomId with admin, user, most recent message, time created at
-    db.Chatroom.findAll({
-      where: {id: req.params.roomId},
-      attributes: []
+    db.Messages.findAll({
+      limit: 1,
+      where: {room_id: req.params.roomId},
+      order: [ [ 'createdAt', 'DESC' ]]
     })
     .then(data => {
       res.send(data);

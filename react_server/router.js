@@ -4,7 +4,7 @@ const roomController = require('./controllers/friendController')
 const friendController = require('./controllers/friendController')
 
 router.get('/chats/:userId', roomController.getRooms);
-router.get('/chats/:roomId', roomController.getRoomInfo)
+router.get('/chats/:roomId', roomController.getPreview)
 
 //only use from friends view
 router.post('/chat', roomController.createRoom);
