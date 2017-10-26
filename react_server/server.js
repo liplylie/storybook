@@ -7,7 +7,7 @@ const socketIo = require('socket.io');
 const db = require('./db/config'); 
 
 // const router = require('./router')
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
