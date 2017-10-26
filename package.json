@@ -8,8 +8,7 @@
     "compile-watch": "webpack --watch",
     "start-node": "nodemon react_server/server.js",
     "test": "jest",
-    "ebs": "npm run compile && npm run start-node",
-    "postinstall": "npm run compile"
+    "ebs": "npm run compile && npm run start-node"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.21.0",
