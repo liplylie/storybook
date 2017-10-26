@@ -86,3 +86,4 @@ __tests__/
 
 !.elasticbeanstalk/*.global.yml
 
+AWS_EC2_STORYBOOK.pem
