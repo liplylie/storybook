@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "compile": "webpack",
+    "compile": "webpack -d",
     "compile-watch": "webpack --watch",
     "start-node": "nodemon server2/server.js",
     "test": "jest",
     "ebs": "npm run compile && npm run start-node",
-    "postinstall": "npm run compile"
+    "postinstall": "npm run compile && run start-node"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.21.0",
