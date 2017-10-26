@@ -4,7 +4,7 @@ const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
 
-const db = require('./db'); 
+const db = require('./db/config'); 
 
 const router = require('./router')
 const PORT = 3000;
@@ -29,21 +29,19 @@ io.on('connection', socket => {
     // console.log('server received message ', io.engine.clientsCount);
     // console.log('this is the message room', message);
     socket.broadcast.to(message.roomId).emit('message', {
-      text: message.text,
-      from: message.userId,
-      createdAt: message.createdAt,
-      roomId: message.roomId
+      message: message.message,
+      sender: message.userId,
+      room_id: message.roomId
     })
-    // db.insert(message);
+    db.Messages.create(message);
   })
   socket.on('subscribe', roomId => {
     // console.log('joining room', room);
     socket.join(roomId);
-    // let messages = db.collection('messages').find({
-    //   roomId: roomId // We want all the messages for that room.
-    // }).sort({
-    //   createdAt: -1 // It's best not to assume that it is in order.
-    // });
+    let messages = db.Messages.findAll({
+      where: {room_id: roomId},
+      order: [[ 'createdAt', 'DESC' ]]
+    });
     socket.emit('message', messages);
   })
   console.log('user connected', io.engine.clientsCount)

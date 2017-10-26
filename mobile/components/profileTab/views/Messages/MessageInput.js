@@ -8,20 +8,16 @@ class MessageInput extends Component {
 
     this.state = {
       input: '',
-      user: '',
-      room: '', 
-      createdAt: '',
     }
 
-    this.socket = ioClient('')
+  this.socket = ioClient('http://localhost:3000')
   }
 
   handleSubmit() {
     this.socket.emit('message', {
       message: this.state.input,
-      from: this.state.user,
-      room: this.state.room,
-      createdAt: this.state.createdAt
+      from: this.props.user,
+      room: this.props.roomId,
     });
   }
 
@@ -34,6 +30,7 @@ class MessageInput extends Component {
       /> 
       <Button 
         onPress={this.handleSubmit.bind(this)}
+        name="Send"
       />
     </View> 
   }
