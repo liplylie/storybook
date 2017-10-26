@@ -26,10 +26,33 @@ class Friends extends Component {
     })
   }
 
+  sendRequest(friendId) {
+    axios.post('/api/addFriend', {
+      friendId: friendId,
+      userId: this.props.userId,
+      type: 'pending'
+    })
+    .then(({ data }) => {
+      console.log('Success sending request', data);
+    })
+    .catch(err => {
+      console.log('Request failed', err);
+    })
+  }
+
   componentDidMount() {
     axios.get('api/friends/' + this.props.userId)
     .then(({ data }) => {
-      this.setState({friends: data})
+    //   data.map(data => {
+    //     if (data.user_id !== this.props.userId) {
+    //       this.setState({ friends: this.state.friends.push(data.user_id)})
+    //     }
+    //     if (data.friend_id !== this.props.userId) {
+    //       this.setState({ friends: this.state.friends.push(data.friend_id)})
+    //     }
+    //   })
+    // })
+      this.setState({friends: data}); 
     })
     .catch(err => {
       console.log('failed to retrieve friends', err);
@@ -51,7 +74,7 @@ class Friends extends Component {
             title="Messages"
           /> 
           {this.state.results.map(result => {
-            <FriendsEntry img={result.img} name={result.name} /> 
+            <FriendsEntry sendRequest={this.sendRequest.bind(this)} friends={this.state.friends} id={result.id} img={result.profile_img_url} name={result.name} /> 
           })}
       </View> 
       )

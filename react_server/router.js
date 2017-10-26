@@ -10,6 +10,7 @@ router.post('/chat', roomController.createRoom);
 
 router.get('/friends/:userId', friendController.getFriendList)
 router.get('/friends/:friendId', friendController.getFriendInfo) 
+router.get('/:friendId', friendController.getFriendProfile)
 
 router.post('/addFriend', friendController.sendRequest)
 router.get('/requests/:userId', friendController.getRequests)
