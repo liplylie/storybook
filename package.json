@@ -5,7 +5,7 @@
   "scripts": {
     "compile": "webpack -d",
     "compile-watch": "webpack --watch",
-    "start-node": "nodemon server2/server.js",
+    "start-node": "nodemon react_server/server.js",
     "test": "jest",
     "ebs": "npm run compile && npm run start-node",
     "postinstall": "node react_server/server.js"

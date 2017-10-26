@@ -73,6 +73,7 @@ client/static/gen
 *.webassets-cache
 *.pyc
 *.log
+client/public/bundle.js
 ios/
 android/
 __tests__/
