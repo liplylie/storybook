@@ -13,8 +13,12 @@ module.exports = {
           friend_id: req.params.userId,
           friend_type: 'friend'
         },
-      ]
-      }})
+      ]},
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
+    })
     .then(data => {
       res.send(data);
     })
@@ -22,19 +26,19 @@ module.exports = {
       res.status(500).send(err); 
     })
   },
-  getFriendInfo: (req, res) => {
-    //get user info as object using req.params.friendId
-    db.User.findAll({
-      where: {id: req.params.friendId},
-      attributes: [name, profile_image_url],
-    })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send(err); 
-    })
-  }, 
+  // getFriendInfo: (req, res) => {
+  //   //get user info as object using req.params.friendId
+  //   db.User.findAll({
+  //     where: {id: req.params.friendId},
+  //     attributes: [name, profile_image_url],
+  //   })
+  //   .then(data => {
+  //     res.send(data);
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send(err); 
+  //   })
+  // }, 
   sendRequest: (req, res) => {
     //add req.body.userId to req.params.friendId friend's pending friend requests
     db.Relationships.create({ 
@@ -101,17 +105,15 @@ module.exports = {
         res.status(500).send(err);
       })
     })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    })
   },
   search: (req, res) => {
     if (!req.params.lastName) {
       db.Relationships.findAll({
-        where: {first_name: req.params.firstName}
+        where: {first_name: req.params.firstName},
+        include: [{
+          model: User,
+          attributes: [name, profile_image_url]
+        }]
       })
       .then(data => {
         res.send(data); 
@@ -124,7 +126,11 @@ module.exports = {
         where: {
           first_name: req.params.firstName,
           last_name: req.params.lastName
-        }
+        },
+        include: [{
+          model: User,
+          attributes: [name, profile_image_url]
+        }]
       }) 
       .then(data => {
         res.send(data); 
