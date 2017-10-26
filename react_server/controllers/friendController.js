@@ -4,7 +4,7 @@ module.exports = {
   getFriendList: (req, res) => {
     //return array of friend ids using req.params.userId
     db.Relationships.findAll({
-      where: Sequelize.Or(
+      where: Sequelize.or(
         {
           user_id: req.params.userId,
           friend_type: 'friend'
@@ -64,7 +64,8 @@ module.exports = {
   },
   blockUser: (req, res) => {
     db.Relationships.update({
-      where: Sequelize.Or(
+      where: {
+        [Op.or]: [
         {
           user_id: req.body.userId,
           friend_id: req.body.friendId,
@@ -75,7 +76,8 @@ module.exports = {
           friend_id: req.body.userId,
           type: 'blocked'
         },
-    )})
+      ]
+    })
   },
   search: (req, res) => {
     if (!req.params.lastName) {

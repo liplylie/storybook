@@ -5,7 +5,7 @@ module.exports = {
   getRooms: (req, res) => {
     //get a user's array of room IDs using req.params.userId
     db.Chatroom.findAll({
-      where: Sequelize.OR(
+      where: Sequelize.or(
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
     )})
@@ -23,7 +23,7 @@ module.exports = {
     //else create room
       //return roomId
     db.Chatroom.findAll({
-      where: Sequelize.Or(
+      where: Sequelize.or(
         {
           chatroom_sender: req.body.userId, 
           chatroom_recipient: req.body.friendId
