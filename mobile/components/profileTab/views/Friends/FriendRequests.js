@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
+import axios from 'axios'
 
 import Request from './Request'
 //need function to delete request 
