@@ -1,11 +1,12 @@
 const db = require('../db/config');
 const Chatroom = require('../db/models/chatroom');
+const { or } = require('sequelize');
 
 module.exports = {
   getRooms: (req, res) => {
     //get a user's array of room IDs using req.params.userId
     Chatroom.findAll({
-      where: { [Op.or] : [
+      where: { [or] : [
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
       ]},
