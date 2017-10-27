@@ -34,7 +34,7 @@ io.on('connection', socket => {
   socket.on('message', message => {
     // console.log('server received message ', io.engine.clientsCount);
     // console.log('this is the message room', message);
-    socket.broadcast.to(message.roomId).emit('message', {
+    socket.broadcast.to(message.roomId.toString()).emit('message', {
       message: message.message,
       sender: message.userId,
       room_id: message.roomId

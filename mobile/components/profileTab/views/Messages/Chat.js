@@ -17,7 +17,7 @@ class Chat extends Component {
   }
   
   componentDidMount() {
-    // this.socket.emit('subscription', this.props.room);
+    // this.socket.emit('subscription', this.props.roomId.toString());
     // this.socket.on('message', message => {
     //   this.setState({messages: this.state.messages.concat(message)})
     // }); 

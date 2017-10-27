@@ -24,7 +24,7 @@ class MessageInput extends Component {
           onSubmitEditing={this.props.handleSubmit(this.state.input)}
         /> 
         <Button 
-          onPress={this.handleSubmit.bind(this)}
+          onPress={() => {this.props.handleSubmit(this.state.input)}}
           title="Send"
         />
       </View> 
