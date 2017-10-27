@@ -45,7 +45,8 @@ friendships = db.Table(
     db.Column('relating_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
                                         primary_key=True),
     db.Column('related_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
-                                        primary_key=True)
+                                        primary_key=True),
+    db.Column('friendship_type', db.String(250)), #blocked, friend
 )
 
 
