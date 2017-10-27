@@ -3,6 +3,7 @@ const parser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
+const cors = require('cors');
 
 const db = require('./db/config'); 
 
@@ -17,6 +18,7 @@ const io = socketIo(server);
 
 app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
+app.use(cors());
 app.use('/api', router)
 // app.use(express.static(path.resolve(__dirname, '../client/public')))
 
