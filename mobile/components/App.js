@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { bindActionCreators } from 'redux'
-
 import TabBarNav from './tabBar/views/TabBarNav'
 import Login from './auth/Login.js'
 import * as AuthActions from '../actions/authActions.js'
+import Spinner from 'react-native-spinkit'
 
 class App extends Component {
   constructor(props) {
@@ -32,11 +32,12 @@ class App extends Component {
             resizeMode='contain'
             source={require('../logo.jpg')} 
           />
-          {authorizing ? <Text>Loading</Text> :<Login />}
+          {authorizing ? <View><Text>Loading</Text><Spinner type='FadingCircle'/></View> :<Login />}
         </View>
       )
     } else {
       return (
+
         <TabBarNav />
       )
     }

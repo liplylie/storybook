@@ -12,7 +12,7 @@ Base= declarative_base()
 class Images(db.Model):
   __tablename__ = 'images'
   id = db.Column(db.Integer, primary_key=True)
-  image_url = db.Column(db.String(250), unique=True)
+  image_url = db.Column(db.String(250))
   scn_code = db.Column(db.String(250), nullable=True)
   longitude = db.Column(db.Float)
   latitude = db.Column(db.Float)

@@ -13,7 +13,7 @@ with open('../sensitive.json') as data_file:
     username = sensitive['username']
     password = sensitive['password']
 
-with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
+with open('../db/sample_metadata/sampleImagesSanFrancisco.json') as data_file:    
     data_images = json.load(data_file)
 
 with open('../db/sample_metadata/sampleUserData.json') as data_file:    

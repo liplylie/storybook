@@ -4,43 +4,82 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
+import Collection from './Collection';
+import { connect } from 'react-redux';
+import Spinner from 'react-native-spinkit';
 
 import Login from '../../auth/Login.js'
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+const Home = (props) => {
+  console.log(props, 'home props')
+    if (props.profileInfo.userLocation){
+      let location = props.profileInfo.userLocation;
+      return (
+          <View style={styles.container}>
+            <View>
+              <View style={styles.logout} >
+                <Login />
+              </View>
+              <Image 
+                style={styles.image}
+                resizeMethod='resize'
+                resizeMode='contain'
+                source={require('../../../logo.jpg')} 
+              />
+              </View>
+              <View style={styles.collection}>
+                <Collection location={location}/>
+              </View>
+          </View>
+      );
+    } else {
+      return (
+        <View style={styles.spinnerContainer}>
+          <Spinner type='FadingCircle' style={styles.spinner}/>
+        </View>
+      )
+    }
   }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image 
-          style={styles.image}
-          resizeMethod='resize'
-          resizeMode='contain'
-          source={require('../../../logo.jpg')} 
-        />
-        <Text>Yes, This is Home View</Text>
-        <Login />
-      </View>
-    );
-  }
-}
-
-export default Home;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    marginTop: 15,
     alignItems: 'center',
     backgroundColor: 'white',
   },
   image: {
     width: 400,
-    height: 200
+    height: 100
+  },
+  collection: {
+    backgroundColor: 'skyblue',
+    flex:1
+  },
+  logout:{
+    marginLeft: 15,
+    width: 10
+  }, 
+  spinnerContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner:{
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
+
+const mapStateToProps = (store) =>{
+ 
+  return {
+    profileInfo: store.Profile
+  }
+}
+
+
+export default connect(mapStateToProps, null)(Home)
