@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import app_config
 from pprint import pprint
 import sqlalchemy_utils
+from sqlalchemy_utils import drop_database
 import json
 
 with open('../sensitive.json') as data_file:    
@@ -39,8 +40,23 @@ db = SQLAlchemy()
 db.init_app(app)
 db.app = app
 
-from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
+from schema import Image, User, friendship, Chatroom, Messages, Comments, Likes
 
+from sqlalchemy.schema import DropTable
+from sqlalchemy.ext.compiler import compiles
+
+@compiles(DropTable, "postgresql")
+def _compile_drop_table(element, compiler, **kwargs):
+    return compiler.visit_drop_table(element) + " CASCADE"
+
+DropTable('chatroom')
+DropTable('comments')
+DropTable('friendships')
+DropTable('image')
+DropTable('likes')
+DropTable('messages')
+DropTable('relationship')
+DropTable('user')
 db.drop_all()
 db.create_all()
 
