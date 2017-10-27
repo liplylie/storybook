@@ -2,8 +2,8 @@ const router = require('express').Router()
 const roomController = require('./controllers/roomController')
 const friendController = require('./controllers/friendController')
 
-router.get('/chats/:userId', roomController.getRooms);
-router.get('/chats/:roomId', roomController.getPreview)
+router.get('/chat/:userId', roomController.getRooms);
+router.get('/chats/:roomId', roomController.getPreview);
 
 //only use from friends view
 router.post('/chat', roomController.createRoom);

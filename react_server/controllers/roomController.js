@@ -4,7 +4,7 @@ const Chatroom = require('../db/models/chatroom');
 module.exports = {
   getRooms: (req, res) => {
     //get a user's array of room IDs using req.params.userId
-    db.Chatroom.findAll({
+    Chatroom.findAll({
       where: { [Op.or] : [
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
