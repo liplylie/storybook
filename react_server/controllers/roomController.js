@@ -21,26 +21,10 @@ module.exports = {
     })
   }, 
   createRoom: (req, res) => {
-    //find where admin = userId and user = friendId OR admin = friendId and userId
-    //using req.body.userId, req.params.friendId 
-      //return roomId
-    //else create room
-      //return roomId
-    db.Chatroom.findOrCreate({
-      where: { [Op.or]: [
-        {
-          chatroom_sender: req.body.userId, 
-          chatroom_recipient: req.body.friendId
-        },
-        {
-          chatroom_sender: req.body.friendId, 
-          chatroom_recipient: req.body.userId
-        },
-      ]},
-      include: [{
-        model: User,
-        attributes: [name, profile_image_url],
-      }]
+    Chatroom.create({
+      chatroom_sender: req.body.userId,
+      chatroom_recipient: req.body.friendId,
+      admin: req.body.username
     })
     .spread((room, created) => {
       res.send(room);
