@@ -5,6 +5,7 @@ import Home from './homeReducer'
 import Profile from './profileReducer'
 import TabBar from './tabBarReducer'
 import CameraPost from './cameraPostReducer'
+import Chat from './cameraReducer'
 
 const reducer = combineReducers({
   Camera,
@@ -12,7 +13,8 @@ const reducer = combineReducers({
   Profile,
   TabBar,
   Auth,
-  CameraPost
+  CameraPost,
+  Chat
 });
 
 export default reducer; 
