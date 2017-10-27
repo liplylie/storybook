@@ -6,14 +6,14 @@ const socketIo = require('socket.io');
 
 const db = require('./db/config'); 
 
-// const router = require('./router')
+const router = require('./router');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 // const redis = require('redis')
-// const client = redis.createClient(); 
+// const client = redis.createClient();
 
 app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
