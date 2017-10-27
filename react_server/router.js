@@ -15,6 +15,7 @@ router.get('/:friendId', friendController.getFriendProfile)
 router.post('/addFriend', friendController.sendRequest)
 router.get('/requests/:userId', friendController.getRequests)
 router.post('/acceptRequest', friendController.acceptRequest)
+router.post('deleteRequest', friendController.deleteRequest)
 
 router.post('/blockUser', friendController.blockUser)
 

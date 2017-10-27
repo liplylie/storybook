@@ -40,6 +40,10 @@ class Friends extends Component {
     })
   }
 
+  getRequests() {
+    
+  }
+
   clearSearch() {
     this.setState({results: []});
   }
@@ -47,16 +51,14 @@ class Friends extends Component {
   componentDidMount() {
     axios.get('api/friends/' + this.props.userId)
     .then(({ data }) => {
-    //   data.map(data => {
-    //     if (data.user_id !== this.props.userId) {
-    //       this.setState({ friends: this.state.friends.push(data.user_id)})
-    //     }
-    //     if (data.friend_id !== this.props.userId) {
-    //       this.setState({ friends: this.state.friends.push(data.friend_id)})
-    //     }
-    //   })
-    // })
-      this.setState({friends: data}); 
+      data.map(data => {
+        if (data.user_id !== this.props.userId) {
+          this.setState({ friends: this.state.friends.concat(data.user_id)})
+        }
+        if (data.friend_id !== this.props.userId) {
+          this.setState({ friends: this.state.friends.concat(data.friend_id)})
+        }
+      })
     })
     .catch(err => {
       console.log('failed to retrieve friends', err);

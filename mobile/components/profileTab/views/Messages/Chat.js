@@ -31,4 +31,11 @@ class Chat extends Component {
   }
 }
 
-export default Chat; 
+const chatState = (state) => {
+  return {
+    room: state.Chat.currentRoom,
+  }
+}
+
+export default connect(chatState)(Chat);
+
