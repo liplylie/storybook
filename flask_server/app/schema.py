@@ -9,8 +9,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base= declarative_base()
 
-class Image(db.Model):
-  __tablename__ = 'image'
+class Images(db.Model):
+  __tablename__ = 'images'
   id = db.Column(db.Integer, primary_key=True)
   image_url = db.Column(db.String(250), unique=True)
   scn_code = db.Column(db.String(250), nullable=True)
@@ -21,11 +21,11 @@ class Image(db.Model):
   image_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
   #foreign keys (this table belongs to...)
-  image_user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))  
+  image_user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))  
 
   #database relationships (this table has many...)
-  image_comments = db.relationship("Comments", backref='image', lazy=True)
-  image_likes = db.relationship("Likes", backref='image', lazy=True)
+  image_comments = db.relationship("Comments", backref='images', lazy=True)
+  image_likes = db.relationship("Likes", backref='images', lazy=True)
 
   def __init__(self, image_url, scn_code, image_user_id, latitude, longitude, likes_count, caption, image_tags_array):
     self.image_url = image_url
@@ -40,63 +40,61 @@ class Image(db.Model):
   def __repr__(self):
     return '<<<Image tags: %r>>>' % self.image_tags_array + ' ' + '<<<image url: %r>>>' % self.image_url
 
-friendship = db.Table(
+friendships = db.Table(
     'friendships',  db.metadata,
-    db.Column('relating_user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), 
+    db.Column('relating_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
                                         primary_key=True),
-    db.Column('related_user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), 
+    db.Column('related_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
                                         primary_key=True)
 )
 
 
-class User(db.Model):
-  __tablename__ = 'user'
+class Users(db.Model):
+  __tablename__ = 'users'
   id = db.Column(db.Integer, primary_key=True)
-  first_name = db.Column(db.String(250))
-  last_name = db.Column(db.String(250))
+  name = db.Column(db.String(250))
   email = db.Column(db.String(250), unique=True)
   profile_image_url = db.Column(db.String(250))
   friends_count = db.Column(db.Integer, nullable=True)
   user_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
   #database relationships (this table has many...)
-  user_images = db.relationship("Image", backref='user', lazy=True)
-  user_messages = db.relationship("Messages", backref='user', lazy=True)
+  user_images = db.relationship("Images", backref='users', lazy=True)
+  user_messages = db.relationship("Messages", backref='users', lazy=True)
   # user_relationships = db.relationship("friendship", backref='user', lazy=True)
-  user_comments = db.relationship("Comments", backref='user', lazy=True)
-  user_likes = db.relationship("Likes", backref='user', lazy=True)
+  user_comments = db.relationship("Comments", backref='users', lazy=True)
+  user_likes = db.relationship("Likes", backref='users', lazy=True)
   # user_sender = db.relationship("Chatroom", backref='user', lazy=True)
   # user_recipient = db.relationship("Chatroom", backref='user', lazy=True)
-  user_friendship = db.relationship("User", secondary=friendship, primaryjoin=id==friendship.c.relating_user_id, secondaryjoin=id==friendship.c.related_user_id)
+  user_friendship = db.relationship("Users", secondary=friendships, primaryjoin=id==friendships.c.relating_user_id, secondaryjoin=id==friendships.c.related_user_id)
 
-  def __init__(self, first_name, last_name, email, profile_image_url, friends_count, user_tags_array):
-    self.first_name = first_name
-    self.last_name = last_name
+  def __init__(self, name, email, profile_image_url, friends_count, user_tags_array):
+    self.name = name
     self.email = email
     self.profile_image_url = profile_image_url
     self.friends_count = friends_count
     self.user_tags_array = user_tags_array
 
   def __repr__(self):
-    return '| User: %r>>>' % self.first_name + ' ' + '<<<user friends count: %r>>>' % self.friends_count + ' ' + '<<<user tags: %r>>>' % self.user_tags_array
+    return '| Users: %r>>>' % self.name + ' ' + '<<<user friends count: %r>>>' % self.friends_count + ' ' + '<<<user tags: %r>>>' % self.user_tags_array
 
 
 
 # this relationship is viewonly and selects across the union of all
 # friends
 friendship_union = select([
-                        friendship.c.relating_user_id, 
-                        friendship.c.related_user_id
+                        friendships.c.relating_user_id, 
+                        friendships.c.related_user_id
                         ]).union(
                             select([
-                                friendship.c.related_user_id, 
-                                friendship.c.relating_user_id]
+                                friendships.c.related_user_id, 
+                                friendships.c.relating_user_id]
                             )
                     ).alias()
-User.all_friends = relationship('User',
+Users.all_friends = relationship('Users',
                        secondary=friendship_union,
-                       primaryjoin=User.id==friendship_union.c.relating_user_id,
-                       secondaryjoin=User.id==friendship_union.c.related_user_id,
+                       primaryjoin=Users.id==friendship_union.c.relating_user_id,
+                       secondaryjoin=Users.id==friendship_union.c.related_user_id,
                        viewonly=True) 
 
 # class Friendship(db.Model):
@@ -118,17 +116,17 @@ User.all_friends = relationship('User',
   # def __repr__(self):
   #   return '| relating_user_id: %r>>>' % self.relating_user_id + ' ' + '<<< related_user_id: %r>>>' % self.related_user_id + ' ' + '<<<relationship_type: %r>>>' % self.relationship_type
 
-class Chatroom(db.Model):
-  __tablename__ = 'chatroom'
+class Chatrooms(db.Model):
+  __tablename__ = 'chatrooms'
   id = db.Column(db.Integer, primary_key=True)
-  admin = db.Column(db.String(250))
+  admin = db.Column(db.String(250), nullable=True)
 
   #foreign keys (this table belongs to...)
-  chatroom_sender = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))
-  chatroom_recipient = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))
+  chatroom_sender = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
+  chatroom_recipient = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
 
   #database relationships (this table has many...)
-  chatroom_messages = db.relationship("Messages", backref='chatroom', lazy=True)
+  chatroom_messages = db.relationship("Messages", backref='chatrooms', lazy=True)
 
   def __init__(self, admin):
     self.admin = admin
@@ -136,15 +134,15 @@ class Chatroom(db.Model):
   def __repr__(self):
     return '<<<image_id: %r>>>' % self.sender_name
 
+
 class Messages(db.Model):
   __tablename__ = 'messages'
   id = db.Column(db.Integer, primary_key=True)
   message = db.Column(db.String(250))
 
   #foreign keys (this table belongs to...)
-  
-  message_chatroom = db.Column(db.Integer, db.ForeignKey("chatroom.id"))
-  sender = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'))
+  message_chatroom = db.Column(db.Integer, db.ForeignKey("chatrooms.id"))
+  sender = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
 
   def __init__(self, user_id, message, room_id):
     self.user_id = user_id
@@ -154,6 +152,7 @@ class Messages(db.Model):
   def __repr__(self):
     return '<<<user_id: %r>>>' % self.user_id + ' ' + '<<<message: %r>>>' % self.message + ' ' + '<<<room_id: %r>>>' % self.room_id
 
+
 class Comments(db.Model):
   __tablename__ = 'comments'
   id = db.Column(db.Integer, primary_key=True)
@@ -161,12 +160,11 @@ class Comments(db.Model):
   likes_count = db.Column(db.Integer, nullable=True)
 
   #foreign keys (this table belongs to...)
-  comment_user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE')) 
-  comment_image_id = db.Column(db.Integer, db.ForeignKey("image.id")) 
+  comment_user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE')) 
+  comment_image_id = db.Column(db.Integer, db.ForeignKey("images.id")) 
 
   #database relationships (this table has many...)
   comment_likes = db.relationship("Likes", backref='comments', lazy=True)
-  
 
   def __init__(self,text, likes_count, comment_user_id, comment_image_id):
     self.text = text
@@ -177,14 +175,15 @@ class Comments(db.Model):
   def __repr__(self):
     return '<<<image_id: %r>>>' % self.image_id + ' ' + '<<<Comment text: %r>>>' % self.text
 
+
 class Likes(db.Model):
   __tablename__ = 'likes'
   id = db.Column(db.Integer, primary_key=True)
   like_type = db.Column(db.String(250))
 
   #foreign keys (this table belongs to...)
-  like_user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE')) 
-  like_image_id = db.Column(db.Integer, db.ForeignKey("image.id")) 
+  like_user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE')) 
+  like_image_id = db.Column(db.Integer, db.ForeignKey("images.id")) 
   like_comment_id = db.Column(db.Integer, db.ForeignKey("comments.id")) 
 
   def __init__(self, like_type, like_user_id, like_image_id, like_comment_id):

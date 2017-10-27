@@ -3,7 +3,7 @@ from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 from app import app, db
-from schema import Image, User, friendship, Chatroom, Messages, Comments, Likes
+from schema import Images, Users, friendships, Chatrooms, Messages, Comments, Likes
 from azure_get_tags import get_tags
 from werkzeug.datastructures import ImmutableMultiDict
 from pprint import pprint
@@ -40,7 +40,7 @@ def add_user():
   friends_count = request_data["friends_count"][0]
   user_tags = ['none']
 
-  db.session.add(User(parsed_name, friends_count, user_tags)) #replace later with actual values
+  db.session.add(Users(parsed_name, friends_count, user_tags)) #replace later with actual values
   db.session.commit()
 
 @app.route('/api/addcomment', methods=['POST'])
@@ -75,7 +75,7 @@ def add_like():
 
 @app.route('/api/get_locs_user', methods=['GET'])
 def grab_all_locations():
-    get_locs_user_query = db.session.query(Image) #returns all images
+    get_locs_user_query = db.session.query(Images) #returns all images
     coords = []
     for i in get_locs_user_query:
       new_loc = {
@@ -93,13 +93,12 @@ def grab_all_locations():
 def get_imgs_by_loc():
     print("grabbing photos by specific location...")
     request_data = dict(request.args)
-    #http://127.0.0.1:5000/api/get_imgs_by_loc?longitude=12&latitude=23.000005
     get_imgs_by_loc_latitude = request_data["latitude"][0]
     get_imgs_by_loc_latitude = float(get_imgs_by_loc_latitude)
     get_imgs_by_loc_longitude = request_data["longitude"][0]
     get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
     
-    get_imgs_by_loc_query = db.session.query(Image).filter((Image.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Image.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Image.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Image.longitude < (get_imgs_by_loc_longitude + 0.001)))
+    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.001)))
     all_images = []
     for j in get_imgs_by_loc_query:
       all_images.append(j.image_url)
@@ -110,23 +109,31 @@ def get_imgs_by_loc():
 
 
 #INCOMPLETE
-@app.route('/api/get_fr_ls_by_loc', methods=['GET'])
-def get_friends_list():
-    print("grabbing friends list...")
-    #get all friends at location, and 1 photo from each friend
-    #images WITHIN a 10 mile radius
-    print(request.args)
+@app.route('/api/get_imgs_by_frs_at_loc', methods=['GET'])
+def get_imgs_by_frs_at_loc():
+    print("grabbing most recent photo from each friend within a 10 mile radius at OP's location...")
     request_data = dict(request.args)
-    print(request_data)
-
-    get_friends_list_user_id = request_data["user_id"][0]
+    # get_imgs_by_frs_at_loc_latitude = request_data["latitude"][0]
+    # get_imgs_by_frs_at_loc_latitude_parsed = float(get_imgs_by_frs_at_loc_latitude)
     
-    # get_friends_list_query = db.session.query(Relationship).filter_by(author_id=get_friends_list_user_id)
-    all_images = []
-    for k in get_imgs_by_loc_query:
-      all_images.append(k.image_url)
-      print(all_images)
-    return all_images
-
-
-#also a new route: get all photos of a friend when you select that friend
+    # get_imgs_by_frs_at_loc_longitude = request_data["longitude"][0]
+    # get_imgs_by_frs_at_loc_longitude_parsed = float(get_imgs_by_frs_at_loc_longitude)
+    
+    # get_imgs_by_frs_at_loc_user_id = request_data["user_id"][0]
+    # get_imgs_by_frs_at_loc_user_id_parsed = float(get_imgs_by_frs_at_loc_user_id)
+    
+    get_list_of_friends_query = db.session.query(Users).filter(Users.user_friendship)
+    print(get_list_of_friends_query)
+    
+    
+    # get_imgs_by_frs_at_loc_latitude_query = db.session.query(Image).filter((Image.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Image.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Image.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Image.longitude < (get_imgs_by_loc_longitude + 0.001)))
+    # get_imgs_by_frs_at_loc_longitude_query = db.session.query()
+    # get_imgs_by_frs_at_loc_user_id = db.session.query()
+    
+    # all_images = []
+    # for j in get_imgs_by_loc_query:
+    #   all_images.append(j.image_url)
+    #   print(all_images)
+    # all_images = str(all_images)
+    # resp = make_response(all_images, 200)
+    # return resp
