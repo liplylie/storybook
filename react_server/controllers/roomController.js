@@ -11,9 +11,9 @@ module.exports = {
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
       ]},
-      include: [{
-        model: User
-      }]
+      // include: [{
+      //   model: User
+      // }]
     })
     .then(data => {
       res.status(201).send(data);
