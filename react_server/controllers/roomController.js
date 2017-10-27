@@ -1,5 +1,6 @@
 const db = require('../db/config');
 const Chatroom = require('../db/models/chatroom');
+const User = require('../db/models/user');
 const { or } = require('sequelize');
 
 module.exports = {
