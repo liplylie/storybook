@@ -8,7 +8,7 @@ const Chatroom = db.define('chatroom', {
   chatroom_sender: {
     type: Sequelize.INTEGER
   },
-  chatroom_recipent: {
+  chatroom_recipient: {
     type: Sequelize.INTEGER
   },
 });
