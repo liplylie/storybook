@@ -40,7 +40,7 @@ db = SQLAlchemy()
 db.init_app(app)
 db.app = app
 
-from schema import Image, User, friendship, Chatroom, Messages, Comments, Likes
+from schema import Images, Users, friendships, Chatrooms, Messages, Comments, Likes
 
 from sqlalchemy.schema import DropTable
 from sqlalchemy.ext.compiler import compiles
@@ -49,29 +49,30 @@ from sqlalchemy.ext.compiler import compiles
 def _compile_drop_table(element, compiler, **kwargs):
     return compiler.visit_drop_table(element) + " CASCADE"
 
-DropTable('chatroom')
+DropTable('chatrooms')
 DropTable('comments')
 DropTable('friendships')
-DropTable('image')
+DropTable('images')
 DropTable('likes')
 DropTable('messages')
-DropTable('relationship')
-DropTable('user')
+DropTable('relationships')
+DropTable('users')
+
 db.drop_all()
 db.create_all()
 
 for j in data_users:
-  db.session.add(User(j['first_name'],  j['last_name'], j['email'], j['profile_image_url'], j['friends_count'], j['user_tags_array']))
+  db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count'], j['user_tags_array']))
 db.session.commit()
 
 for i in data_images:
-  db.session.add(Image(i['image_url'],  i['scn_code'], i['image_user_id'], i['latitude'], i['longitude'], i['likes_count'], i['caption'], i['image_tags_array']))
+  db.session.add(Images(i['image_url'],  i['scn_code'], i['image_user_id'], i['latitude'], i['longitude'], i['likes_count'], i['caption'], i['image_tags_array']))
 db.session.commit()
 
-query_user = User.query.all()
+query_user = Users.query.all()
 print(query_user)
 
-query_image = Image.query.all()
+query_image = Images.query.all()
 print(query_image)
 
 ##############################
