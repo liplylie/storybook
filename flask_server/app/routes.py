@@ -3,7 +3,7 @@ from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 from app import app, db
-from schema import Image, User, Relationship, Chatroom, Messages, Comments, Likes
+from schema import Image, User, friendship, Chatroom, Messages, Comments, Likes
 from azure_get_tags import get_tags
 from werkzeug.datastructures import ImmutableMultiDict
 from pprint import pprint
@@ -104,7 +104,9 @@ def get_imgs_by_loc():
     for j in get_imgs_by_loc_query:
       all_images.append(j.image_url)
       print(all_images)
-    return all_images  
+    all_images = str(all_images)
+    resp = make_response(all_images, 200)
+    return resp  
 
 
 #INCOMPLETE
@@ -119,7 +121,7 @@ def get_friends_list():
 
     get_friends_list_user_id = request_data["user_id"][0]
     
-    get_friends_list_query = db.session.query(Relationship).filter_by(author_id=get_friends_list_user_id)
+    # get_friends_list_query = db.session.query(Relationship).filter_by(author_id=get_friends_list_user_id)
     all_images = []
     for k in get_imgs_by_loc_query:
       all_images.append(k.image_url)
