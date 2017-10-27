@@ -61,7 +61,7 @@ class Team extends Component {
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
-            <img src="http://via.placeholder.com/300x500" alt=""/>
+            <img src="https://s3-us-west-2.amazonaws.com/storybooknativeapp/adminPictures/image.jpg" alt=""/>
           </div>
         </div>
       </div>
