@@ -17,38 +17,49 @@ class Chat extends Component {
   }
   
   componentDidMount() {
-    this.socket.emit('subscription', this.props.room);
-    this.socket.on('message', message => {
-      this.setState({messages: this.state.messages.concat(message)})
-    }); 
+    // this.socket.emit('subscription', this.props.room);
+    // this.socket.on('message', message => {
+    //   this.setState({messages: this.state.messages.concat(message)})
+    // }); 
   }
 
   componentWillUnmount() {
     //disconnect from socket
   }
 
+  handleSubmit(input) {
+    this.socket.emit('message', {
+      message: input,
+      from: this.props.userId,
+      room: this.props.roomId,
+    });
+  }
+
   render () {
     const {navigate} = this.props.navigation;
-    <View>
-      <Button 
-        name="Back"
-        onPress={() => {
-          navigate('Messages'); 
-        }}
-      /> 
-      <MessageInput /> 
-      {this.state.messages.map(message => {
-        <ChatBubble message={message.message} sender={message.sender}/> 
-      })}
-    </View>
+    return (
+      <View>
+        <Button 
+          title="Back"
+          onPress={() => {
+            navigate('Messages'); 
+          }}
+        /> 
+        <MessageInput handleSubmit={this.handleSubmit.bind(this)}/> 
+        {this.state.messages.map(message => {
+          <ChatBubble message={message.message} sender={message.sender}/> 
+        })}
+      </View>
+    )
   }
 }
 
-const chatState = (state) => {
+const chatStore = (store) => {
   return {
-    room: state.Chat.currentRoom,
+    room: store.Chat.currentRoom,
+    userId: store.Auth.userId
   }
 }
 
-export default connect(chatState)(Chat);
+export default connect(chatStore)(Chat);
 
