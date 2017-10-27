@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+const key = require('../../sensitive.json');
 
-const db = new Sequelize(process.env.DATABASE_URL);
+const db = new Sequelize('postgres://'+key.username+':'+key.password+'@'+key.rds_endpoint+'/'+key.username);
 
 db.authenticate()
 .then(() => {
