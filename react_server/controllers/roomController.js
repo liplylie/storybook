@@ -12,8 +12,7 @@ module.exports = {
         {chatroom_recipient: req.params.userId}
       ]},
       include: [{
-        model: User,
-        attributes: [name, profile_image_url],
+        model: User
       }]
     })
     .then(data => {
