@@ -3,7 +3,7 @@ import { View, Button } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-import SearchBar from 'react-native-elements'
+import { SearchBar } from 'react-native-elements'
 import FriendsEntry from './FriendsEntry'
 
 class Friends extends Component {

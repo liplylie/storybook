@@ -56,3 +56,5 @@ class FriendRequests extends Component {
     </View>
   }
 }
+
+export default FriendRequests;

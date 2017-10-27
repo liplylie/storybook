@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios' 
 import { View, Button } from 'react-native'
+import { connect } from 'react-redux'
 
 import io from 'socket.io-client'
 
@@ -22,12 +23,18 @@ class Chat extends Component {
     }); 
   }
 
+  componentWillUnmount() {
+    //disconnect from socket
+  }
+
   render () {
     const {navigate} = this.props.navigation;
     <View>
       <Button 
         name="Back"
-        onPress={() => navigate('Messages')}
+        onPress={() => {
+          navigate('Messages'); 
+        }}
       /> 
       <MessageInput /> 
       {this.state.messages.map(message => {

@@ -17,3 +17,5 @@ const Request = (props) => {
     </View> 
   )
 }
+
+export default Request; 

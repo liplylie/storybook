@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
+import axios from 'axios'
 
-import SearchBar from 'react-native-elements'
+import MessageEntry from './MessageEntry'
+import { SearchBar } from 'react-native-elements'
 
 class Messages extends Component {
   constructor(props) {
@@ -22,11 +24,11 @@ class Messages extends Component {
   }
 
   render() {
+    let friend = '';
     return (
       <View>
         <SearchBar /> 
-        {this.state.rooms.forEach((room) => {
-          const friend; 
+        {/* {this.state.rooms.forEach((room) => {
           if (room.chatroom_sender !== this.props.userId) {
             friend = room.chatroom_sender; 
           } else {
@@ -43,7 +45,7 @@ class Messages extends Component {
           .catch(err => {
             console.log('error getting previews', err);
           })
-        })}
+        })} */}
       </View> 
     )
   }
@@ -55,4 +57,4 @@ const mapStateToProps = (store) => {
    }
  }
 
-export default connect(mapStateToProps)(Messages);
+export default connect(mapStateToProps, null)(Messages);
