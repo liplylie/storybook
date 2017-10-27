@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 
 import axios from 'axios'
@@ -25,10 +25,12 @@ class Messages extends Component {
 
   render() {
     let friend = '';
+    const {navigate} = this.props.navigation;
     return (
       <View>
         <SearchBar /> 
-        {/* {this.state.rooms.forEach((room) => {
+        <Button title="Back" onPress={() => navigate('Friends')} /> 
+        {this.state.rooms.forEach((room) => {
           if (room.chatroom_sender !== this.props.userId) {
             friend = room.chatroom_sender; 
           } else {
@@ -45,7 +47,7 @@ class Messages extends Component {
           .catch(err => {
             console.log('error getting previews', err);
           })
-        })} */}
+        })}
       </View> 
     )
   }
