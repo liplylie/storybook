@@ -26,7 +26,7 @@ module.exports = {
       //return roomId
     //else create room
       //return roomId
-    db.Chatroom.findAll({
+    db.Chatroom.findOrCreate({
       where: { [Op.or]: [
         {
           chatroom_sender: req.body.userId, 
@@ -42,27 +42,8 @@ module.exports = {
         attributes: [name, profile_image_url],
       }]
     })
-    .then(data => {
-      if (data.length) {
-        res.send(data);
-      } else {
-        db.Chatroom.create({
-          chatroom_sender: req.body.userId,
-          chatroom_recipient: req.params.friendId,
-        }, 
-        {
-          include: [{
-            model: User,
-            attributes: [name, profile_image_url],
-          }]
-        })
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send(err); 
-        })
-      }
+    .spread((room, created) => {
+      res.send(room);
     })
     .catch(err => {
       res.status(500).send(err);

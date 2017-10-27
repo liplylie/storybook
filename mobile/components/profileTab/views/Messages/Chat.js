@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios' 
+import { View, Button } from 'react-native'
+import { connect } from 'react-redux'
 
 import io from 'socket.io-client'
 
@@ -21,8 +23,19 @@ class Chat extends Component {
     }); 
   }
 
+  componentWillUnmount() {
+    //disconnect from socket
+  }
+
   render () {
+    const {navigate} = this.props.navigation;
     <View>
+      <Button 
+        name="Back"
+        onPress={() => {
+          navigate('Messages'); 
+        }}
+      /> 
       <MessageInput /> 
       {this.state.messages.map(message => {
         <ChatBubble message={message.message} sender={message.sender}/> 
@@ -31,4 +44,11 @@ class Chat extends Component {
   }
 }
 
-export default Chat; 
+const chatState = (state) => {
+  return {
+    room: state.Chat.currentRoom,
+  }
+}
+
+export default connect(chatState)(Chat);
+

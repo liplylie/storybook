@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 
+import axios from 'axios'
 
-import SearchBar from 'react-native-elements'
+import MessageEntry from './MessageEntry'
+import { SearchBar } from 'react-native-elements'
 
 class Messages extends Component {
   constructor(props) {
@@ -22,11 +24,13 @@ class Messages extends Component {
   }
 
   render() {
+    let friend = '';
+    const {navigate} = this.props.navigation;
     return (
       <View>
         <SearchBar /> 
+        <Button title="Back" onPress={() => navigate('Friends')} /> 
         {this.state.rooms.forEach((room) => {
-          const friend; 
           if (room.chatroom_sender !== this.props.userId) {
             friend = room.chatroom_sender; 
           } else {
@@ -34,7 +38,11 @@ class Messages extends Component {
           }
           axios.get('/chats/' + room.id)
           .then(({ data }) => {
-            <MessageEntry navigation={this.props.navigation} message={data.message} friend={friend.User.name} img={friend.User.img}/> 
+            <MessageEntry 
+              navigation={this.props.navigation} 
+              roomId={room.id} message={data.message} 
+              friend={friend.User.name} 
+              img={friend.User.img}/> 
           })
           .catch(err => {
             console.log('error getting previews', err);
@@ -51,4 +59,4 @@ const mapStateToProps = (store) => {
    }
  }
 
-export default connect(mapStateToProps)(Messages);
+export default connect(mapStateToProps, null)(Messages);

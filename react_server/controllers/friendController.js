@@ -92,6 +92,26 @@ module.exports = {
       res.status(500).send(err);
     })
   },
+  deleteRequest: (req, res) => {
+    //add req.params.friendId to current user's friend list and vice versa
+    db.Relationships.destroy({
+      where: {
+        user_id: req.body.userId,
+        friend_id: req.body.friendId,
+      },
+      include: [{
+        model: User,
+        attributes: [name, profile_image_url],
+      }]
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
+  },
+  //delete request
   blockUser: (req, res) => {
     db.Relationships.update({
       where: { [Op.or]: [
@@ -114,6 +134,7 @@ module.exports = {
       })
     })
   },
+  //remove friend
   search: (req, res) => {
     if (!req.params.lastName) {
       db.Relationships.findAll({

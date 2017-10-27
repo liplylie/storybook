@@ -8,3 +8,5 @@ const ChatBubble = (props) => {
     </View>
   )
 }
+
+export default ChatBubble;
