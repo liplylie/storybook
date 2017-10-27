@@ -9,8 +9,8 @@ class Home extends Component {
   render() {
     return (
       <div className="container" style={{marginTop: 40}}>
-        <div className="row" style={{paddingTop: 40}}>
-          <div className="col" style={{textAlign: 'right'}}>
+        <div className="row" style={{paddingTop: 40, height: '100vh'}}>
+          <div className="col align-self-center" style={{textAlign: 'right'}}>
             <img src="http://via.placeholder.com/300x500" />
           </div>
           <div className="col align-self-center" style={{textAlign: 'center'}}>
