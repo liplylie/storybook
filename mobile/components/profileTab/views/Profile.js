@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import UserMap from './map.js'
 
@@ -11,18 +11,37 @@ const Profile = ( props ) => {
 		let email = props.profileInfo.Auth.email;
 		let picture = props.profileInfo.Auth.picture;
 		let id = props.profileInfo.Auth.id;
+		let friendIcon = "https://cdn.pixabay.com/photo/2016/11/14/17/39/group-1824146_960_720.png"
+
+		const viewFriends = () => {
+    	props.navigation.navigate("Friends")
+  	}
 
 		return (
 	    <ScrollView style={styles.profileContainer}>
+
 	    	<View style ={styles.profileDetails}>
-	    		<Image source={{uri:picture}} style={styles.profilePicture}/>
-	      	<Text style={styles.profileName}>
-	      		Name: {name}
-	      		</Text>
-	      	<Text style={styles.profileEmail}>
-	      		Email: {email}
-	      	</Text>
-	      </View>
+	    		<View style={{flexDirection: 'row', flex: 1}}>
+		    		<Image source={{uri:picture}} style={styles.profilePicture}/>
+		    		<View style={{ marginLeft: 180}}>
+			    		<TouchableHighlight onPress={viewFriends}>
+			      		<Image source={{uri:friendIcon}} style ={styles.friendIcon}/> 
+			      	</TouchableHighlight>
+		      	</View>
+		    	</View>
+		      	<Text style={styles.profileName}>
+		      		Name: {name}
+		      		</Text>
+		      	<Text style={styles.profileEmail}>
+		      		Email: {email}
+		      	</Text>
+		    </View>
+
+
+
+
+
+
 	      <View style={styles.profileMap}>
 	      	<UserMap navigation={props.navigation}/>
 	      </View>
@@ -61,6 +80,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderRadius: 10
 	}, 
+	friendIcon: {
+		width: 100, 
+		height: 60,
+		borderRadius: 10
+	},
 	profileName: {
 		paddingLeft: 10,
 		paddingTop: 15

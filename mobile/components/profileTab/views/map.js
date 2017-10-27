@@ -114,6 +114,7 @@ class UserMap extends Component {
     navigator.geolocation.clearWatch(this.watchID)
   }
 
+
   viewTargetPictures(e){
     // e contains coordinate info
     console.log(e.nativeEvent, ' press marker')

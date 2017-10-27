@@ -17,6 +17,6 @@ const routeConfig = {
 // going to disable the header for now
 const stackNavigatorConfig = {
   headerMode: 'none',
-  initialRouteName: 'Friends'
+  initialRouteName: 'Profile'
 }
 export const ProfileNavigator = StackNavigator(routeConfig,stackNavigatorConfig)
