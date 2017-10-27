@@ -11,6 +11,8 @@ const Chatroom = db.define('chatroom', {
   chatroom_recipient: {
     type: Sequelize.INTEGER
   },
+}, {
+  timestamps: false
 });
 
 Chatroom.sync();
