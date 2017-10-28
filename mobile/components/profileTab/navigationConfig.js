@@ -5,9 +5,7 @@ import Messages from './views/Messages/Messages'
 import Chat from './views/Messages/Chat'
 import UserMap from './views/map.js'
 import PicturesFromMarker from './views/picturesFromMarker'
-//only uncommented ARView if it is installed
-//import ARView from '../homeTab/views/AR.js'
-
+import FriendRequests from './views/Friends/FriendRequests'
 
 const routeConfig = {
   Profile: { screen: Profile},
@@ -21,6 +19,6 @@ const routeConfig = {
 // going to disable the header for now
 const stackNavigatorConfig = {
   headerMode: 'none',
-  initialRouteName: 'Chat'
+  initialRouteName: 'Profile'
 }
 export const ProfileNavigator = StackNavigator(routeConfig,stackNavigatorConfig)

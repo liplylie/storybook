@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as chatActions from '../../../../actions/chatActions'
 
 // const MessageEntry = (props) => {
 //   const {navigate} = this.props.navigate;
@@ -37,16 +39,18 @@ class MessageEntry extends Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
-      <TouchableWithoutFeedback 
-        onPress={() => {
-          this.props.actions.enterRoom(this.props.roomId)
-          navigate('Chat');
-        }}
-      >
-        <Text>{this.props.friend}</Text>
+      <View>
+        <TouchableWithoutFeedback 
+          onPress={() => {
+            this.props.actions.enterRoom(this.props.roomId)
+            navigate('Chat');
+          }}
+          >
+          <Text>{this.props.friend}</Text>
+        </TouchableWithoutFeedback> 
         <Text>{this.props.message}</Text>
         <Image source={this.props.img}/>
-      </TouchableWithoutFeedback> 
+      </View>
     )
   }
 }

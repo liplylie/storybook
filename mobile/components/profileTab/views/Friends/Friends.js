@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button } from 'react-native'
+import { View, Button, TouchableWithoutFeedback } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -10,8 +10,8 @@ class Friends extends Component {
   constructor(props) {
     super(props); 
     this.state = {
-      friends: [], 
-      results: [],
+      friends: [{id: 1, img: "", name: "Angie"}, {id: 2, img: "", name: "Jordan"}  ], 
+      results: [{id: 2, img: "", name: "Jeff"}, {id: 4, img: "", name: "Daniel"}],
       input: ''
     }
   }
@@ -71,26 +71,37 @@ class Friends extends Component {
       return (
         <View>
           <SearchBar
-            placeholder="Search friends"
+            placeholder="Search"
             onChangeText={(text) => {this.setState({input: text})}}
             onSubmitEditing={() => {
               this.searchFriends(this.state.input.split(' ')[0], this.state.input.split(' ')[1]);
-              clear(); 
             }}
             //add icon to clear searches
           /> 
           <Button
             onPress={() => navigate('Messages')}
-            title="Messages"
+            title="Go to messages"
+          /> 
+          <Button
+            onPress={() => navigate('FriendRequests')}
+            title="Go to friend requests"
+          /> 
+          <Button
+            onPress={() => navigate('Profile')}
+            title="Go back to profile"
           /> 
           {this.state.results.map(result => {
-            <FriendsEntry 
-              sendRequest={this.sendRequest.bind(this)} 
-              friends={this.state.friends} 
-              id={result.id} 
-              img={result.profile_img_url} 
-              name={result.name}
-            /> 
+            return ( 
+              <TouchableWithoutFeedback>
+                <FriendsEntry 
+                  sendRequest={this.sendRequest.bind(this)} 
+                  friends={this.state.friends} 
+                  id={result.id} 
+                  img={result.profile_img_url} 
+                  name={result.name}
+                /> 
+              </TouchableWithoutFeedback>
+            )
           })}
       </View> 
       )
@@ -98,6 +109,7 @@ class Friends extends Component {
       return (
         <View>
           <SearchBar 
+            placeholder="Search"
             searchFriends={this.searchFriends.bind(this)} 
             onChangeText={(text) => {this.setState({input: text})}}
             onSubmitEditing={() => {
@@ -108,13 +120,21 @@ class Friends extends Component {
           />
           <Button
             onPress={() => navigate('Messages')}
-            title="Messages"
+            title="Go to messages"
+          /> 
+          <Button
+            onPress={() => navigate('FriendRequests')}
+            title="Go to friend requests"
           /> 
           {this.state.friends.map(friend => {
-            <FriendsEntry 
-              img={friend.profile_img_url} 
-              name={friend.name}
-            /> 
+            return (
+              <TouchableWithoutFeedback>
+                <FriendsEntry 
+                  img={friend.profile_img_url} 
+                  name={friend.name}
+                /> 
+              </TouchableWithoutFeedback>
+            ) 
           })} 
         </View> 
       )

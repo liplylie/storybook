@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
 import axios from 'axios' 
-import { View, Button } from 'react-native'
+import { View, Button, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import io from 'socket.io-client'
 
 import MessageInput from './MessageInput'
+import ChatBubble from './ChatBubble'
 
 class Chat extends Component { 
   constructor(props) {
     super(props);
     this.state = { 
-      messages: [],
+      messages: [{message: "hello", sender: "angie", roomId: "1"}, {message: "hello", sender: "daniel", roomId: "1"}],
     }
-    this.socket = io('http://localhost:3000')
+    this.socket = io('http://slocalhost:3000')
   }
   
   componentDidMount() {
     // this.socket.emit('subscription', this.props.roomId.toString());
-    // this.socket.on('message', message => {
-    //   this.setState({messages: this.state.messages.concat(message)})
-    // }); 
+    this.socket.emit('subscription', "1");
+    this.socket.on('message', message => {
+      this.setState({messages: this.state.messages.concat(message)})
+    }); 
   }
 
   componentWillUnmount() {
@@ -28,15 +30,18 @@ class Chat extends Component {
   }
 
   handleSubmit(input) {
-    this.socket.emit('message', {
+    let message = {
       message: input,
-      from: this.props.userId,
-      room: this.props.roomId,
-    });
+      sender: "angie",
+      roomId: "1"
+    }
+    this.socket.emit('message', message);
+    this.setState({messages: this.state.messages.concat(message)});
   }
 
   render () {
     const {navigate} = this.props.navigation;
+    console.log(this.state.messages);
     return (
       <View>
         <Button 
@@ -46,8 +51,11 @@ class Chat extends Component {
           }}
         /> 
         <MessageInput handleSubmit={this.handleSubmit.bind(this)}/> 
+        <Text>Messages</Text>
         {this.state.messages.map(message => {
-          <ChatBubble message={message.message} sender={message.sender}/> 
+          return  ( 
+            <Text>{message.sender}:{message.message}</Text> 
+          )
         })}
       </View>
     )
@@ -57,7 +65,7 @@ class Chat extends Component {
 const chatStore = (store) => {
   return {
     room: store.Chat.currentRoom,
-    userId: store.Auth.userId
+    // userId: store.Auth.userId
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Button } from 'react-native'
 
 
 const FriendsEntry = (props) => {
@@ -20,7 +20,7 @@ const FriendsEntry = (props) => {
         />
         <Text>{props.name}</Text> 
         <Button
-          name='Add friend'
+          title="Add friend"
           onPress={() => this.props.sendRequest(props.id)}
         /> 
       </View> 

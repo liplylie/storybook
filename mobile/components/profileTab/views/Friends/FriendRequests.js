@@ -9,7 +9,7 @@ class FriendRequests extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requests: [], 
+      requests: [{friend: "Daniel"}], 
     }
   }
   
@@ -35,25 +35,28 @@ class FriendRequests extends Component {
   // }
   
   componentDidMount() {
-    axios.get('/requests/' + this.props.UserId) 
-    .then(({ data }) => {
-      this.setState({requests: data})
-    })
-    .catch(err => {
-      console.log('error getting friend requests', err); 
-    })
+    // axios.get('/requests/' + this.props.UserId) 
+    // .then(({ data }) => {
+    //   this.setState({requests: data})
+    // })
+    // .catch(err => {
+    //   console.log('error getting friend requests', err); 
+    // })
   }
 
   render() {
-    <View>
-      {this.state.requests.map(request => {
-        <Request 
-          acceptRequest={this.acceptRequest.bind(this)}
-          deleteRequest={this.deleteRequest.bind(this)}
-          friend={request.friendId}
-        />
-      })}
-    </View>
+    return ( 
+      <View>
+        {this.state.requests.map((rqt) => {
+          console.log('inside map: ', rqt);
+          return (
+            <Request 
+              fnd={rqt.friend}
+            />
+          )
+        })}
+      </View>
+    )
   }
 }
 
