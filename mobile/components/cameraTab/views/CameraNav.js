@@ -9,10 +9,10 @@ import { connect } from 'react-redux'
 class CameraNav extends Component {
   static navigationOptions = {
     tabBarIcon: '',
-    tabBarIcon: () => (
+    tabBarIcon: ({tintColor}) => (
       <Image 
       source={require('../../../camera.png')}
-      style={{width:30, height:30}}>
+      style={{width:30, height:30, tintColor: 'white'}}>
       </Image>
     )
   }

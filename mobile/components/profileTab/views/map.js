@@ -119,12 +119,8 @@ class UserMap extends Component {
     // e contains coordinate info
     //console.log(e.nativeEvent, ' press marker')
     this.props.navigation.navigate("ARView")
-
-
   }
 
-
-   
   render() {
      console.log(this.location, 'this location')
     return (

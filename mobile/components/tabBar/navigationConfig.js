@@ -17,7 +17,7 @@ var tabBarConfig = {
     inactiveTintColor: 'blue',
   // background color is for the tab component
     activeBackgroundColor: 'skyblue',
-    inactiveBackgroundColor: 'white',
+    inactiveBackgroundColor: 'lavender',
     labelStyle: {
       fontSize: .001,
       padding: 5

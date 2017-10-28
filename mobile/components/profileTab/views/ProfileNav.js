@@ -8,10 +8,10 @@ import { connect } from 'react-redux'
 class ProfileNav extends Component {
   static navigationOptions = {
     tabBarIcon: '',
-    tabBarIcon: () => (
+    tabBarIcon: ({tintColor}) => (
       <Image 
       source={require('../../../image_icon.png')}
-      style={{width:30, height:30}}>
+      style={{width:30, height:30, tintColor:'white'}}>
       </Image>
     )
   }
