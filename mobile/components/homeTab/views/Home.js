@@ -47,20 +47,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 15,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   title:{
     flexDirection: 'column',
+    margin: 10
   },
   image: {
     width: 250,
     height: 50,
-    margin: 2,
-    padding: 5
+    margin: 2
   },
   collection: {
     backgroundColor: 'skyblue',
-    flex:1
+    flex:1,
+    borderRadius: 5
   },
   spinnerContainer:{
     flex: 1,

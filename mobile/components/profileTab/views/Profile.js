@@ -36,7 +36,9 @@ const Profile = ( props ) => {
 		      	<Text style={styles.profileEmail}>
 		      		Email: {email}
 		      	</Text>
-		      	<Login/>
+		      	<View style={{margin: 5}}>
+		      		<Login />
+		      	</View>
 		    </View>
 
 
@@ -69,13 +71,19 @@ const styles = StyleSheet.create({
 	profileContainer: {
 		flex: 1,
 		flexDirection: 'row',
+		backgroundColor: 'white'
 	},
 	profileDetails: {
-		margin: 20,
-		backgroundColor: 'rgba(0, 122, 255, 0.1)',
-		flex: 1
+		flex: 1,
+		marginTop: 20, 
+		marginLeft:20, 
+		marginRight: 20,
+		marginBottom: 10,
+		backgroundColor: 'skyblue',
+		borderRadius: 5
 	},
 	profilePicture: {
+		margin: 5,
 		width: 60, 
 		height: 60,
 		justifyContent: 'center',
@@ -83,24 +91,29 @@ const styles = StyleSheet.create({
 		borderRadius: 10
 	}, 
 	friendIcon: {
-		width: 100, 
+		width: 85, 
 		height: 60,
 		borderRadius: 10
 	},
 	profileName: {
 		paddingLeft: 10,
-		paddingTop: 15
+		paddingTop: 5,
+		fontSize: 14,
+		fontFamily: 'Verdana',
+		fontWeight: 'bold'
 	},
 	profileEmail: {
 		paddingLeft: 10,
-		color:"red"
+		fontSize: 14,
+		paddingBottom: 5,
+		fontFamily: 'Verdana',
+		fontWeight: 'bold'
 	},
 	profileMap: {
-		flexDirection: 'column',
-		margin: 20,
 		flex: 3,
-		backgroundColor:"blue",
-		width: (Dimensions.get('window').width) - 40
+		flexDirection: 'column',
+		marginLeft: 20,
+		width: (Dimensions.get('window').width) - 40,
 	}
 })
 

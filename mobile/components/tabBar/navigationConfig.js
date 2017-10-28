@@ -19,15 +19,13 @@ var tabBarConfig = {
     activeBackgroundColor: 'skyblue',
     inactiveBackgroundColor: 'white',
     labelStyle: {
-      fontSize: 12,
-      padding: 0
+      fontSize: .001,
+      padding: 5
     }
   }
 }
 var TabBarNavigator = TabNavigator(routeConfig,tabBarConfig)
 
-TabBarNavigator.navigationOptions = {
-  title: 'poop'
-}
+
 //export default TabBarNavigator
 export default TabBarNavigator 

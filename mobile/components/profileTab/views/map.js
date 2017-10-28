@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
+    borderRadius: 5,
     position: 'absolute'
   },
   radius:{
