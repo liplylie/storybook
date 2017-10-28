@@ -16,20 +16,49 @@ def index():
   return render_template('index.html')
 
 #add image
-@app.route('/api/addurl', methods=['POST'])
+@app.route('/api/add_image', methods=['POST'])
 def add_photo():
   #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.form)
+  print(request_data)
+  #image URL
   url = request_data["url"][0]
   parsed_url = url.encode('utf-8')
+  print(parsed_url, type(parsed_url))
+  #tags
   request_body = "{'url': '" + parsed_url + "'}"
+  print(request_body)
+  image_tags = get_tags(request_body)
 
-  tags = get_tags(request_body)
-  db.session.add(Image('','',1,0,0,0,0,tags)) #replace later with actual values
+  #scn_code(currently set to '0')
+  # scn_code = request_data["scn_code"][0]
+  scn_code = '0'
+  parsed_scn_code = scn_code.encode('utf-8')
+
+  image_user_id = request_data["image_user_id"][0]
+  parsed_image_user_id = int(image_user_id)
+  
+  #geolocation
+  latitude = request_data["latitude"][0]
+  parsed_latitude = int(latitude)
+
+  longitude = request_data["longitude"][0]
+  parsed_longitude = int(longitude)
+
+  likes_count = request_data["likes_count"][0]
+  parsed_likes_count = int(likes_count)
+
+  image_caption = request_data["caption"][0]
+  parsed_image_caption = image_caption.encode('utf-8')
+
+  print(parsed_url, request_body, image_tags, parsed_scn_code, parsed_image_user_id, parsed_latitude, parsed_longitude, parsed_likes_count, parsed_image_caption)
+  db.session.add(Images(parsed_url,parsed_scn_code, image_user_id, latitude, longitude, likes_count, parsed_image_caption,image_tags)) #replace later with actual values
   db.session.commit()
+  resp = make_response('added successfully!', 201)
+  return resp
 
 #add user
-@app.route('/api/adduser', methods=['POST'])
+@app.route('/api/add_user', methods=['POST'])
 def add_user():
   #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.form)
@@ -113,6 +142,7 @@ def get_imgs_by_loc():
 def get_imgs_by_frs_at_loc():
     print("grabbing most recent photo from each friend within a 10 mile radius at OP's location...")
     request_data = dict(request.args)
+
     # get_imgs_by_frs_at_loc_latitude = request_data["latitude"][0]
     # get_imgs_by_frs_at_loc_latitude_parsed = float(get_imgs_by_frs_at_loc_latitude)
     
@@ -137,3 +167,4 @@ def get_imgs_by_frs_at_loc():
     # all_images = str(all_images)
     # resp = make_response(all_images, 200)
     # return resp
+

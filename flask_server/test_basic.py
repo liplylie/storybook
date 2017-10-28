@@ -2,6 +2,7 @@ from flask import Flask, g
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from app import app, db, DropTable
+from app.schema import Images, Users, friendships, Chatrooms, Messages, Comments, Likes
 from config import app_config, basedir
 from pprint import pprint
 import sqlalchemy_utils
@@ -39,54 +40,62 @@ class database_tests(unittest.TestCase):
       self.assertEqual(response.status_code, 200)
       print('--------------------------------\ntest_main_page: passed\n--------------------------------')
 
-  def test_main_page(self):
-      response = self.app.get('/api/addurl', follow_redirects=True)
+  def test_add_image(self):
+      self.app.post('/api/add_image', data=dict({
+          'url':['https://i.imgur.com/AskrvGz.jpg'],
+          'scn_code': '34',
+          'image_user_id': 1,
+          'latitude': 30,
+          'longitude': 23,
+          'likes_count': 31,
+          'caption': 'let\'s do this!'
+          }))
+      test_image = Images.query.order_by(Images.id.desc()).first()
+      print('||||||||||||||-----------------', test_image.image_url)
+      test_image_url = test_image.image_url;
+      print(test_image)
+      self.assertEqual(test_image.image_url, 'https://i.imgur.com/AskrvGz.jpg')
+      
+      print('--------------------------------\ntest_add_photo: passed\n--------------------------------') 
 
-      #your test here
+  def test_adduser(self):
 
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+      print('--------------------------------\ntest_adduser: passed\n--------------------------------') 
 
-  def test_main_page(self):
-      response = self.app.get('/api/adduser', follow_redirects=True)
-
-      #your test here
-
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
-
-  def test_main_page(self):
+  def test_addcomment(self):
       response = self.app.get('/api/addcomment', follow_redirects=True)
 
       #your test here
 
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+      print('--------------------------------\ntest_addcomment: passed\n--------------------------------') 
 
-  def test_main_page(self):
+  def test_addlike(self):
       response = self.app.get('/api/addlike', follow_redirects=True)
 
       #your test here
 
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+      print('--------------------------------\ntest_addlike: passed\n--------------------------------') 
 
-  def test_main_page(self):
+  def test_get_locs_user(self):
       response = self.app.get('/api/get_locs_user', follow_redirects=True)
 
       #your test here
 
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+      print('--------------------------------\ntest_get_locs_user: passed\n--------------------------------') 
 
-  def test_main_page(self):
+  def test_get_imgs_by_loc(self):
       response = self.app.get('/api/get_imgs_by_loc', follow_redirects=True)
 
       #your test here
 
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+      print('--------------------------------\ntest_get_imgs_by_loc: passed\n--------------------------------') 
  
-  def test_main_page(self):
+  def test_get_imgs_by_frs_at_loc(self):
       response = self.app.get('/api/get_imgs_by_frs_at_loc', follow_redirects=True)
-      
+
       #your test here
 
-      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+      print('--------------------------------\ntest_get_imgs_by_frs_at_loc: passed\n--------------------------------') 
 
 
 if __name__ == "__main__":
