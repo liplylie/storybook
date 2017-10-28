@@ -1,26 +1,29 @@
-const db = require('../db/config')
+const db = require('../db/config');
+const { or } = require('sequelize');
+
+const Friendships = require('../db/models/friendship');
+const User = require('../db/models/user');
 
 module.exports = { 
   getFriendList: (req, res) => {
     //return array of friend ids using req.params.userId
-    db.Relationships.findAll({
-      where: { [Op.or]: [
-        {
-          user_id: req.params.userId,
-          friend_type: 'friend'
-        },
-        {
-          friend_id: req.params.userId,
-          friend_type: 'friend'
-        },
-      ]},
+    Friendships.findAll({
+      where: { 
+        friendship_type: 'friend',
+        relating_user_id: req.params.userId
+        // [or]: [{
+        //   relating_user_id: req.params.userId,
+        // },
+        // {
+        //   related_user_id: req.params.userId,
+        // }]
+      },
       include: [{
-        model: User,
-        attributes: [name, profile_image_url],
+        model: User
       }]
     })
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch(err => {
       res.status(500).send(err); 
@@ -41,13 +44,13 @@ module.exports = {
   // }, 
   sendRequest: (req, res) => {
     //add req.body.userId to req.params.friendId friend's pending friend requests
-    db.Relationships.create({ 
-      user_id: req.body.friendId,
-      friend_id: req.body.userId, 
-      type: 'pending'
+    Friendships.create({ 
+      relating_user_id: req.body.friendId,
+      related_user_id: req.body.userId, 
+      friendship_type: 'pending'
     })
     .then(data => {
-      res.send(data);
+      res.status(202).send(data);
     })
     .catch(err => {
       res.status(500).send(err);
@@ -55,9 +58,9 @@ module.exports = {
   },
   getRequests: (req, res) => {
     //get all pending where userId = req.params.userId
-    db.Relationships.findAll({
+    Friendships.findAll({
       where: {
-        user_id: req.params.userId,
+        relating_user_id: req.params.userId,
         type: 'pending'
       },
       include: [{
@@ -74,16 +77,13 @@ module.exports = {
   }, 
   acceptRequest: (req, res) => {
     //add req.params.friendId to current user's friend list and vice versa
-    db.Relationships.update({
+    Friendships.update({
+      friendship_type: 'friend'
+    }, {
       where: {
-        user_id: req.body.userId,
-        friend_id: req.body.friendId,
-        type: 'friend'
-      },
-      include: [{
-        model: User,
-        attributes: [name, profile_image_url],
-      }]
+        relating_user_id: req.body.userId,
+        related_user_id: req.body.friendId,
+      }
     })
     .then(data => {
       res.send(data);
@@ -94,10 +94,10 @@ module.exports = {
   },
   deleteRequest: (req, res) => {
     //add req.params.friendId to current user's friend list and vice versa
-    db.Relationships.destroy({
+    Friendships.destroy({
       where: {
-        user_id: req.body.userId,
-        friend_id: req.body.friendId,
+        relating_user_id: req.body.userId,
+        related_user_id: req.body.friendId,
       },
       include: [{
         model: User,
@@ -113,16 +113,16 @@ module.exports = {
   },
   //delete request
   blockUser: (req, res) => {
-    db.Relationships.update({
+    Friendships.update({
       where: { [Op.or]: [
         {
-          user_id: req.body.userId,
-          friend_id: req.body.friendId,
+          relating_user_id: req.body.userId,
+          related_user_id: req.body.friendId,
           type: 'blocked'
         },
         {
-          user_id: req.body.friendId,
-          friend_id: req.body.userId,
+          relating_user_id: req.body.friendId,
+          related_user_id: req.body.userId,
           type: 'blocked'
         },
       ]}
@@ -137,7 +137,7 @@ module.exports = {
   //remove friend
   search: (req, res) => {
     if (!req.params.lastName) {
-      db.Relationships.findAll({
+      Friendships.findAll({
         where: {first_name: req.params.firstName},
         include: [{
           model: User,
@@ -151,7 +151,7 @@ module.exports = {
         res.status(500).send(err);
       })
     } else {
-      db.Relationships.findAll({
+      Friendships.findAll({
         where: {
           first_name: req.params.firstName,
           last_name: req.params.lastName

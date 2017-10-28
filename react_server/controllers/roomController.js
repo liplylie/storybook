@@ -1,52 +1,38 @@
-const db = require('../db/config')
+const db = require('../db/config');
+const Chatroom = require('../db/models/chatroom');
+const User = require('../db/models/user');
+const { or } = require('sequelize');
 
 module.exports = {
   getRooms: (req, res) => {
     //get a user's array of room IDs using req.params.userId
-    db.Chatroom.findAll({
-      where: { [Op.or] : [
+    Chatroom.findAll({
+      where: { [or] : [
         {chatroom_sender: req.params.userId},
         {chatroom_recipient: req.params.userId}
       ]},
-      include: [{
-        model: User,
-        attributes: [name, profile_image_url],
-      }]
+      // include: [{
+      //   model: User
+      // }]
     })
     .then(data => {
-      res.send(data);
+      res.status(201).send(data);
     })
     .catch(err => {
-      res.status(500).send(err); 
+      res.status(400).send(err); 
     })
   }, 
   createRoom: (req, res) => {
-    //find where admin = userId and user = friendId OR admin = friendId and userId
-    //using req.body.userId, req.params.friendId 
-      //return roomId
-    //else create room
-      //return roomId
-    db.Chatroom.findOrCreate({
-      where: { [Op.or]: [
-        {
-          chatroom_sender: req.body.userId, 
-          chatroom_recipient: req.body.friendId
-        },
-        {
-          chatroom_sender: req.body.friendId, 
-          chatroom_recipient: req.body.userId
-        },
-      ]},
-      include: [{
-        model: User,
-        attributes: [name, profile_image_url],
-      }]
+    Chatroom.create({
+      chatroom_sender: req.body.userId,
+      chatroom_recipient: req.body.friendId,
+      admin: req.body.username
     })
-    .spread((room, created) => {
-      res.send(room);
+    .then(data => {
+      res.status(201).send(data);
     })
     .catch(err => {
-      res.status(500).send(err);
+      res.status(400).send(err);
     })
   },
   getPreview: (req, res) => {

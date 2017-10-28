@@ -40,9 +40,11 @@ class CameraView extends Component {
             ImagePicker.openCamera({
               width: 1350,
               height: 1080,
-              cropping: true
+              cropping: true,
+              includeBase64: true,
             })
               .then(image => {
+                actions.saveImage(image);
                 navigation.navigate('Post');
               })
               .catch(err => {

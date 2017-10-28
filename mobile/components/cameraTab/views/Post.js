@@ -17,7 +17,7 @@ class Post extends Component {
   }
 
   render() {
-    const { image, creds, actions, navigation } = this.props;
+    const { image, userId, actions, navigation } = this.props;
     const { name, description, tags } = this.state;
 
     return (
@@ -48,8 +48,9 @@ class Post extends Component {
               name,
               image: image,
               description,
+              userId
             }
-            actions.postImage(postObj, creds);
+            actions.postImage(postObj);
             navigation.navigate('Camera');
           }}
         />
@@ -61,7 +62,7 @@ class Post extends Component {
 const postState = (state) => {
   return {
     image: state.CameraPost.image,
-    creds: state.Auth.authCreds
+    userId: state.Auth.userId
   }
 }
 

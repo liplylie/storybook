@@ -73,9 +73,17 @@ client/static/gen
 *.webassets-cache
 *.pyc
 *.log
-ios
-android
 client/public/bundle.js
+ios/
+android/
+__tests__/
 
+# Elastic Beanstalk Files
 
+.elasticbeanstalk/*
 
+!.elasticbeanstalk/*.cfg.yml
+
+!.elasticbeanstalk/*.global.yml
+
+AWS_EC2_STORYBOOK.pem
