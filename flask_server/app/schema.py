@@ -7,7 +7,6 @@ from sqlalchemy import Integer, Table, Column, ForeignKey, \
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-Base= declarative_base()
 
 class Images(db.Model):
   __tablename__ = 'images'
@@ -45,7 +44,8 @@ friendships = db.Table(
     db.Column('relating_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
                                         primary_key=True),
     db.Column('related_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
-                                        primary_key=True)
+                                        primary_key=True),
+    db.Column('friendship_type', db.String(250)), #blocked, friend
 )
 
 
@@ -79,7 +79,6 @@ class Users(db.Model):
     return '| Users: %r>>>' % self.name + ' ' + '<<<user friends count: %r>>>' % self.friends_count + ' ' + '<<<user tags: %r>>>' % self.user_tags_array
 
 
-
 # this relationship is viewonly and selects across the union of all
 # friends
 friendship_union = select([
@@ -96,25 +95,6 @@ Users.all_friends = relationship('Users',
                        primaryjoin=Users.id==friendship_union.c.relating_user_id,
                        secondaryjoin=Users.id==friendship_union.c.related_user_id,
                        viewonly=True) 
-
-# class Friendship(db.Model):
-#   __tablename__ = 'friendship'
-#   # id = db.Column(db.Integer, primary_key=True)
-#   relationship_type = db.Column(db.String(250)) # [friend, block, etc]
-#   #foreign keys (this table belongs to...)
-
-#   relating_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
-#   related_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
-
-#   #select * 
-
-  # def __init__(self, relating_user_id, related_user_id, relationship_type):
-  #   self.relating_user_id = relating_user_id
-  #   self.related_user_id = related_user_id
-  #   self.relationship_type = relationship_type
-
-  # def __repr__(self):
-  #   return '| relating_user_id: %r>>>' % self.relating_user_id + ' ' + '<<< related_user_id: %r>>>' % self.related_user_id + ' ' + '<<<relationship_type: %r>>>' % self.relationship_type
 
 class Chatrooms(db.Model):
   __tablename__ = 'chatrooms'
@@ -194,3 +174,4 @@ class Likes(db.Model):
 
   def __repr__(self):
     return '<<<Like_image_id: %r>>>' % self.image_id + ' ' + '<<<Tags: %r>>>' % self.tags_array
+
