@@ -61,20 +61,6 @@ DropTable('users')
 db.drop_all()
 db.create_all()
 
-for j in data_users:
-  db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count'], j['user_tags_array']))
-db.session.commit()
-
-for i in data_images:
-  db.session.add(Images(i['image_url'],  i['scn_code'], i['image_user_id'], i['latitude'], i['longitude'], i['likes_count'], i['caption'], i['image_tags_array']))
-db.session.commit()
-
-query_user = Users.query.all()
-print(query_user)
-
-query_image = Images.query.all()
-print(query_image)
-
 ##############################
 #load Routes:
 from app import routes
