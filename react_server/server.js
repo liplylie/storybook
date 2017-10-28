@@ -5,7 +5,11 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 
-const db = require('./db/config'); 
+const db = require('./db/config');
+const User = require('./db/models/user');
+const Chatroom = require('./db/models/chatroom');
+const Messages = require('./db/models/messages');
+const Friendships = require('./db/models/friendship');
 
 const router = require('./router');
 const PORT = process.env.PORT || 3000;
@@ -53,7 +57,14 @@ io.on('disconnect', socket => {
   console.log('user disconnected', io.engine.clientsCount);
 })
 
-
-server.listen(PORT, () => console.log('listening on port ' + PORT));
+User.sync()
+  .then(() => {
+    Chatroom.sync();
+    Friendships.sync();
+  }).then(() => {
+    Messages.sync();
+  }).then(() => {
+    server.listen(PORT, () => console.log('listening on port ' + PORT));
+  })
 
 // module.exports = client; 
