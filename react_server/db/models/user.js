@@ -21,6 +21,4 @@ const User = db.define('user', {
   timestamps: false
 });
 
-User.sync();
-
 module.exports = User;

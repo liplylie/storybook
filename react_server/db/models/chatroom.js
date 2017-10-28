@@ -16,6 +16,4 @@ Chatroom.belongsTo(User, {foreignKey: 'chatroom_sender', allowNull: false, onDel
 User.hasMany(Chatroom, {foreignKey: 'chatroom_recipient', allowNull: false, onDelete: 'CASCADE'});
 Chatroom.belongsTo(User, {foreignKey: 'chatroom_recipient', allowNull: false, onDelete: 'CASCADE'});
 
-Chatroom.sync();
-
 module.exports = Chatroom;
