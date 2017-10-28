@@ -14,7 +14,7 @@ export default class ARView extends Component {
           lightEstimation 
           focusScene
         >
-	  			<ARKit.Sprite position={{ x: 0, y: 0, z: -0.5}}>
+	  			<ARKit.Sprite position={{ x: 0, y: 0, z: -2}}>
 	          <Image source={{uri:"https://www.gstatic.com/webp/gallery/1.sm.jpg"}} style={{height: 200, width: 200}}/>
 	        </ARKit.Sprite>
 
