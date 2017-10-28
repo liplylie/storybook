@@ -115,10 +115,10 @@ class UserMap extends Component {
   }
 
 
-  viewTargetPictures(e){
+  viewTargetPictures(){
     // e contains coordinate info
-    console.log(e.nativeEvent, ' press marker')
-    this.props.navigation.navigate("PicturesFromMarker")
+    //console.log(e.nativeEvent, ' press marker')
+    this.props.navigation.navigate("ARView")
 
 
   }
@@ -134,7 +134,7 @@ class UserMap extends Component {
            region={this.state.initialPosition}>
           <MapView.Marker
             id = 'userMarker'
-            onPress={e => this.viewTargetPictures(e)}
+            onPress={this.viewTargetPictures}
             coordinate={this.state.markerPosition}>
               <View style={styles.radius}>
                 <View style={styles.marker}/>
