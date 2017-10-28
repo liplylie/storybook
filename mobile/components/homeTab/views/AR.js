@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { ARKit } from 'react-native-arkit';
-
 // debug={true}
           // onPlaneDetected={console.log} // event listener for plane detection
           // onPlaneUpdate={console.log} // event listener for plane update

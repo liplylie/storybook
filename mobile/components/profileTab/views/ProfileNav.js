@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Image } from 'react-native'
 import { addNavigationHelpers } from 'react-navigation'
 import { ProfileNavigator } from '../navigationConfig'
 
@@ -7,7 +7,13 @@ import { connect } from 'react-redux'
 
 class ProfileNav extends Component {
   static navigationOptions = {
-    tabBarIcon: ''
+    tabBarIcon: '',
+    tabBarIcon: () => (
+      <Image 
+      source={require('../../../image_icon.png')}
+      style={{width:30, height:30}}>
+      </Image>
+    )
   }
 
   render() {

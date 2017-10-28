@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import UserMap from './map.js'
+import UserMap from './map.js';
+import Login from '../../auth/Login'
 
 
 const Profile = ( props ) => {
@@ -11,7 +12,7 @@ const Profile = ( props ) => {
 		let email = props.profileInfo.Auth.email;
 		let picture = props.profileInfo.Auth.picture;
 		let id = props.profileInfo.Auth.id;
-		let friendIcon = "https://cdn.pixabay.com/photo/2016/11/14/17/39/group-1824146_960_720.png"
+		let friendIcon = "https://cdn.iconscout.com/public/images/icon/premium/png-512/profile-group-friend-team-user-avatar-3d104201ce065c29-512x512.png"
 
 		const viewFriends = () => {
     	props.navigation.navigate("Friends")
@@ -35,6 +36,7 @@ const Profile = ( props ) => {
 		      	<Text style={styles.profileEmail}>
 		      		Email: {email}
 		      	</Text>
+		      	<Login/>
 		    </View>
 
 

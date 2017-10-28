@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { addNavigationHelpers } from 'react-navigation'
-import { TabBarNavigator } from '../navigationConfig'
+import  TabBarNavigator  from '../navigationConfig'
 
 import { connect } from 'react-redux'
 
