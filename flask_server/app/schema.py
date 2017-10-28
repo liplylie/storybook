@@ -136,7 +136,7 @@ class Messages(db.Model):
 class Comments(db.Model):
   __tablename__ = 'comments'
   id = db.Column(db.Integer, primary_key=True)
-  text = db.Column(db.String(250))
+  text = db.Column(db.String(750))
   likes_count = db.Column(db.Integer, nullable=True)
 
   #foreign keys (this table belongs to...)
@@ -153,7 +153,7 @@ class Comments(db.Model):
     self.comment_image_id = comment_image_id
 
   def __repr__(self):
-    return '<<<image_id: %r>>>' % self.image_id + ' ' + '<<<Comment text: %r>>>' % self.text
+    return '<<<image_id: %r>>>' % self.comment_image_id + ' ' + '<<<Comment text: %r>>>' % self.text
 
 
 class Likes(db.Model):
@@ -173,5 +173,5 @@ class Likes(db.Model):
     self.like_comment_id = like_comment_id
 
   def __repr__(self):
-    return '<<<Like_image_id: %r>>>' % self.image_id + ' ' + '<<<Tags: %r>>>' % self.tags_array
+    return '<<<Like_image_id: %r>>>' % self.like_image_id + ' ' + '<<<Tags: %r>>>' % self.like_type
 
