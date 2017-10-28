@@ -1,8 +1,8 @@
 from flask import Flask, g
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
-from app import app, db
-from config import app_config
+from app import app, db, DropTable
+from config import app_config, basedir
 from pprint import pprint
 import sqlalchemy_utils
 from sqlalchemy_utils import drop_database
@@ -26,26 +26,10 @@ class database_tests(unittest.TestCase):
       app.config['WTF_CSRF_ENABLED'] = False
       app.config['DEBUG'] = False
       app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://"+username+":"+password+"@"+rds_endpoint+"/"+username
-      os.path.join(app.config['BASEDIR'], TEST_DB)
+      os.path.join(basedir, TEST_DB)
       self.app = app.test_client()
 
-      @compiles(DropTable, "postgresql")
-      def _compile_drop_table(element, compiler, **kwargs):
-          return compiler.visit_drop_table(element) + " CASCADE"
 
-      DropTable('chatrooms')
-      DropTable('comments')
-      DropTable('friendships')
-      DropTable('images')
-      DropTable('likes')
-      DropTable('messages')
-      DropTable('relationships')
-      DropTable('users')
-
-      db.drop_all()
-      db.create_all()
-
-  # executed after each test
   def tearDown(self):
       pass
  
@@ -53,7 +37,57 @@ class database_tests(unittest.TestCase):
   def test_main_page(self):
       response = self.app.get('/', follow_redirects=True)
       self.assertEqual(response.status_code, 200)
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------')
+
+  def test_main_page(self):
+      response = self.app.get('/api/addurl', follow_redirects=True)
+
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+
+  def test_main_page(self):
+      response = self.app.get('/api/adduser', follow_redirects=True)
+
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+
+  def test_main_page(self):
+      response = self.app.get('/api/addcomment', follow_redirects=True)
+
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+
+  def test_main_page(self):
+      response = self.app.get('/api/addlike', follow_redirects=True)
+
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+
+  def test_main_page(self):
+      response = self.app.get('/api/get_locs_user', follow_redirects=True)
+
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+
+  def test_main_page(self):
+      response = self.app.get('/api/get_imgs_by_loc', follow_redirects=True)
+
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
  
- 
+  def test_main_page(self):
+      response = self.app.get('/api/get_imgs_by_frs_at_loc', follow_redirects=True)
+      
+      #your test here
+
+      print('--------------------------------\ntest_main_page: passed\n--------------------------------') 
+
+
 if __name__ == "__main__":
     unittest.main()
