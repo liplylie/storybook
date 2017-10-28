@@ -21,7 +21,7 @@ with open('../db/sample_metadata/sampleUserData.json') as data_file:
 
 #############################
 #initialize app:
-app = Flask(__name__, instance_relative_config=True, static_folder="../../client/static", template_folder="../../client/static")
+app = Flask(__name__, instance_relative_config=True, static_folder="../../client/public", template_folder="../../client/public")
 
 #############################
 #load compiled assets:
