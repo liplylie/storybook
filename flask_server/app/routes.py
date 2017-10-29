@@ -2,13 +2,18 @@ from flask import Flask, g, render_template, request, make_response
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
-from app import app, db
+from sqlalchemy import Integer, Table, Column, ForeignKey
+from app import app, db, DropTable
 from schema import Images, Users, friendships, Chatrooms, Messages, Comments, Likes
+from config import app_config, basedir
 from azure_get_tags import get_tags
 from werkzeug.datastructures import ImmutableMultiDict
 from pprint import pprint
 import sqlalchemy_utils
+from sqlalchemy_utils import drop_database
 import json
+import os
+import unittest
 
 
 
@@ -200,7 +205,7 @@ def get_all_friends():
     get_all_friends_user_id = request_data["userId"][0]
     parsed_get_all_friends_user_id = int(get_all_friends_user_id)
     
-    get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id')
+    get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
     
     list_of_friends = []
     for i in get_all_friends_query:
@@ -212,14 +217,72 @@ def get_all_friends():
 # get all friends using req.params.userId along with name and profile picture of the friend
   #DONE
 
+@app.route('/api/get_friend_requests', methods=['GET'])
+def get_friend_requests():
+    print("grabbing all friend requests for specific user...")
+    request_data = dict(request.args)
+    get_friend_requests_user_id = request_data["userId"][0]
+    parsed_get_friend_requests_user_id = int(get_friend_requests_user_id)
 
+    
+    get_friend_requests_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_friend_requests_user_id))
+    list_of_requests = []
+    for i in get_friend_requests_query:
+      pending_friend_query = db.session.execute('SELECT * FROM users WHERE id = ' + str(i.related_user_id))
+      for j in pending_friend_query:
+        list_of_requests.append(j)
+    list_of_requests = str(list_of_requests)
+    resp = make_response(list_of_requests, 200)
+    return resp 
 
 # get all friend requests using req.params.userId along with name and profile pic
+  #DONE
+
+@app.route('/api/add_friend', methods=['POST'])
+def add_friend():
+    print("adding friend...")
+    request_data = dict(request.form)
+    add_friend_relating_user_id = request_data["userId"][0]
+    parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
+
+    add_friend_related_user_id = request_data["friendId"][0]
+    parsed_add_friend_related_user_id = str(add_friend_related_user_id)
+
+    db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
+    db.session.commit()
+
+    resp = make_response('added successfully!', 201)
+    return resp
+
+
+
 # add a friend using relating_user_id: req.body.friendId, 
     #related_user_id: req.body.userId and friendship_type: 'pending'
+      #DONE, !!!!!! tell angie you switched userId and friendId because relating_user is for OP
+
+
 # get all requests using req.params.userId where type = 'pending'
+  #DONE
+
+@app.route('/api/accept_friend_request', methods=['POST'])
+def accept_friend_request():
+    print("accepting friend request...")
+    request_data = dict(request.form)
+    accept_friend_request_relating_user_id = request_data["userId"][0]
+    parsed_accept_friend_request_relating_user_id = str(accept_friend_request_relating_user_id)
+
+    accept_friend_request_related_user_id = request_data["friendId"][0]
+    parsed_accept_friend_request_related_user_id = str(accept_friend_request_related_user_id)
+
+    db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_relating_user_id + " AND related_user_id=" + parsed_accept_friend_request_related_user_id)
+    db.session.commit()
+
+    resp = make_response('modified successfully!', 201)
+    return resp
+
 # accept request - using relating_user_id: req.body.userId, related_user_id: req.body.friendId
    # and update type to 'friend'
+
 # delete request using req.body.userId and req.body.friendId
 # block a user so changing type to 'blocked' using req.body.userId and req.body.friendId
 # a search method. 
