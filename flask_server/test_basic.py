@@ -28,6 +28,9 @@ with open('../db/sample_metadata/sampleUserData.json') as data_file:
     data_users = json.load(data_file)
 
 with open('../db/sample_metadata/sampleImagesSanFrancisco.json') as data_file:    
+    data_sf_images = json.load(data_file)
+
+with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
     data_images = json.load(data_file)
 
 with open('../db/sample_metadata/sampleCommentData.json') as data_file:    
@@ -38,6 +41,10 @@ with open('../db/sample_metadata/sampleLikes_Data.json') as data_file:
 
 for j in data_users:
   db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count'], j['user_tags_array']))
+db.session.commit()
+
+for i in data_sf_images:
+  db.session.add(Images(i['image_url'],  i['scn_code'], i['image_user_id'], i['latitude'], i['longitude'], i['likes_count'], i['caption'], i['image_tags_array']))
 db.session.commit()
 
 for i in data_images:
@@ -51,6 +58,12 @@ db.session.commit()
 for i in data_likes:
   db.session.add(Likes(i['like_type'],  i['like_user_id'], i['like_image_id'], i['like_comment_id']))
 db.session.commit()
+
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,2,'pending')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,3,'friend')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,4,'friend')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,4,'pending')")
+
 
 query_image = Images.query.all()
 print(query_image)
@@ -141,7 +154,7 @@ class database_tests(unittest.TestCase):
     
 
   def test_get_locs_user(self):
-    response = self.app.get('/api/get_locs_user', follow_redirects=True)
+    response = self.app.get('/api/get_all_locations', follow_redirects=True)
     self.assertEqual(response.status_code, 200)
     print('test_get_locs_user: passed')
 
@@ -150,8 +163,13 @@ class database_tests(unittest.TestCase):
     self.assertEqual(response.status_code, 200)
     print('test_get_imgs_by_loc: passed')
 
+  def test_get_imgs_by_frs_at_loc(self):
+    response = self.app.get('/api/get_imgs_by_frs_at_loc?latitude=30&longitude=34&userId=1', follow_redirects=True)
+    self.assertEqual(response.status_code, 200)
+    print('test_get_imgs_by_frs_at_loc: passed')
+
   def test_get_all_friends(self):
-    response = self.app.get('/api/get_all_friends?user_id=1', follow_redirects=True)
+    response = self.app.get('/api/get_all_friends?userId=1', follow_redirects=True)
     self.assertEqual(response.status_code, 200)
     print('test_get_all_friends: passed')
 
