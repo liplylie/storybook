@@ -198,6 +198,26 @@ class database_tests(unittest.TestCase):
     #   self.assertEqual(i, 1, 5, u'pending')
     print('test_add_friend: passed')
 
+  def test_block_friend(self):
+    self.app.post('/api/block_friend', data=dict({
+    "userId": 1,
+    "friendId": 3
+    }))
+    # test_friendship = db.session.execute("select * from friendships where relating_user_id = 3 and related_user_id = 5;")
+    # for i in test_friendship:
+    #   self.assertEqual(i, 1, 5, u'pending')
+    print('test_add_friend: passed')
+
+  def test_remove_friend(self):
+    self.app.post('/api/remove_friend', data=dict({
+    "userId": 1,
+    "friendId": 4
+    }))
+    # test_friendship = db.session.execute("select * from friendships where relating_user_id = 3 and related_user_id = 5;")
+    # for i in test_friendship:
+    #   self.assertEqual(i, 1, 5, u'pending')
+    print('test_add_friend: passed')
+
 
 if __name__ == "__main__":
   unittest.main()
