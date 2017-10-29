@@ -62,7 +62,7 @@ db.session.commit()
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,2,'pending')")
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,3,'friend')")
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,4,'friend')")
-db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,4,'pending')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,5,'pending')")
 
 
 query_image = Images.query.all()
@@ -172,6 +172,31 @@ class database_tests(unittest.TestCase):
     response = self.app.get('/api/get_all_friends?userId=1', follow_redirects=True)
     self.assertEqual(response.status_code, 200)
     print('test_get_all_friends: passed')
+
+  def test_get_friend_requests(self):
+    response = self.app.get('/api/get_friend_requests?userId=1', follow_redirects=True)
+    self.assertEqual(response.status_code, 200)
+    print('get_friend_requests: passed')
+
+  def test_add_friend(self):
+    self.app.post('/api/add_friend', data=dict({
+    "userId": 3,
+    "friendId": 5
+    }))
+    test_friendship = db.session.execute("select * from friendships where relating_user_id = 3 and related_user_id = 5;")
+    # for i in test_friendship:
+    #   self.assertEqual(i, 1, 5, u'pending')
+    print('test_add_friend: passed')
+
+  def test_accept_friend_request(self):
+    self.app.post('/api/accept_friend_request', data=dict({
+    "userId": 1,
+    "friendId": 2
+    }))
+    test_friendship = db.session.execute("select * from friendships where relating_user_id = 3 and related_user_id = 5;")
+    # for i in test_friendship:
+    #   self.assertEqual(i, 1, 5, u'pending')
+    print('test_add_friend: passed')
 
 
 if __name__ == "__main__":
