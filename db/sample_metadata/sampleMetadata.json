@@ -20,7 +20,7 @@
     "scn_code": "123",
     "latitude": 23,     
     "longitude": 12, 
-    "image_user_id": 1, 
+    "image_user_id": 4, 
     "location": "123", 
     "likes_count": 0, 
     "caption": "123"
@@ -31,9 +31,9 @@
     "image_tags_array":  ["car","road","transport","parked","old","roof","surfing","sitting","top","white","driving","ocean","parking","meter","field"],
     "dominantColors":  ["White","Grey","Black"],
     "scn_code": "123",     
-    "latitude": 23,     
-    "longitude": 12, 
-    "image_user_id": 1, 
+    "latitude": 30,     
+    "longitude": 34, 
+    "image_user_id": 3, 
     "location": "123", 
     "likes_count": 0, 
     "caption": "123"
@@ -46,7 +46,7 @@
     "scn_code": "123",     
     "latitude": 23,     
     "longitude": 12, 
-    "image_user_id": 1, 
+    "image_user_id": 2, 
     "location": "123", 
     "likes_count": 0, 
     "caption": "123"
