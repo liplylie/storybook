@@ -280,11 +280,68 @@ def accept_friend_request():
     resp = make_response('modified successfully!', 201)
     return resp
 
+@app.route('/api/block_friend', methods=['POST'])
+def block_friend():
+    print("blocking friend...")
+    request_data = dict(request.form)
+    block_friend_relating_user_id = request_data["userId"][0]
+    parsed_block_friend_relating_user_id = str(block_friend_relating_user_id)
+
+    block_friend_related_user_id = request_data["friendId"][0]
+    parsed_block_friend_related_user_id = str(block_friend_related_user_id)
+
+    db.session.execute("UPDATE friendships SET friendship_type='blocked' WHERE relating_user_id=" + parsed_block_friend_relating_user_id + " AND related_user_id=" + parsed_block_friend_related_user_id)
+    db.session.commit()
+
+    resp = make_response('modified successfully!', 201)
+    return resp
+
+@app.route('/api/remove_friend', methods=['POST'])
+def remove_friend():
+    print("removing friend...")
+    request_data = dict(request.form)
+    remove_friend_relating_user_id = request_data["userId"][0]
+    parsed_remove_friend_relating_user_id = str(remove_friend_relating_user_id)
+
+    remove_friend_related_user_id = request_data["friendId"][0]
+    parsed_remove_friend_related_user_id = str(remove_friend_related_user_id)
+
+    db.session.execute("DELETE FROM friendships WHERE relating_user_id=" + parsed_remove_friend_relating_user_id + " AND related_user_id=" + parsed_remove_friend_related_user_id)
+    db.session.commit()
+
+    resp = make_response('removed successfully!', 201)
+    return resp
+
+# @app.route('/api/search_for_user', methods=['GET'])
+# def search_for_user():
+#     print("grabbing list of user's friends...")
+#     request_data = dict(request.args)
+    
+    # get_all_friends_user_id = request_data["userId"][0]
+    # parsed_get_all_friends_user_id = int(get_all_friends_user_id)
+    
+    # get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
+    
+    # list_of_friends = []
+    # for i in get_all_friends_query:
+    #   list_of_friends.append(i.related_user_id)
+    # list_of_friends = str(list_of_friends)
+    # resp = make_response(list_of_friends, 200)
+    # return resp
+
+
+
 # accept request - using relating_user_id: req.body.userId, related_user_id: req.body.friendId
    # and update type to 'friend'
+     #DONE
 
 # delete request using req.body.userId and req.body.friendId
+  #DONE
+    
+
 # block a user so changing type to 'blocked' using req.body.userId and req.body.friendId
+    #DONE
+
 # a search method. 
    #if there is a req.params.lastName search by that req.params.firstName + req.params.lastName
 
