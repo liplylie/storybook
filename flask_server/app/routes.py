@@ -10,10 +10,13 @@ from pprint import pprint
 import sqlalchemy_utils
 import json
 
+
+
 @app.route('/')
 def index():
   """This module renders main page"""
   return render_template('index.html')
+
 
 #add image
 @app.route('/api/add_image', methods=['POST'])
@@ -56,6 +59,7 @@ def add_photo():
   resp = make_response('added successfully!', 201)
   return resp
 
+
 #add user
 @app.route('/api/add_user', methods=['POST'])
 def add_user():
@@ -74,12 +78,14 @@ def add_user():
   friends_count = request_data["friends_count"][0]
   parsed_friends_count = int(friends_count)
 
-  user_tags_array = request_data["user_tags_array"][0]
+  # user_tags_array = 
+  user_tags_array = ['']
 
   db.session.add(Users(parsed_name, parsed_email, parsed_profile_image_url, parsed_friends_count, user_tags_array)) #replace later with actual values
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
+
 
 @app.route('/api/add_comment', methods=['POST'])
 def add_comment():
@@ -96,6 +102,7 @@ def add_comment():
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
+
 
 @app.route('/api/add_like', methods=['POST'])
 def add_like():
@@ -119,11 +126,12 @@ def add_like():
   resp = make_response('added successfully!', 201)
   return resp
 
-@app.route('/api/get_locs_user', methods=['GET'])
+
+@app.route('/api/get_all_locations', methods=['GET'])
 def grab_all_locations():
-    get_locs_user_query = db.session.query(Images) #returns all images
+    get_all_locations_query = db.session.query(Images) #returns all images
     coords = []
-    for i in get_locs_user_query:
+    for i in get_all_locations_query:
       new_loc = {
         "latitude": i.latitude,
         "longitude": i.longitude
@@ -132,6 +140,7 @@ def grab_all_locations():
     coords = str(coords)
     resp = make_response(coords, 200)
     return resp
+
 
 @app.route('/api/get_imgs_by_loc', methods=['GET'])
 def get_imgs_by_loc():
@@ -144,14 +153,14 @@ def get_imgs_by_loc():
     
     get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.001)))
     all_images = []
-    for j in get_imgs_by_loc_query:
-      all_images.append(j.image_url)
+    for i in get_imgs_by_loc_query:
+      all_images.append(i.image_url)
     all_images = str(all_images)
     resp = make_response(all_images, 200)
     return resp  
 
 
-#INCOMPLETE
+
 @app.route('/api/get_imgs_by_frs_at_loc', methods=['GET'])
 def get_imgs_by_frs_at_loc():
     print("grabbing most recent photo from each friend within a 10 mile radius at OP's location...")
@@ -163,31 +172,56 @@ def get_imgs_by_frs_at_loc():
     get_imgs_by_frs_at_loc_longitude = request_data["longitude"][0]
     parsed_get_imgs_by_frs_at_loc_longitude = float(get_imgs_by_frs_at_loc_longitude)
     
-    get_imgs_by_frs_at_loc_user_id = request_data["user_id"][0]
-    parsed_get_imgs_by_frs_at_loc_user_id_parsed = int(get_imgs_by_frs_at_loc_user_id)
+    get_imgs_by_frs_at_loc_user_id = request_data["userId"][0]
+    parsed_get_imgs_by_frs_at_loc_user_id = int(get_imgs_by_frs_at_loc_user_id)
     
-    get_list_of_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id')
-    
-    list_of_friends = []
-    for k in get_list_of_friends_query:
-      list_of_friends.append(k.related_user_id)
-    list_of_friends = str(list_of_friends)
-    resp = make_response(list_of_friends, 200)
+    get_list_of_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_imgs_by_frs_at_loc_user_id))
+
+    list_of_photos = []
+    for i in get_list_of_friends_query:
+      print(i.related_user_id)
+      parsed_user_id = int(i.related_user_id)
+      most_recent_image_at_loc = Images.query.filter_by(image_user_id=parsed_user_id).filter((Images.latitude > (parsed_get_imgs_by_frs_at_loc_latitude - 0.001)) & (Images.latitude < (parsed_get_imgs_by_frs_at_loc_latitude + 0.001)) & (Images.longitude > (parsed_get_imgs_by_frs_at_loc_longitude - 0.001)) & (Images.longitude < (parsed_get_imgs_by_frs_at_loc_longitude + 0.001))).order_by(Images.id.desc()).first()
+      print(most_recent_image_at_loc)
+      if (most_recent_image_at_loc):
+        list_of_photos.append(most_recent_image_at_loc)
+      print("list of photos...", list_of_photos)
+    list_of_photos = str(list_of_photos)
+
+    resp = make_response(list_of_photos, 200)
     return resp   
+
 
 @app.route('/api/get_all_friends', methods=['GET'])
 def get_all_friends():
     print("grabbing list of user's friends...")
     request_data = dict(request.args)
     
-    get_all_friends_user_id = request_data["user_id"][0]
+    get_all_friends_user_id = request_data["userId"][0]
     parsed_get_all_friends_user_id = int(get_all_friends_user_id)
     
     get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id')
     
     list_of_friends = []
-    for k in get_all_friends_query:
-      list_of_friends.append(k.related_user_id)
+    for i in get_all_friends_query:
+      list_of_friends.append(i.related_user_id)
     list_of_friends = str(list_of_friends)
     resp = make_response(list_of_friends, 200)
-    return resp   
+    return resp
+
+# get all friends using req.params.userId along with name and profile picture of the friend
+  #DONE
+
+
+
+# get all friend requests using req.params.userId along with name and profile pic
+# add a friend using relating_user_id: req.body.friendId, 
+    #related_user_id: req.body.userId and friendship_type: 'pending'
+# get all requests using req.params.userId where type = 'pending'
+# accept request - using relating_user_id: req.body.userId, related_user_id: req.body.friendId
+   # and update type to 'friend'
+# delete request using req.body.userId and req.body.friendId
+# block a user so changing type to 'blocked' using req.body.userId and req.body.friendId
+# a search method. 
+   #if there is a req.params.lastName search by that req.params.firstName + req.params.lastName
+
