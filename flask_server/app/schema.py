@@ -86,10 +86,10 @@ friendship_union = select([
                         friendships.c.related_user_id
                         ]).union(
                             select([
-                                friendships.c.related_user_id, 
-                                friendships.c.relating_user_id]
+                              friendships.c.related_user_id, 
+                              friendships.c.relating_user_id]
                             )
-                    ).alias()
+                          ).alias()
 Users.all_friends = relationship('Users',
                        secondary=friendship_union,
                        primaryjoin=Users.id==friendship_union.c.relating_user_id,
