@@ -1,11 +1,13 @@
 from flask import Flask, g
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
-from config import app_config
+from config import app_config, basedir
 from pprint import pprint
 import sqlalchemy_utils
 from sqlalchemy_utils import drop_database
 import json
+import os
+import unittest
 
 with open('../sensitive.json') as data_file:    
     sensitive = json.load(data_file)
@@ -97,9 +99,13 @@ for i in data_likes:
 db.session.commit()
 
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,2,'pending')")
+db.session.commit()
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,3,'friend')")
+db.session.commit()
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,4,'friend')")
+db.session.commit()
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,5,'pending')")
+db.session.commit()
 
 
 query_image = Images.query.all()

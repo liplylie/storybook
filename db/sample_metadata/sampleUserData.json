@@ -1,307 +1,434 @@
 [
   {
-    "favoriteFruit": "apple",
-    "greeting": "Hello, Cohen! You have 9 unread messages.",
-    "friends": [
-      {
-        "name": "Rachel Deleon",
-        "id": 0
-      },
-      {
-        "name": "Goldie Klein",
-        "id": 1
-      },
-      {
-        "name": "Page Baldwin",
-        "id": 2
-      }
-    ],
-    "range": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      "do",
-      "officia",
-      "consequat",
-      "enim",
-      "culpa"
-    ],
-    "longitude": "82.61765",
-    "latitude": "50.732501",
-    "registered": "Tuesday, January 6, 2015 2:39 PM",
-    "about": "Aliquip elit ipsum ad exercitation. Deserunt voluptate nulla cillum ex qui ad veniam anim tempor cupidatat irure. Do magna sunt elit aliquip elit nulla consequat dolor amet aute excepteur aute dolor adipisicing. Ea est deserunt non Lorem voluptate esse culpa irure dolore est veniam eiusmod cupidatat eu.",
-    "address": "987 Everett Avenue, Coloma, Minnesota, 7696",
-    "phone": "+1 (914) 426-2121",
+    "longitude": "115.395329",
+    "latitude": "32.285538",
     "user_tags_array": [
-      "ZANYMAX",
-      "Cohen",
-      "Holt"
+      "BOVIS",
+      "Janelle",
+      "Huber"
     ],
-    "email": "cohen.holt@zanymax.org",
-    "company": "ZANYMAX",
-    "last_name": "Holt",
-    "name": "Cohen",
-    "eyeColor": "brown",
-    "friends_count": 35,
-    "age": 24,
-    "profile_image_url": "http://placehold.it/32x32",
-    "balance": "$3,093.95",
-    "isActive": true,
-    "guid": "bfe7ddb4-ea12-4cc4-a8ec-ef75dc78073e",
-    "index": 0,
-    "_id": "59f13af2bb23d59e726374af"
-  },
-  {
-    "favoriteFruit": "strawberry",
-    "greeting": "Hello, Dickson! You have 7 unread messages.",
-    "friends": [
-      {
-        "name": "Nicole Cooley",
-        "id": 0
-      },
-      {
-        "name": "Durham Bates",
-        "id": 1
-      },
-      {
-        "name": "Evangelina Perkins",
-        "id": 2
-      }
-    ],
-    "range": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      "nisi",
-      "proident",
-      "anim",
-      "Lorem",
-      "aute"
-    ],
-    "longitude": "39.306682",
-    "latitude": "35.117935",
-    "registered": "Thursday, December 4, 2014 12:58 AM",
-    "about": "Consequat laboris anim aute duis et officia consequat non. Irure dolor fugiat ipsum adipisicing esse fugiat elit irure ipsum exercitation nulla enim labore. Fugiat id non ea ad consequat. Id non excepteur commodo exercitation anim exercitation ullamco do reprehenderit occaecat laborum aute do exercitation. Amet adipisicing elit labore commodo voluptate magna. Incididunt sint commodo exercitation voluptate nostrud occaecat est duis exercitation reprehenderit in adipisicing ex aliqua.",
-    "address": "608 Elm Avenue, Shepardsville, Illinois, 1063",
-    "phone": "+1 (945) 596-2139",
-    "user_tags_array": [
-      "MEDESIGN",
-      "Dickson",
-      "Rios"
-    ],
-    "email": "dickson.rios@medesign.biz",
-    "company": "MEDESIGN",
-    "last_name": "Rios",
-    "name": "Dickson",
-    "eyeColor": "brown",
+    "email": "janelle.huber@bovis.co.uk",
+    "company": "BOVIS",
+    "last_name": "Huber",
+    "first_name": "Janelle",
+    "name": "Witt",
     "friends_count": 26,
-    "age": 21,
-    "profile_image_url": "http://placehold.it/32x32",
-    "balance": "$2,134.00",
-    "isActive": false,
-    "guid": "96beb3fc-52fe-4d45-969f-3c3565599f56",
-    "index": 1,
-    "_id": "59f13af24dd893d8da125aab"
+    "profile_image_url": "http://placehold.it/32x32"
   },
   {
-    "favoriteFruit": "strawberry",
-    "greeting": "Hello, Levine! You have 10 unread messages.",
-    "friends": [
-      {
-        "name": "Addie Gross",
-        "id": 0
-      },
-      {
-        "name": "Hammond Black",
-        "id": 1
-      },
-      {
-        "name": "Callie Ramos",
-        "id": 2
-      }
-    ],
-    "range": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      "aliquip",
-      "excepteur",
-      "sint",
-      "incididunt",
-      "ullamco"
-    ],
-    "longitude": "-34.839928",
-    "latitude": "-2.461356",
-    "registered": "Tuesday, February 11, 2014 2:05 AM",
-    "about": "Sint occaecat ad deserunt et adipisicing fugiat sit mollit nulla laborum exercitation cupidatat sit ipsum. Lorem fugiat anim culpa eu incididunt enim sit. Dolor quis amet aliquip eiusmod irure in aliqua ex ipsum. Ullamco nostrud Lorem quis ipsum laboris. Aute et exercitation occaecat minim culpa id ea id duis. Fugiat laboris non consectetur duis.",
-    "address": "410 Townsend Street, Wiscon, New York, 2797",
-    "phone": "+1 (922) 478-2256",
+    "longitude": "30.404922",
+    "latitude": "10.225552",
     "user_tags_array": [
-      "OULU",
-      "Levine",
+      "CEPRENE",
+      "Jeannie",
+      "Meadows"
+    ],
+    "email": "jeannie.meadows@ceprene.tv",
+    "company": "CEPRENE",
+    "last_name": "Meadows",
+    "first_name": "Jeannie",
+    "name": "England",
+    "friends_count": 39,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-102.129122",
+    "latitude": "-46.417828",
+    "user_tags_array": [
+      "DANJA",
+      "Mavis",
+      "Bishop"
+    ],
+    "email": "mavis.bishop@danja.biz",
+    "company": "DANJA",
+    "last_name": "Bishop",
+    "first_name": "Mavis",
+    "name": "Katie",
+    "friends_count": 39,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "167.214039",
+    "latitude": "-40.273416",
+    "user_tags_array": [
+      "QUILCH",
+      "Audrey",
+      "Sims"
+    ],
+    "email": "audrey.sims@quilch.name",
+    "company": "QUILCH",
+    "last_name": "Sims",
+    "first_name": "Audrey",
+    "name": "Carole",
+    "friends_count": 28,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "41.99527",
+    "latitude": "-66.560237",
+    "user_tags_array": [
+      "PROSELY",
+      "Tracy",
+      "Cantu"
+    ],
+    "email": "tracy.cantu@prosely.biz",
+    "company": "PROSELY",
+    "last_name": "Cantu",
+    "first_name": "Tracy",
+    "name": "Herman",
+    "friends_count": 40,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "50.954873",
+    "latitude": "63.016546",
+    "user_tags_array": [
+      "CALCULA",
+      "Sonja",
+      "Gibbs"
+    ],
+    "email": "sonja.gibbs@calcula.ca",
+    "company": "CALCULA",
+    "last_name": "Gibbs",
+    "first_name": "Sonja",
+    "name": "Lottie",
+    "friends_count": 23,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "169.186241",
+    "latitude": "62.34756",
+    "user_tags_array": [
+      "SULFAX",
+      "Holden",
+      "Craft"
+    ],
+    "email": "holden.craft@sulfax.us",
+    "company": "SULFAX",
+    "last_name": "Craft",
+    "first_name": "Holden",
+    "name": "Alvarez",
+    "friends_count": 22,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "124.6448",
+    "latitude": "-18.832062",
+    "user_tags_array": [
+      "ZILODYNE",
+      "Lawson",
+      "Welch"
+    ],
+    "email": "lawson.welch@zilodyne.me",
+    "company": "ZILODYNE",
+    "last_name": "Welch",
+    "first_name": "Lawson",
+    "name": "Kristen",
+    "friends_count": 24,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "84.866708",
+    "latitude": "-56.482601",
+    "user_tags_array": [
+      "PROVIDCO",
+      "Reeves",
+      "Craig"
+    ],
+    "email": "reeves.craig@providco.org",
+    "company": "PROVIDCO",
+    "last_name": "Craig",
+    "first_name": "Reeves",
+    "name": "Aguilar",
+    "friends_count": 22,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "152.798776",
+    "latitude": "89.229071",
+    "user_tags_array": [
+      "QUALITERN",
+      "Baxter",
+      "May"
+    ],
+    "email": "baxter.may@qualitern.com",
+    "company": "QUALITERN",
+    "last_name": "May",
+    "first_name": "Baxter",
+    "name": "Barton",
+    "friends_count": 22,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-154.336649",
+    "latitude": "-30.923863",
+    "user_tags_array": [
+      "ENERVATE",
+      "Kerry",
+      "Farmer"
+    ],
+    "email": "kerry.farmer@enervate.info",
+    "company": "ENERVATE",
+    "last_name": "Farmer",
+    "first_name": "Kerry",
+    "name": "Linda",
+    "friends_count": 31,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-82.08593",
+    "latitude": "83.710257",
+    "user_tags_array": [
+      "PHARMACON",
+      "Darla",
+      "Rutledge"
+    ],
+    "email": "darla.rutledge@pharmacon.net",
+    "company": "PHARMACON",
+    "last_name": "Rutledge",
+    "first_name": "Darla",
+    "name": "Tamara",
+    "friends_count": 30,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "5.338623",
+    "latitude": "-47.775656",
+    "user_tags_array": [
+      "MAINELAND",
+      "Dixon",
+      "Hines"
+    ],
+    "email": "dixon.hines@maineland.co.uk",
+    "company": "MAINELAND",
+    "last_name": "Hines",
+    "first_name": "Dixon",
+    "name": "Beasley",
+    "friends_count": 20,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "145.341667",
+    "latitude": "41.840354",
+    "user_tags_array": [
+      "GRONK",
+      "Lacey",
+      "Nunez"
+    ],
+    "email": "lacey.nunez@gronk.tv",
+    "company": "GRONK",
+    "last_name": "Nunez",
+    "first_name": "Lacey",
+    "name": "Dianne",
+    "friends_count": 26,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-176.961869",
+    "latitude": "-82.031473",
+    "user_tags_array": [
+      "EZENTIA",
+      "Adams",
       "Lawson"
     ],
-    "email": "levine.lawson@oulu.ca",
-    "company": "OULU",
+    "email": "adams.lawson@ezentia.biz",
+    "company": "EZENTIA",
     "last_name": "Lawson",
-    "name": "Levine",
-    "eyeColor": "green",
-    "friends_count": 35,
-    "age": 29,
-    "profile_image_url": "http://placehold.it/32x32",
-    "balance": "$2,008.30",
-    "isActive": false,
-    "guid": "b181d82b-6f9b-4651-bcea-904ae173bd71",
-    "index": 2,
-    "_id": "59f13af2a8f553a9adffc5a7"
+    "first_name": "Adams",
+    "name": "Avis",
+    "friends_count": 37,
+    "profile_image_url": "http://placehold.it/32x32"
   },
   {
-    "favoriteFruit": "banana",
-    "greeting": "Hello, Nanette! You have 7 unread messages.",
-    "friends": [
-      {
-        "name": "Morgan Rogers",
-        "id": 0
-      },
-      {
-        "name": "Duffy Pena",
-        "id": 1
-      },
-      {
-        "name": "Keri Stephens",
-        "id": 2
-      }
-    ],
-    "range": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      "pariatur",
-      "sint",
-      "voluptate",
-      "nostrud",
-      "dolor"
-    ],
-    "longitude": "141.875738",
-    "latitude": "-26.94793",
-    "registered": "Sunday, December 4, 2016 3:20 PM",
-    "about": "Cillum officia ad reprehenderit velit quis elit ipsum fugiat aute est excepteur labore do. Consectetur occaecat sit laboris quis voluptate in minim mollit ex magna anim. Non adipisicing proident aute aliquip reprehenderit id eu labore elit dolore.",
-    "address": "854 Keap Street, Curtice, Louisiana, 8423",
-    "phone": "+1 (830) 502-3718",
+    "longitude": "99.663596",
+    "latitude": "78.15787",
     "user_tags_array": [
-      "COMVOY",
-      "Nanette",
-      "Castaneda"
+      "JAMNATION",
+      "Lucia",
+      "Avila"
     ],
-    "email": "nanette.castaneda@comvoy.us",
-    "company": "COMVOY",
-    "last_name": "Castaneda",
-    "name": "Nanette",
-    "eyeColor": "green",
-    "friends_count": 28,
-    "age": 25,
-    "profile_image_url": "http://placehold.it/32x32",
-    "balance": "$1,261.39",
-    "isActive": true,
-    "guid": "3b549e82-e5b9-48ab-b394-0c5fba123d69",
-    "index": 3,
-    "_id": "59f13af26af5942b5745dd79"
+    "email": "lucia.avila@jamnation.name",
+    "company": "JAMNATION",
+    "last_name": "Avila",
+    "first_name": "Lucia",
+    "name": "Harrell",
+    "friends_count": 24,
+    "profile_image_url": "http://placehold.it/32x32"
   },
   {
-    "favoriteFruit": "banana",
-    "greeting": "Hello, Watson! You have 5 unread messages.",
-    "friends": [
-      {
-        "name": "Kasey Kim",
-        "id": 0
-      },
-      {
-        "name": "Carole Ingram",
-        "id": 1
-      },
-      {
-        "name": "Saundra Santos",
-        "id": 2
-      }
-    ],
-    "range": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9
-    ],
-    "tags": [
-      "proident",
-      "sint",
-      "anim",
-      "in",
-      "nulla"
-    ],
-    "longitude": "-172.634899",
-    "latitude": "26.944865",
-    "registered": "Sunday, July 16, 2017 6:38 AM",
-    "about": "Consequat irure tempor velit dolore exercitation ullamco nulla tempor velit cillum ut fugiat veniam esse. Aute anim ea ipsum veniam sit. Deserunt dolore laboris aute amet velit quis reprehenderit voluptate magna. Anim laboris officia Lorem fugiat ipsum nulla ad id ea ad culpa et tempor consequat. Reprehenderit sunt commodo eiusmod officia et consectetur ipsum laborum aliquip quis esse.",
-    "address": "827 Juliana Place, Cliffside, Alabama, 9127",
-    "phone": "+1 (935) 528-2045",
+    "longitude": "-50.48741",
+    "latitude": "20.003619",
     "user_tags_array": [
-      "TURNLING",
+      "OHMNET",
+      "Kirk",
+      "Rice"
+    ],
+    "email": "kirk.rice@ohmnet.biz",
+    "company": "OHMNET",
+    "last_name": "Rice",
+    "first_name": "Kirk",
+    "name": "Patricia",
+    "friends_count": 29,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-179.683776",
+    "latitude": "78.809614",
+    "user_tags_array": [
+      "ACCUPHARM",
       "Watson",
-      "Vazquez"
+      "Jennings"
     ],
-    "email": "watson.vazquez@turnling.me",
-    "company": "TURNLING",
-    "last_name": "Vazquez",
-    "name": "Watson",
-    "eyeColor": "green",
-    "friends_count": 33,
-    "age": 30,
-    "profile_image_url": "http://placehold.it/32x32",
-    "balance": "$1,585.88",
-    "isActive": false,
-    "guid": "b711ad48-c8ad-4fb6-902c-c497f1aeaf68",
-    "index": 4,
-    "_id": "59f13af20d5e3ca73c5c462f"
+    "email": "watson.jennings@accupharm.ca",
+    "company": "ACCUPHARM",
+    "last_name": "Jennings",
+    "first_name": "Watson",
+    "name": "Hammond",
+    "friends_count": 20,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "92.852911",
+    "latitude": "-43.35122",
+    "user_tags_array": [
+      "QUANTASIS",
+      "Horn",
+      "Peters"
+    ],
+    "email": "horn.peters@quantasis.us",
+    "company": "QUANTASIS",
+    "last_name": "Peters",
+    "first_name": "Horn",
+    "name": "Kendra",
+    "friends_count": 23,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-69.558499",
+    "latitude": "84.428727",
+    "user_tags_array": [
+      "LUXURIA",
+      "Luisa",
+      "Adkins"
+    ],
+    "email": "luisa.adkins@luxuria.me",
+    "company": "LUXURIA",
+    "last_name": "Adkins",
+    "first_name": "Luisa",
+    "name": "Jaime",
+    "friends_count": 31,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "6.093349",
+    "latitude": "65.261385",
+    "user_tags_array": [
+      "CONFRENZY",
+      "Kennedy",
+      "Anderson"
+    ],
+    "email": "kennedy.anderson@confrenzy.org",
+    "company": "CONFRENZY",
+    "last_name": "Anderson",
+    "first_name": "Kennedy",
+    "name": "Baldwin",
+    "friends_count": 20,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-119.233267",
+    "latitude": "80.475007",
+    "user_tags_array": [
+      "ZILLATIDE",
+      "Hilary",
+      "Vinson"
+    ],
+    "email": "hilary.vinson@zillatide.com",
+    "company": "ZILLATIDE",
+    "last_name": "Vinson",
+    "first_name": "Hilary",
+    "name": "Blackburn",
+    "friends_count": 40,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-57.410003",
+    "latitude": "34.298809",
+    "user_tags_array": [
+      "OVATION",
+      "Shepherd",
+      "Collier"
+    ],
+    "email": "shepherd.collier@ovation.info",
+    "company": "OVATION",
+    "last_name": "Collier",
+    "first_name": "Shepherd",
+    "name": "Campbell",
+    "friends_count": 32,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "109.2339",
+    "latitude": "19.42672",
+    "user_tags_array": [
+      "ZINCA",
+      "Chapman",
+      "Dyer"
+    ],
+    "email": "chapman.dyer@zinca.net",
+    "company": "ZINCA",
+    "last_name": "Dyer",
+    "first_name": "Chapman",
+    "name": "Velasquez",
+    "friends_count": 28,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-89.933822",
+    "latitude": "-37.591238",
+    "user_tags_array": [
+      "ZAYA",
+      "Lynette",
+      "Mitchell"
+    ],
+    "email": "lynette.mitchell@zaya.co.uk",
+    "company": "ZAYA",
+    "last_name": "Mitchell",
+    "first_name": "Lynette",
+    "name": "Martin",
+    "friends_count": 21,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "95.229739",
+    "latitude": "-71.197618",
+    "user_tags_array": [
+      "VIAGRAND",
+      "Meyer",
+      "Cardenas"
+    ],
+    "email": "meyer.cardenas@viagrand.tv",
+    "company": "VIAGRAND",
+    "last_name": "Cardenas",
+    "first_name": "Meyer",
+    "name": "Crystal",
+    "friends_count": 34,
+    "profile_image_url": "http://placehold.it/32x32"
+  },
+  {
+    "longitude": "-9.227621",
+    "latitude": "43.422581",
+    "user_tags_array": [
+      "MOTOVATE",
+      "Estelle",
+      "Garrison"
+    ],
+    "email": "estelle.garrison@motovate.biz",
+    "company": "MOTOVATE",
+    "last_name": "Garrison",
+    "first_name": "Estelle",
+    "name": "Pickett",
+    "friends_count": 24,
+    "profile_image_url": "http://placehold.it/32x32"
   }
 ]
