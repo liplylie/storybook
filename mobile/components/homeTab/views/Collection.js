@@ -17,6 +17,7 @@ export default class Collection extends Component {
 	render(){
 		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
 		var test = [];
+		let navigation = this.props.navigation
 		 // for (var i=0; i < 100; i++){
 	  //     test.push(<Book image={{uri:img1}} style={styles.image}/>)
 	  //   }
@@ -24,7 +25,7 @@ export default class Collection extends Component {
 	  return (
 	    <ScrollView >
 	    <View style={styles.container}>
-	    	<Book image={img1}/>
+	    	<Book image={img1} navigation={navigation}/>
 	    </View>
 	    </ScrollView> 
   	)

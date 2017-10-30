@@ -84,47 +84,27 @@ class UserMap extends Component {
 
     var that = this
     axios.get('http://localhost:5000/api/get_locs_user')
-  .then(function ({data}) {
-    console.log(data, 'api map response');
-    let locations = parser(data)
-    console.log(locations, 'locations asdfasdfasdf')
-    that.location = [...locations]
-  })
-  .catch(function (error) {
-    console.log(error, 'api map response');
-  })
-
- 
+    .then(function ({data}) {
+      console.log(data, 'api map response');
+      let locations = parser(data)
+      console.log(locations, 'locations asdfasdfasdf')
+      that.location = [...locations]
+    })
+    .catch(function (error) {
+      console.log(error, 'api map response');
+    })
   }
-      // make get request to server for all locations (do not need pictures)
-      // this.state.initialPosition.latitude,
-      //http://localhost:5000/api/get_locs_user
-      //axios.get() ...
-        // receive location coordinates
-        //.then(locations) 
       
-          // put infointo this.location
-            // this.location = [...locations]
-
-    // map through this.location and put each element into a new Marker
-      
-    
-
   componentWillUnmount(){
     navigator.geolocation.clearWatch(this.watchID)
   }
 
 
-  viewTargetPictures(e){
-    // e contains coordinate info
-    console.log(e.nativeEvent, ' press marker')
-    this.props.navigation.navigate("PicturesFromMarker")
-
-
+  viewTargetPictures(){
+    // clicking here renders ar view. Leave commented unless ar kit is installed
+    //this.props.navigation.navigate("ARView")
   }
 
-
-   
   render() {
      console.log(this.location, 'this location')
     return (
@@ -134,7 +114,7 @@ class UserMap extends Component {
            region={this.state.initialPosition}>
           <MapView.Marker
             id = 'userMarker'
-            onPress={e => this.viewTargetPictures(e)}
+            onPress={this.viewTargetPictures}
             coordinate={this.state.markerPosition}>
               <View style={styles.radius}>
                 <View style={styles.marker}/>
@@ -161,6 +141,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
+    borderRadius: 5,
     position: 'absolute'
   },
   radius:{

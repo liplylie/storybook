@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import UserMap from './map.js'
+import UserMap from './map.js';
+import Login from '../../auth/Login'
 
 
 const Profile = ( props ) => {
@@ -11,7 +12,7 @@ const Profile = ( props ) => {
 		let email = props.profileInfo.Auth.email;
 		let picture = props.profileInfo.Auth.picture;
 		let id = props.profileInfo.Auth.id;
-		let friendIcon = "https://cdn.pixabay.com/photo/2016/11/14/17/39/group-1824146_960_720.png"
+		let friendIcon = "https://cdn.iconscout.com/public/images/icon/premium/png-512/profile-group-friend-team-user-avatar-3d104201ce065c29-512x512.png"
 
 		const viewFriends = () => {
     	props.navigation.navigate("Friends")
@@ -35,6 +36,9 @@ const Profile = ( props ) => {
 		      	<Text style={styles.profileEmail}>
 		      		Email: {email}
 		      	</Text>
+		      	<View style={{margin: 5}}>
+		      		<Login />
+		      	</View>
 		    </View>
 
 
@@ -67,13 +71,19 @@ const styles = StyleSheet.create({
 	profileContainer: {
 		flex: 1,
 		flexDirection: 'row',
+		backgroundColor: 'white'
 	},
 	profileDetails: {
-		margin: 20,
-		backgroundColor: 'rgba(0, 122, 255, 0.1)',
-		flex: 1
+		flex: 1,
+		marginTop: 20, 
+		marginLeft:20, 
+		marginRight: 20,
+		marginBottom: 10,
+		backgroundColor: 'skyblue',
+		borderRadius: 5
 	},
 	profilePicture: {
+		margin: 5,
 		width: 60, 
 		height: 60,
 		justifyContent: 'center',
@@ -81,24 +91,29 @@ const styles = StyleSheet.create({
 		borderRadius: 10
 	}, 
 	friendIcon: {
-		width: 100, 
+		width: 85, 
 		height: 60,
 		borderRadius: 10
 	},
 	profileName: {
 		paddingLeft: 10,
-		paddingTop: 15
+		paddingTop: 5,
+		fontSize: 14,
+		fontFamily: 'Verdana',
+		fontWeight: 'bold'
 	},
 	profileEmail: {
 		paddingLeft: 10,
-		color:"red"
+		fontSize: 14,
+		paddingBottom: 5,
+		fontFamily: 'Verdana',
+		fontWeight: 'bold'
 	},
 	profileMap: {
-		flexDirection: 'column',
-		margin: 20,
 		flex: 3,
-		backgroundColor:"blue",
-		width: (Dimensions.get('window').width) - 40
+		flexDirection: 'column',
+		marginLeft: 20,
+		width: (Dimensions.get('window').width) - 40,
 	}
 })
 

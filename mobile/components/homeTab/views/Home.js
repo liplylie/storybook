@@ -11,27 +11,28 @@ import Collection from './Collection';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
 
-import Login from '../../auth/Login.js'
 
-const Home = (props) => {
-  console.log(props, 'home props')
-    if (props.profileInfo.userLocation){
-      let location = props.profileInfo.userLocation;
+//import Login from '../../auth/Login.js'
+
+class Home extends Component {
+
+  render(){
+    if (this.props.profileInfo.userLocation){
+      console.log(this.props, 'home props')
+      let location = this.props.profileInfo.userLocation;
+      let navigation = this.props.navigation
       return (
           <View style={styles.container}>
-            <View>
-              <View style={styles.logout} >
-                <Login />
-              </View>
-              <Image 
-                style={styles.image}
-                resizeMethod='resize'
-                resizeMode='contain'
-                source={require('../../../logo.jpg')} 
-              />
+              <View style={styles.title}> 
+                <Image 
+                  style={styles.image}
+                  resizeMethod='resize'
+                  resizeMode='contain'
+                  source={require('../../../logo.jpg')} 
+                />
               </View>
               <View style={styles.collection}>
-                <Collection location={location}/>
+                <Collection location={location} navigation={navigation}/>
               </View>
           </View>
       );
@@ -43,26 +44,29 @@ const Home = (props) => {
       )
     }
   }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 15,
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'white'
+  },
+  title:{
+    flexDirection: 'column',
+    margin: 10
   },
   image: {
-    width: 400,
-    height: 100
+    width: 250,
+    height: 50,
+    margin: 2
   },
   collection: {
     backgroundColor: 'skyblue',
-    flex:1
+    flex:1,
+    borderRadius: 5
   },
-  logout:{
-    marginLeft: 15,
-    width: 10
-  }, 
   spinnerContainer:{
     flex: 1,
     justifyContent: 'center',

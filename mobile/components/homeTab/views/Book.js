@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
 	image:{
@@ -16,19 +17,26 @@ const styles = StyleSheet.create({
 	}
 })
 
+
 const Book = (props) => {
 	console.log(props, 'book props')
 	var test = [];
+	const viewPage = ()=>{
+		props.navigation.navigate("Page")
+  }
 		 for (var i=0; i < 100; i++){
-	      test.push( <View>
-    	<Text style={styles.text}> User Name </Text>
-    	<Image source={{uri:props.image}} style={styles.image}/>
-    </View> )
+	      test.push( 
+	      	<View>
+		    		<Text style={styles.text}> User Name </Text>
+			      <TouchableHighlight onPress={viewPage}>
+		    			<Image source={{uri:props.image}} style={styles.image}/>
+		    		</TouchableHighlight>
+	    		</View> 
+    	  )
 	    }
   return (
     test
   )
 }
 
-export default Book;
-
+export default Book
