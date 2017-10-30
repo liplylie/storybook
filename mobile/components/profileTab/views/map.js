@@ -108,8 +108,6 @@ class UserMap extends Component {
 
     // map through this.location and put each element into a new Marker
       
-    
-
   componentWillUnmount(){
     navigator.geolocation.clearWatch(this.watchID)
   }

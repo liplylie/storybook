@@ -15,9 +15,12 @@ import Spinner from 'react-native-spinkit';
 //import Login from '../../auth/Login.js'
 
 class Home extends Component {
+
   render(){
     if (this.props.profileInfo.userLocation){
+      console.log(this.props, 'home props')
       let location = this.props.profileInfo.userLocation;
+      let navigation = this.props.navigation
       return (
           <View style={styles.container}>
               <View style={styles.title}> 
@@ -29,7 +32,7 @@ class Home extends Component {
                 />
               </View>
               <View style={styles.collection}>
-                <Collection location={location}/>
+                <Collection location={location} navigation={navigation}/>
               </View>
           </View>
       );
