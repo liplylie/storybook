@@ -64,7 +64,6 @@ class Page extends Component{
 					        style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
 					        onChangeText={(comment) => this.handleComment(comment)}
 					        placeholder='Add a Comment ...'
-      						placeholderTextColor='ffffff'
 					      />
 				      </View>
 				  	</ScrollView>
