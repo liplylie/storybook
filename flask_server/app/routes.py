@@ -134,18 +134,31 @@ def add_like():
 
 @app.route('/api/get_all_locations', methods=['GET'])
 def grab_all_locations():
-    get_all_locations_query = db.session.query(Images) #returns all images
-    coords = []
-    for i in get_all_locations_query:
-      new_loc = {
-        "latitude": i.latitude,
-        "longitude": i.longitude
-      }
-      coords.append(new_loc)
-    coords = str(coords)
-    resp = make_response(coords, 200)
-    return resp
+  request_data = dict(request.args)
+  get_all_locations_query = db.session.query(Images) #returns all images
+  coords = []
+  for i in get_all_locations_query:
+    new_loc = {
+      "latitude": i.latitude,
+      "longitude": i.longitude
+    }
+    coords.append(new_loc)
+  coords = str(coords)
+  resp = make_response(coords, 200)
+  return resp
 
+@app.route('/api/get_user_info', methods=['GET'])
+def get_user_info():
+  request_data = dict(request.args)
+  get_user_info_user_id = request_data["userId"][0]
+  parsed_get_user_info_user_id = int(get_user_info_user_id)
+
+  get_user_info_query = db.session.query(Users).filter(Users.id == parsed_get_user_info_user_id)
+  user_info = []
+  for i in get_user_info_query:
+    user_info.append(i)
+  resp = make_response(str(user_info), 200)
+  return resp
 
 @app.route('/api/get_imgs_by_loc', methods=['GET'])
 def get_imgs_by_loc():
@@ -209,13 +222,12 @@ def get_all_friends():
     
     list_of_friends = []
     for i in get_all_friends_query:
-      list_of_friends.append(i.related_user_id)
+      relative_info_query = db.session.query(Users).filter(Users.id == i.related_user_id)
+      for j in relative_info_query:
+        list_of_friends.append(j)
     list_of_friends = str(list_of_friends)
     resp = make_response(list_of_friends, 200)
     return resp
-
-# get all friends using req.params.userId along with name and profile picture of the friend
-  #DONE
 
 @app.route('/api/get_friend_requests', methods=['GET'])
 def get_friend_requests():
@@ -255,15 +267,6 @@ def add_friend():
     return resp
 
 
-
-# add a friend using relating_user_id: req.body.friendId, 
-    #related_user_id: req.body.userId and friendship_type: 'pending'
-      #DONE, !!!!!! tell angie you switched userId and friendId because relating_user is for OP
-
-
-# get all requests using req.params.userId where type = 'pending'
-  #DONE
-
 @app.route('/api/accept_friend_request', methods=['POST'])
 def accept_friend_request():
     print("accepting friend request...")
@@ -279,6 +282,7 @@ def accept_friend_request():
 
     resp = make_response('modified successfully!', 201)
     return resp
+
 
 @app.route('/api/block_friend', methods=['POST'])
 def block_friend():
@@ -296,6 +300,7 @@ def block_friend():
     resp = make_response('modified successfully!', 201)
     return resp
 
+
 @app.route('/api/remove_friend', methods=['POST'])
 def remove_friend():
     print("removing friend...")
@@ -311,6 +316,7 @@ def remove_friend():
 
     resp = make_response('removed successfully!', 201)
     return resp
+
 
 # @app.route('/api/search_for_user', methods=['GET'])
 # def search_for_user():
@@ -328,20 +334,4 @@ def remove_friend():
     # list_of_friends = str(list_of_friends)
     # resp = make_response(list_of_friends, 200)
     # return resp
-
-
-
-# accept request - using relating_user_id: req.body.userId, related_user_id: req.body.friendId
-   # and update type to 'friend'
-     #DONE
-
-# delete request using req.body.userId and req.body.friendId
-  #DONE
-    
-
-# block a user so changing type to 'blocked' using req.body.userId and req.body.friendId
-    #DONE
-
-# a search method. 
-   #if there is a req.params.lastName search by that req.params.firstName + req.params.lastName
 
