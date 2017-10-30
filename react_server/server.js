@@ -24,10 +24,10 @@ app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
 app.use(cors());
 app.use('/api', router)
-// app.use(express.static(path.resolve(__dirname, '../client/public')))
+app.use(express.static(path.resolve(__dirname, '../client/public')))
 
 app.get('/*', function (req, res) {
-  res.send(404, 'SERVER ONLY');
+  res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
 })
 
 io.on('connection', socket => {
@@ -57,14 +57,14 @@ io.on('disconnect', socket => {
   console.log('user disconnected', io.engine.clientsCount);
 })
 
-User.sync()
-  .then(() => {
-    Chatroom.sync();
-    Friendships.sync();
-  }).then(() => {
-    Messages.sync();
-  }).then(() => {
+// User.sync()
+//   .then(() => {
+//     Chatroom.sync();
+//     Friendships.sync();
+//   }).then(() => {
+//     Messages.sync();
+//   }).then(() => {
     server.listen(PORT, () => console.log('listening on port ' + PORT));
-  })
+  // })
 
 // module.exports = client; 
