@@ -1,4 +1,4 @@
-import  TabBarNavigator  from '../components/tabBar/navigationConfig'
+import { TabBarNavigator } from '../components/tabBar/navigationConfig'
 import { NavigationActions } from 'react-navigation';
 
 const TabBarReducer = (state, action) => {

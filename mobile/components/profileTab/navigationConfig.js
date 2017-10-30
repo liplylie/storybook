@@ -5,7 +5,8 @@ import Messages from './views/Messages/Messages'
 import Chat from './views/Messages/Chat'
 import UserMap from './views/map.js'
 import PicturesFromMarker from './views/picturesFromMarker'
-import ARView from '../homeTab/views/AR.js'
+//only uncommented ARView if it is installed
+//import ARView from '../homeTab/views/AR.js'
 
 
 const routeConfig = {
@@ -15,7 +16,7 @@ const routeConfig = {
   Chat: { screen: Chat },
   UserMap: { screen: UserMap },
   PicturesFromMarker: { screen: PicturesFromMarker},
-  ARView: {screen: ARView},
+  //ARView: {screen: ARView},
 }
 // going to disable the header for now
 const stackNavigatorConfig = {

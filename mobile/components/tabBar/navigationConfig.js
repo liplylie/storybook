@@ -24,8 +24,8 @@ var tabBarConfig = {
     }
   }
 }
-var TabBarNavigator = TabNavigator(routeConfig,tabBarConfig)
+
 
 
 //export default TabBarNavigator
-export default TabBarNavigator 
+export const TabBarNavigator = TabNavigator(routeConfig,tabBarConfig)
