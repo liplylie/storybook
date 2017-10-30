@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native'
+import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableHighlight } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
 //import { connect } from 'react-redux'
 
 const { width, height } =  Dimensions.get('window')
+let visibleHeight = 0
+let visibleWidth = 0
 
 class Page extends Component{
 	constructor(props){
 		super(props)
 		console.log(props, 'page props')
+		this.state = {
+			visibleHeight: 0,
+			visibleWidth:0
+		}
+		
 	}
 	componentDidMount(){
 	// send get request for all images from clicked user
 
+	}
+
+	showTextInput(){
+		this.setState({
+			visibleHeight: 40,
+			visibleWidth: width
+		})
+	}
+
+	handleComment(comment){
+		console.log(comment, 'comment')
 	}
 	render(){
 		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
@@ -38,8 +56,16 @@ class Page extends Component{
 						  	<Text style={styles.likes}> Likes: 0 </Text>
 						  	<View>
 						  		<Text style={styles.userCommentName}> SquidWard <Text style={styles.userComment}> I hate you SpongeBob</Text></Text>
-						  		
 						  	</View>
+						  	<TouchableHighlight onPress={this.showTextInput.bind(this)}>
+						  		<Text> Add Comment</Text> 
+						  	</TouchableHighlight>
+					      <TextInput
+					        style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
+					        onChangeText={(comment) => this.handleComment(comment)}
+					        placeholder='Add a Comment ...'
+      						placeholderTextColor='ffffff'
+					      />
 				      </View>
 				  	</ScrollView>
 			   </View> 
@@ -100,6 +126,10 @@ const styles = StyleSheet.create({
 		fontWeight: 'normal',
 		fontSize: 13,
 		fontFamily: 'Verdana',
+	}, 
+	hidden:{
+		height: visibleHeight,
+		width: visibleWidth
 	}
 
 })
