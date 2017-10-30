@@ -61,6 +61,59 @@ DropTable('users')
 db.drop_all()
 db.create_all()
 
+with open('../db/sample_metadata/sampleUserData.json') as data_file:    
+    data_users = json.load(data_file)
+
+with open('../db/sample_metadata/sampleImagesSanFrancisco.json') as data_file:    
+    data_sf_images = json.load(data_file)
+
+with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
+    data_images = json.load(data_file)
+
+with open('../db/sample_metadata/sampleCommentData.json') as data_file:    
+    data_comments = json.load(data_file)
+
+with open('../db/sample_metadata/sampleLikes_Data.json') as data_file:    
+    data_likes = json.load(data_file)
+
+for j in data_users:
+  db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count'], j['user_tags_array']))
+db.session.commit()
+
+for i in data_sf_images:
+  db.session.add(Images(i['image_url'],  i['scn_code'], i['image_user_id'], i['latitude'], i['longitude'], i['likes_count'], i['caption'], i['image_tags_array']))
+db.session.commit()
+
+for i in data_images:
+  db.session.add(Images(i['image_url'],  i['scn_code'], i['image_user_id'], i['latitude'], i['longitude'], i['likes_count'], i['caption'], i['image_tags_array']))
+db.session.commit()
+
+for i in data_comments:
+  db.session.add(Comments(i['text'],  i['likes_count'], i['comment_user_id'], i['comment_image_id']))
+db.session.commit()
+
+for i in data_likes:
+  db.session.add(Likes(i['like_type'],  i['like_user_id'], i['like_image_id'], i['like_comment_id']))
+db.session.commit()
+
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,2,'pending')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,3,'friend')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,4,'friend')")
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,5,'pending')")
+
+
+query_image = Images.query.all()
+print(query_image)
+
+query_user = Users.query.all()
+print(query_user)
+
+query_comment = Comments.query.all()
+print(query_comment)
+
+query_like = Likes.query.all()
+print(query_like)
+
 ##############################
 #load Routes:
 from app import routes
