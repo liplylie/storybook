@@ -32,12 +32,12 @@ class Team extends Component {
           <div className="col align-self-center" style={{textAlign: 'right'}}>
             <p>Scrum Master</p>
             <h1>Angie Tang</h1>
-            <p>Description</p>
+            <p></p>
             <a href="http://github.com/atang167" target="blank">GitHub</a>
           </div>
           <div className="col" style={{maxWidth: 200}}></div>
           <div className="col align-self-center" style={{textAlign: 'left'}}>
-            <img src="http://via.placeholder.com/300x500" alt=""/>
+            <img src="https://s3-us-west-2.amazonaws.com/storybooknativeapp/adminPictures/angie.jpg" alt=""/>
           </div>
         </div>
         <div className="row justify-content-center" style={{height: '100vh'}}>
