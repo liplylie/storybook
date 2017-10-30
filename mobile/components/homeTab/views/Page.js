@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableHighlight } from 'react-native'
+import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableOpacity } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
 //import { connect } from 'react-redux'
@@ -57,9 +57,9 @@ class Page extends Component{
 						  	<View>
 						  		<Text style={styles.userCommentName}> SquidWard <Text style={styles.userComment}> I hate you SpongeBob</Text></Text>
 						  	</View>
-						  	<TouchableHighlight onPress={this.showTextInput.bind(this)}>
+						  	<TouchableOpacity onPress={this.showTextInput.bind(this)}>
 						  		<Text> Add Comment</Text> 
-						  	</TouchableHighlight>
+						  	</TouchableOpacity>
 					      <TextInput
 					        style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
 					        onChangeText={(comment) => this.handleComment(comment)}
