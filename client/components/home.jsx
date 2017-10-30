@@ -8,14 +8,14 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="container" style={{marginTop: 40}}>
-        <div className="row" style={{paddingTop: 40, height: '100vh'}}>
+      <div style={{marginTop: 40}}>
+        <div className="row" style={{paddingTop: 40, height: '100vh', backgroundColor: 'lightpink'}}>
           <div className="col align-self-center" style={{textAlign: 'right'}}>
             <img src="http://via.placeholder.com/300x500" />
           </div>
-          <div className="col align-self-center" style={{textAlign: 'center'}}>
+          <div className="col align-self-center" style={{textAlign: 'left'}}>
             <h1>Download now</h1>
-            <div className="row justify-content-center">
+            <div>
               <button type="button" className="btn btn-outline-dark">
                 App Store
               </button>
