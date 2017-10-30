@@ -6,6 +6,7 @@ from sqlalchemy import Integer, Table, Column, ForeignKey, \
     create_engine, String, select
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.ext.declarative import declarative_base
+import json
 
 
 class Images(db.Model):
@@ -37,7 +38,16 @@ class Images(db.Model):
     self.image_tags_array = image_tags_array
 
   def __repr__(self):
-    return '<<<Image tags: %r>>>' % self.image_tags_array + ' ' + '<<<image url: %r>>>' % self.image_url
+    return json.dumps({
+      "image_url": self.image_url,
+      "scn_code":self.scn_code,
+      "image_user_id": self.image_user_id,
+      "latitude": self.latitude,
+      "longitude": self.longitude,
+      "likes_count": self.likes_count,
+      "caption": self.caption,
+      "image_tags_array": self.image_tags_array
+    })
 
 friendships = db.Table(
     'friendships',  db.metadata,
@@ -76,7 +86,13 @@ class Users(db.Model):
     self.user_tags_array = user_tags_array
 
   def __repr__(self):
-    return '| Users: %r>>>' % self.name + ' ' + '<<<user friends count: %r>>>' % self.friends_count + ' ' + '<<<user tags: %r>>>' % self.user_tags_array
+    return json.dumps({
+      "name": self.name,
+      "email": self.email,
+      "profile_image_url": self.profile_image_url,
+      "friends_count": self.friends_count,
+      "user_tags_array": self.user_tags_array
+    })
 
 
 # this relationship is viewonly and selects across the union of all
@@ -112,7 +128,9 @@ class Chatrooms(db.Model):
     self.admin = admin
 
   def __repr__(self):
-    return '<<<image_id: %r>>>' % self.sender_name
+    return json.dumps({
+      "admin": self.admin,
+    })
 
 
 class Messages(db.Model):
@@ -130,8 +148,11 @@ class Messages(db.Model):
     self.room_id = room_id
 
   def __repr__(self):
-    return '<<<user_id: %r>>>' % self.user_id + ' ' + '<<<message: %r>>>' % self.message + ' ' + '<<<room_id: %r>>>' % self.room_id
-
+    return json.dumps({
+      "user_id": self.user_id,
+      "message": self.message,
+      "room_id": self.room_id
+    })
 
 class Comments(db.Model):
   __tablename__ = 'comments'
@@ -153,7 +174,12 @@ class Comments(db.Model):
     self.comment_image_id = comment_image_id
 
   def __repr__(self):
-    return '<<<image_id: %r>>>' % self.comment_image_id + ' ' + '<<<Comment text: %r>>>' % self.text
+    return json.dumps({
+      "text": self.text,
+      "likes_count": self.likes_count,
+      "comment_user_id": self.comment_user_id,
+      "comment_image_id": self.comment_image_id
+    })
 
 
 class Likes(db.Model):
@@ -173,5 +199,9 @@ class Likes(db.Model):
     self.like_comment_id = like_comment_id
 
   def __repr__(self):
-    return '<<<Like_image_id: %r>>>' % self.like_image_id + ' ' + '<<<Tags: %r>>>' % self.like_type
-
+    return json.dumps({
+      "like_type": self.like_type,
+      "like_user_id": self.like_user_id,
+      "like_image_id": self.like_image_id,
+      "like_comment_id": self.like_comment_id
+    })
