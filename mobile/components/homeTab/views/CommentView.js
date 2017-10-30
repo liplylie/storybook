@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const CommentView = () => {
-  return;
+class CommentView extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+
+  render() {
+  }
 }
 
 export default CommentView;
