@@ -87,3 +87,8 @@ __tests__/
 !.elasticbeanstalk/*.global.yml
 
 AWS_EC2_STORYBOOK.pem
+
+# Elastic Beanstalk Files for flask server:
+flask_server/.elasticbeanstalk/*
+flask_server/!.elasticbeanstalk/*.cfg.yml
+flask_server/!.elasticbeanstalk/*.global.yml
