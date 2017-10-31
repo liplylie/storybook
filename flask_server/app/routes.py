@@ -228,13 +228,20 @@ def get_all_friends():
     
     list_of_friends = []
     for i in get_all_friends_query:
-      relative_info_query = db.session.query(Users).filter(Users.id == i.related_user_id)
-      for j in relative_info_query:
-        list_of_friends.append(j)
+      if i[len(i) - 1] == 'friend':
+        relative_info_query = db.session.query(Users).filter(Users.id == i.related_user_id)
+        for j in relative_info_query:
+          temp = {
+            "id": j.id,
+            "name": j.name,
+            "email": j.email,
+            "profile_image_url": j.profile_image_url
+          }
+          list_of_friends.append(temp)
     
     result = {}
     result["data"] = list_of_friends
-    resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+    resp = make_response(json.dumps(result), 200)
     return resp
 
 @app.route('/api/get_friend_requests', methods=['GET'])
@@ -244,13 +251,20 @@ def get_friend_requests():
     get_friend_requests_user_id = request_data["userId"][0]
     parsed_get_friend_requests_user_id = int(get_friend_requests_user_id)
 
-    
     get_friend_requests_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_friend_requests_user_id))
     list_of_requests = []
     for i in get_friend_requests_query:
-      pending_friend_query = db.session.execute('SELECT * FROM users WHERE id = ' + str(i.related_user_id))
-      for j in pending_friend_query:
-        list_of_requests.append(j)
+      print("this is i: ", i)
+      if i[len(i) - 1] == 'pending':
+        pending_friend_query = db.session.execute('SELECT * FROM users WHERE id = ' + str(i.related_user_id))
+        for j in pending_friend_query:
+          temp = {
+            "id": j[0],
+            "name": j[1],
+            "email": j[2],
+            "profile_image_url": j[3]
+          }
+          list_of_requests.append(temp)
     
     result = {}
     result["data"] = list_of_requests
@@ -263,18 +277,19 @@ def get_friend_requests():
 @app.route('/api/add_friend', methods=['POST'])
 def add_friend():
     print("adding friend...")
-    request_data = dict(request.form)
-    add_friend_relating_user_id = request_data["userId"][0]
-    parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
+    print("request values: ", request.values)
+    # request_data = dict(request.form)
+    # add_friend_relating_user_id = request_data["userId"][0]
+    # parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
 
-    add_friend_related_user_id = request_data["friendId"][0]
-    parsed_add_friend_related_user_id = str(add_friend_related_user_id)
+    # add_friend_related_user_id = request_data["friendId"][0]
+    # parsed_add_friend_related_user_id = str(add_friend_related_user_id)
 
-    db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
-    db.session.commit()
+    # db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
+    # db.session.commit()
 
-    resp = make_response('added successfully!', 201)
-    return resp
+    # resp = make_response('added successfully!', 201)
+    # return resp
 
 
 @app.route('/api/accept_friend_request', methods=['POST'])
