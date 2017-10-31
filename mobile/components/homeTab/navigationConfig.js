@@ -14,7 +14,6 @@ const routeConfig = {
 }
 // going to disable the header for now
 const stackNavigatorConfig = {
-  headerMode: 'none',
   initialRouteName: 'Home'
 }
 export const HomeNavigator = StackNavigator(routeConfig,stackNavigatorConfig)

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
 import axios from 'axios';
 import Book from './Book'
+
+const { width, height } =  Dimensions.get('window')
 
 export default class Collection extends Component {
 	constructor(props){
@@ -34,9 +36,10 @@ export default class Collection extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-    width: 330,
+    width: width,
     marginTop: 15,
     flexDirection:'row', 
 		flexWrap:'wrap',
+		justifyContent: 'center'
   }
 })

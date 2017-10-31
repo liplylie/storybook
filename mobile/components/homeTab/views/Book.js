@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
 			marginLeft: 5, 
 			marginRight: 5, 
 			marginBottom: 5,
-			width: 100, 
-			height: 100,
+			width: 110, 
+			height: 110,
 			borderRadius: 10
 		},
 	text:{

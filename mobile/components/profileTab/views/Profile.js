@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import UserMap from './map.js';
 import Login from '../../auth/Login'
 
-
+const { width, height } =  Dimensions.get('window');
 const Profile = ( props ) => {
 	console.log(props, 'profile props')
 	if (props.profileInfo.Auth.name){
@@ -112,8 +112,7 @@ const styles = StyleSheet.create({
 	profileMap: {
 		flex: 3,
 		flexDirection: 'column',
-		marginLeft: 20,
-		width: (Dimensions.get('window').width) - 40,
+		width: width,
 	}
 })
 

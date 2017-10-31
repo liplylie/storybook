@@ -145,6 +145,7 @@ def grab_all_locations():
     coords.append(new_loc)
   result = {}
   result["data"] = coords
+  # coords = str(coords)
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
 

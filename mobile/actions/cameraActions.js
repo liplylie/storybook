@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import { Buffer } from 'buffer';
+import axios from 'axios';
 
 export const saveImage = (image) => {
   return function(dispatch) {
@@ -22,11 +23,19 @@ export const postImage = (obj) => {
       ACL: 'public-read',
       ContentType: obj.image.mime
     }, (err, data) => {
-      err ? 
+      if(err) {
         console.log('Error uploading photo to AWS: ', err)
-        : console.log('Successfully uploaded photo: ', data);
-
+      } else {
+        console.log('Successfully uploaded photo: ', data);
+        axios.post('http://localhost:5000/api/add_image', data)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         //Send img url (data.Location) to database
+      }
     })
   }
 }
