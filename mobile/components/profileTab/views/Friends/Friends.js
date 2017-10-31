@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
-import { View, Button, TouchableWithoutFeedback, Text, Image } from 'react-native'
+import { View, Button, TouchableWithoutFeedback, Text, Image, StyleSheet } from 'react-native'
+import { SearchBar, Card } from 'react-native-elements'
+
 import { connect } from 'react-redux'
 import { bindActionCreators} from 'redux'
+
 import axios from 'axios'
 
 import * as friendActions from '../../../../actions/friendActions'
 
-import { SearchBar } from 'react-native-elements'
+const styles = StyleSheet.create({
+	image: {
+			marginTop: .5,
+			marginLeft: 5, 
+			marginRight: 5, 
+			marginBottom: 5,
+			width: 110, 
+			height: 110,
+			borderRadius: 10
+		},
+	text: {
+		textAlign: 'center'
+	}
+})
 
 
 //import FriendProfile from './FriendProfile'
@@ -14,15 +30,15 @@ import { SearchBar } from 'react-native-elements'
 class Friends extends Component {
   constructor(props) {
     super(props); 
-    // this.state = {
-    //   friends: [{id: 1, img: "", name: "Angie"}, {id: 2, img: "", name: "Jordan"}  ], 
-    //   results: [{id: 2, img: "", name: "Jeff"}, {id: 4, img: "", name: "Daniel"}],
-    //   input: ''
-    // }
     this.state = {
-      results: [],
+      friends: [{id: 1, img: "", name: "Angie"}, {id: 2, img: "", name: "Jordan"}  ], 
+      results: [{id: 2, img: "https://ih0.redbubble.net/image.409990999.1253/sticker,375x360-bg,ffffff.u1.png", name: "Jeff"}, {id: 4, img: "http://www.cartoonbrew.com/wp-content/uploads/2016/11/danielchong_webarebears.jpg", name: "Daniel"}],
       input: ''
     }
+    // this.state = {
+    //   results: [],
+    //   input: ''
+    // }
   }
 
   componentDidMount() {
@@ -99,32 +115,38 @@ class Friends extends Component {
           <Button
             onPress={() => navigate('Profile')}
             title="Go back to profile"
-          /> 
+          />
+          <Card title="Friends">
           {this.state.results.map(result => {
-            for (let i = 0; i < this.props.friends.length; i++) {
-              if (result.id === friends[i].id) {
-                return (
-                  <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id, type: "friend"})}>
-                    <Text>{result.name}</Text> 
-                    <Image source={result.img} />
-                  </TouchableWithoutFeedback>
-                )
-              } else {
+            // for (let i = 0; i < this.props.friends.length; i++) {
+            //   if (result.id === friends[i].id) {
                 return (
                   <View>
-                    <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id, type: "result"})}>
-                      <Text>{result.name}</Text> 
-                      <Image source={result.img} />
-                    </TouchableWithoutFeedback>
-                    <Button
-                      title="Add friend"
-                      onPress={() => {this.sendRequest(result.id)}}
-                    ></Button>
+                  <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: result.id, type: "friend"})}>
+                    <Image style={styles.image} resizeMode="cover" source={{uri: result.img}}/>
+                  </TouchableWithoutFeedback >
+                  <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: result.id, type: "friend"})}>
+                    <Text style={styles.text}>{result.name}</Text>
+                  </TouchableWithoutFeedback> 
                   </View> 
                 )
-              }
-            }
+              // } else {
+              //   return (
+              //     <View>
+              //       <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id, type: "result"})}>
+              //         <Text>{result.name}</Text> 
+              //         <Image source={result.img} />
+              //       </TouchableWithoutFeedback>
+              //       <Button
+              //         title="Add friend"
+              //         onPress={() => {this.sendRequest(result.id)}}
+              //       ></Button>
+              //     </View> 
+              //   )
+              // }
+            // }
           })}
+          </Card> 
       </View> 
       )
     } else {
