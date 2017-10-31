@@ -91,11 +91,11 @@ for i in data_images:
 db.session.commit()
 
 for i in data_comments:
-  db.session.add(Comments(i['text'],  i['likes_count'], i['comment_user_id'], i['comment_image_id']))
+  db.session.add(Comments(i['text'], i['comment_user_id'], i['comment_image_id']))
 db.session.commit()
 
 for i in data_likes:
-  db.session.add(Likes(i['like_type'],  i['like_user_id'], i['like_image_id'], i['like_comment_id']))
+  db.session.add(Likes(i['like_user_id'], i['like_image_id']))
 db.session.commit()
 
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,2,'pending')")
