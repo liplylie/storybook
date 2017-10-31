@@ -8,6 +8,7 @@ import io from 'socket.io-client'
 import MessageInput from './MessageInput'
 import ChatBubble from './ChatBubble'
 
+
 class Chat extends Component { 
   constructor(props) {
     super(props);
@@ -19,8 +20,8 @@ class Chat extends Component {
   
   componentDidMount() {
     // this.socket.emit('subscription', this.props.roomId.toString());
-    this.socket.emit('subscription', '1');
-    this.socket.on('message', message => {
+    // this.socket.emit('subscription', '1');
+    this.socket.on(this.props.roomId.toString(), message => {
       this.setState({messages: this.state.messages.concat(message)})
     }); 
     
@@ -66,7 +67,6 @@ class Chat extends Component {
 const chatStore = (store) => {
   return {
     room: store.Chat.currentRoom,
-    // userId: store.Auth.userId
   }
 }
 
