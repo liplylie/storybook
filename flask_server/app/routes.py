@@ -378,3 +378,14 @@ def remove_friend():
     # resp = make_response(list_of_friends, 200)
     # return resp
 
+#getting most recent message (preview)
+#all messages
+#search all users
+
+#get al likes for a specific image
+
+#get all images for a specific user
+
+#posting comments for a specific image
+
+#getting all comments for a specific image. make this a join table with the users
