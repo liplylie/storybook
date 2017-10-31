@@ -143,8 +143,9 @@ def grab_all_locations():
       "longitude": i.longitude
     }
     coords.append(new_loc)
-  coords = str(coords)
-  resp = make_response(coords, 200)
+  result = {}
+  result["data"] = coords
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
 
 @app.route('/api/get_user_info', methods=['GET'])
@@ -157,7 +158,9 @@ def get_user_info():
   user_info = []
   for i in get_user_info_query:
     user_info.append(i)
-  resp = make_response(str(user_info), 200)
+  result = {}
+  result["data"] = user_info
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
 
 @app.route('/api/get_imgs_by_loc', methods=['GET'])
@@ -173,8 +176,9 @@ def get_imgs_by_loc():
     all_images = []
     for i in get_imgs_by_loc_query:
       all_images.append(i.image_url)
-    all_images = str(all_images)
-    resp = make_response(all_images, 200)
+    result = {}
+    result["data"] = all_images
+    resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp  
 
 
@@ -204,9 +208,11 @@ def get_imgs_by_frs_at_loc():
       if (most_recent_image_at_loc):
         list_of_photos.append(most_recent_image_at_loc)
       print("list of photos...", list_of_photos)
-    list_of_photos = str(list_of_photos)
+    
+    result = {}
+    result["data"] = list_of_photos
 
-    resp = make_response(list_of_photos, 200)
+    resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp   
 
 
@@ -225,8 +231,10 @@ def get_all_friends():
       relative_info_query = db.session.query(Users).filter(Users.id == i.related_user_id)
       for j in relative_info_query:
         list_of_friends.append(j)
-    list_of_friends = str(list_of_friends)
-    resp = make_response(list_of_friends, 200)
+    
+    result = {}
+    result["data"] = list_of_friends
+    resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp
 
 @app.route('/api/get_friend_requests', methods=['GET'])
@@ -243,8 +251,10 @@ def get_friend_requests():
       pending_friend_query = db.session.execute('SELECT * FROM users WHERE id = ' + str(i.related_user_id))
       for j in pending_friend_query:
         list_of_requests.append(j)
-    list_of_requests = str(list_of_requests)
-    resp = make_response(list_of_requests, 200)
+    
+    result = {}
+    result["data"] = list_of_requests
+    resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp 
 
 # get all friend requests using req.params.userId along with name and profile pic

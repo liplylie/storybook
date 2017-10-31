@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableOpacity } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
-//import { connect } from 'react-redux'
+
+import CommentView from './CommentView'
 
 const { width, height } =  Dimensions.get('window')
 let visibleHeight = 0
@@ -19,8 +20,7 @@ class Page extends Component{
 		
 	}
 	componentDidMount(){
-	// send get request for all images from clicked user
-
+		// send get request for all images from clicked user
 	}
 
 	showTextInput(){
@@ -55,6 +55,7 @@ class Page extends Component{
 				      	<Text style={styles.caption}> My Life is Great </Text>
 						  	<Text style={styles.likes}> Likes: 0 </Text>
 						  	<View>
+									<CommentView />
 						  		<Text style={styles.userCommentName}> SquidWard <Text style={styles.userComment}> I hate you SpongeBob</Text></Text>
 						  	</View>
 						  	<TouchableOpacity onPress={this.showTextInput.bind(this)}>

@@ -14,14 +14,14 @@ class CameraView extends Component {
   }
   addPicture(){
     ImagePicker.openPicker({
-      width: 1350,
-      height: 1080,
+      width: 640,
+      height: 480,
       cropping: true,
       includeBase64: true,
     })
       .then(image => {
-        actions.saveImage(image);
-        navigation.navigate('Post');
+        this.props.actions.saveImage(image);
+        this.props.navigation.navigate('Post');
       })
       .catch(err => {
         console.log('image picker error: ', err);
@@ -30,12 +30,14 @@ class CameraView extends Component {
 
   takePicture(){
     ImagePicker.openCamera({
-      width: 1350,
-      height: 1080,
-      cropping: true
+      width: 640,
+      height: 480,
+      cropping: true,
+      includeBase64: true
     })
       .then(image => {
-        navigation.navigate('Post');
+        this.props.actions.saveImage(image)
+        this.props.navigation.navigate('Post');
       })
       .catch(err => {
         console.log('capture picker error: ', err);

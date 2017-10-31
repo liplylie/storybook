@@ -13,7 +13,9 @@ class Nav extends Component {
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
             <span className="navbar-brand mb-0">
-              <img src="https://i.imgur.com/d1EPJRC.jpg" height="40" alt="" />
+              <Link to='/' className="nav-link">
+                <img src="https://i.imgur.com/d1EPJRC.jpg" height="40" alt="" />
+              </Link>
             </span>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
