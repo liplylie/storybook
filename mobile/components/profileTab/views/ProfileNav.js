@@ -20,6 +20,7 @@ class ProfileNav extends Component {
     const { profileState, dispatch } = this.props
     return (
       <ProfileNavigator
+        screenProps={this.props.userId}
         navigation={
           addNavigationHelpers({
             dispatch: dispatch,
@@ -31,10 +32,11 @@ class ProfileNav extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   return {
-   profileState: state.Profile
-   }
+    profileState: store.Profile,
+    userId: store.Auth.userId
+  }
  }
 
 export default connect(mapStateToProps)(ProfileNav)
