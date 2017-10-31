@@ -97,9 +97,10 @@ const mapStateToProps = (store) => {
    }
  }
 
-const chatActions = (dispatch) => {
+const chatDispatch = (dispatch) => {
   return {
     actions: bindActionCreators(chatActions, dispatch) 
   }
 }
+
 export default connect(mapStateToProps, chatActions)(NewChat);
