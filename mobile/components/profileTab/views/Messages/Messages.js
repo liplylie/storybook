@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
-
-import axios from 'axios'
+import { bindActionCreators } from 'redux'
 
 import MessageEntry from './MessageEntry'
 import { SearchBar } from 'react-native-elements'
+
+import * as chatActions from '../../../../actions/chatActions'
 
 class Messages extends Component {
   constructor(props) {

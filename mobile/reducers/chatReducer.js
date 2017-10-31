@@ -21,17 +21,6 @@ const chatReducer = (state=initialState, action) => {
   }
 }     
 
-export const getRooms = (userId) => {
-  return function(dispatch) {
-    axios.get('/api/chat/' + userId)
-    .then(({ data }) => {
-      dispatch({type: 'GET_ALL_ROOMS', payload: data});
-    })
-    .catch(err => {
-      dispatch({type: 'ROOM_LIST_FAIL', payload: err})
-    })
-  }
-}
 
 
 export default chatReducer;

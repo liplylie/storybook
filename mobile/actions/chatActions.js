@@ -1,5 +1,7 @@
 import key from '../../sensitive.json'
 
+import axios from 'axios'
+
 export const enterRoom = (roomId) => {
   return function(dispatch) {
     dispatch({type: 'ENTER_ROOM', payload: roomId});
