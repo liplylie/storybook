@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import UserMap from './map.js';
 import Login from '../../auth/Login'
 
-
+const { width, height } =  Dimensions.get('window');
 const Profile = ( props ) => {
 	console.log(props, 'profile props')
 	if (props.profileInfo.Auth.name){
@@ -18,24 +18,45 @@ const Profile = ( props ) => {
     	props.navigation.navigate("Friends")
   	}
 
+  	const getFriends = () => {
+  		// get all friends, count them all, return count
+  		// put user id in get request params
+  		//'/api/get_all_friends'
+  	}
+
 		return (
 	    <ScrollView style={styles.profileContainer}>
-
+	    	<View style={{flex:.3, backgroundColor: 'white', marginTop:10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+	    		<Text style={styles.email}>
+		      	{email}
+		      </Text>
+		      <TouchableHighlight onPress={viewFriends} >
+			      <Image source={{uri:friendIcon}} style={styles.friendIcon}/> 
+			    </TouchableHighlight>
+	    	</View>
 	    	<View style ={styles.profileDetails}>
 	    		<View style={{flexDirection: 'row', flex: 1}}>
-		    		<Image source={{uri:picture}} style={styles.profilePicture}/>
+	    			<View style={{flexDirection: 'column', flex: 1}}>
+	    				<View style={{flexDirection: 'row', alignItems: 'center'}}>
+			    			<Image source={{uri:picture}} style={styles.profilePicture}/>
+			    			<View style={{paddingLeft: 150, justifyContent: 'space-around', flexDirection: 'row'}}>
+			    				<View style={{marginRight: 20}}>
+				    				<Text> Photos </Text>
+				    				<Text style={{textAlign: 'center'}}> 0 </Text>
+				    			</View>
+				    			<View>
+					    			<Text> Friends </Text>
+				    				<Text style={{textAlign: 'center'}}> 0 </Text>
+				    			</View>
+			    			</View>
+			    		</View>
+			    		<Text style={styles.profileName}> {name} </Text>
+			    	</View>
 		    		<View style={{ marginLeft: 180}}>
-			    		<TouchableHighlight onPress={viewFriends}>
-			      		<Image source={{uri:friendIcon}} style ={styles.friendIcon}/> 
-			      	</TouchableHighlight>
+			    		
 		      	</View>
 		    	</View>
-		      	<Text style={styles.profileName}>
-		      		Name: {name}
-		      		</Text>
-		      	<Text style={styles.profileEmail}>
-		      		Email: {email}
-		      	</Text>
+		      	
 		      	<View style={{margin: 5}}>
 		      		<Login />
 		      	</View>
@@ -75,45 +96,40 @@ const styles = StyleSheet.create({
 	},
 	profileDetails: {
 		flex: 1,
-		marginTop: 20, 
-		marginLeft:20, 
-		marginRight: 20,
-		marginBottom: 10,
-		backgroundColor: 'skyblue',
-		borderRadius: 5
+		backgroundColor: 'skyblue'
 	},
 	profilePicture: {
-		margin: 5,
-		width: 60, 
-		height: 60,
+		marginTop: 15,
+		marginLeft: 30,
+		marginBottom: 10,
+		width: 50, 
+		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 10
+		borderRadius: 20
 	}, 
 	friendIcon: {
-		width: 85, 
-		height: 60,
-		borderRadius: 10
+		width: 40, 
+		height: 40,
+		borderRadius: 10,
+		marginLeft: 30,
 	},
-	profileName: {
-		paddingLeft: 10,
+	email: {
 		paddingTop: 5,
 		fontSize: 14,
 		fontFamily: 'Verdana',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		marginRight: 20,
 	},
-	profileEmail: {
-		paddingLeft: 10,
+	profileName: {
 		fontSize: 14,
 		paddingBottom: 5,
-		fontFamily: 'Verdana',
-		fontWeight: 'bold'
+		fontFamily: 'Verdana'
 	},
 	profileMap: {
 		flex: 3,
 		flexDirection: 'column',
-		marginLeft: 20,
-		width: (Dimensions.get('window').width) - 40,
+		width: width,
 	}
 })
 

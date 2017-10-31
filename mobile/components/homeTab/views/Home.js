@@ -15,7 +15,9 @@ import Spinner from 'react-native-spinkit';
 //import Login from '../../auth/Login.js'
 
 class Home extends Component {
-
+  static navigationOptions = {
+    header: null
+  }
   render(){
     if (this.props.profileInfo.userLocation){
       console.log(this.props, 'home props')
@@ -65,7 +67,6 @@ const styles = StyleSheet.create({
   collection: {
     backgroundColor: 'skyblue',
     flex:1,
-    borderRadius: 5
   },
   spinnerContainer:{
     flex: 1,

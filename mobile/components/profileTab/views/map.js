@@ -19,6 +19,7 @@ import MapView from 'react-native-maps';
 import userLocation from '../../../actions/userLocationAction.js'
 import axios from 'axios'
 import parser from '../../../parser.js'
+import key from '../../../../sensitive.json'
 
 
 const { width, height } =  Dimensions.get('window');
@@ -27,6 +28,9 @@ const SCREEN_WIDTH = width;
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+const PythonServer = key.flask_server
+console.log(PythonServer, 'PythonServer')
+
 
 
 class UserMap extends Component {
@@ -83,12 +87,11 @@ class UserMap extends Component {
     })
 
     var that = this
-    axios.get('http://localhost:5000/api/get_locs_user')
-    .then(function ({data}) {
+    axios.get(`${PythonServer}api/get_all_locations`)
+    .then(function (data) {
       console.log(data, 'api map response');
-      let locations = parser(data)
-      console.log(locations, 'locations asdfasdfasdf')
-      that.location = [...locations]
+      // const locations = data.data
+      // that.location = [...locations]
     })
     .catch(function (error) {
       console.log(error, 'api map response');
@@ -141,7 +144,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
-    borderRadius: 5,
     position: 'absolute'
   },
   radius:{

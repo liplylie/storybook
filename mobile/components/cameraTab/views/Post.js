@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -17,11 +17,14 @@ class Post extends Component {
   }
 
   render() {
-    const { image, userId, actions, navigation } = this.props;
+    const { image, userId, actions, navigation, location } = this.props;
     const { name, description, tags } = this.state;
+    let height = image.height
+    let width = image.width
 
     return (
       <View>
+        <Image source={{uri:image.path}} style={{height: height, width: width}}/>
         <TextInput 
           placeholder="Title"
           onChangeText={(text) => {
@@ -48,7 +51,8 @@ class Post extends Component {
               name,
               image: image,
               description,
-              userId
+              userId,
+              location
             }
             actions.postImage(postObj);
             navigation.navigate('Camera');
@@ -62,7 +66,8 @@ class Post extends Component {
 const postState = (state) => {
   return {
     image: state.CameraPost.image,
-    userId: state.Auth.userId
+    userId: state.Auth.userId,
+    location: state.Profile.userLocation
   }
 }
 
