@@ -48,15 +48,15 @@ class Messages extends Component {
         <Button title="Go back" onPress={() => navigate('Friends')} /> 
         <Button title="New chat" onPress={() => navigate('NewChat')} /> 
         {this.props.rooms.map((room) => {
-          if (room.chatroom_sender !== this.screenProps.userId) {
+          if (room.chatroom_sender !== this.screenProps) {
             friend = room.sender.name; 
             // img = room.sender.img;
           } else {
             friend = room.recipient.name; 
             // img = room.sender.img;
           }
-          //get must current message
-          axios.get('/chats/' + room.id)
+          //get most current message
+          axios.get('' + room.id)
           .then(({ data }) => { 
             return (
               this.state.rooms.map(room => {

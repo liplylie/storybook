@@ -13,7 +13,6 @@ class NewChat extends Component {
     this.state = {
       results: [],
       input: '',
-      chatFriends: [],
       chatroom: ''
     }
   } 
@@ -54,9 +53,8 @@ class NewChat extends Component {
     })
   }
 
-
   render() {
-    console.log('friends list', this.props.friends);
+    // console.log('friends list', this.props.friends);
     let friend = '';
     let img = '';
     const {navigate} = this.props.navigation;
