@@ -216,14 +216,18 @@ def get_imgs_by_loc():
     get_imgs_by_loc_longitude = request_data["longitude"][0]
     get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
     
-    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.001)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.001)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.001)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.001)))
+    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.002)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.002)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.002)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.002)))
     all_images = []
     for i in get_imgs_by_loc_query:
-      all_images.append(i.image_url)
+      all_images.append({
+        "image_user_id": i.image_user_id,
+        "image_id": i.id,
+        "imageUrl": i.image_url
+      })
     result = {}
     result["data"] = all_images
     resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
-    return resp  
+    return resp
 
 
 
