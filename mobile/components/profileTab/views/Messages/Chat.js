@@ -14,26 +14,27 @@ class Chat extends Component {
     this.state = { 
       messages: [{message: "hello", sender: "angie", roomId: "1"}, {message: "hello", sender: "daniel", roomId: "1"}],
     }
-    this.socket = io('http://slocalhost:3000')
+    this.socket = io('http://localhost:3000')
   }
   
   componentDidMount() {
     // this.socket.emit('subscription', this.props.roomId.toString());
-    this.socket.emit('subscription', "1");
+    this.socket.emit('subscription', '1');
     this.socket.on('message', message => {
       this.setState({messages: this.state.messages.concat(message)})
     }); 
+    
   }
 
   componentWillUnmount() {
-    //disconnect from socket
+    this.socket.disconnect;
   }
 
   handleSubmit(input) {
     let message = {
       message: input,
-      sender: "angie",
-      roomId: "1"
+      sender: 'angie',
+      roomId: '1'
     }
     this.socket.emit('message', message);
     this.setState({messages: this.state.messages.concat(message)});

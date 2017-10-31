@@ -24,7 +24,6 @@ app.use(parser.json())
 app.use(parser.urlencoded({extended: true}))
 app.use(cors());
 app.use('/api', router)
-
 app.use(express.static(path.resolve(__dirname, '../client/public')))
 
 app.get('/*', function (req, res) {
@@ -33,25 +32,29 @@ app.get('/*', function (req, res) {
 
 io.on('connection', socket => {
   socket.on('message', message => {
-    // console.log('server received message ', io.engine.clientsCount);
-    // console.log('this is the message room', message);
-    socket.broadcast.to(message.roomIid.emit('message', {
+    console.log('server received message', message);
+    console.log('this is the message room', message.roomId);
+    socket.broadcast.to(message.roomId).emit('message', {
       message: message.message,
       sender: message.sender,
-      room_id: parseInt(message.roomId)
-    }))
-    // db.Messages.create(message);
+      roomId: message.roomId
+    })
+    // db.Messages.create({
+      //message: message.message,
+      //sender: message.sender,
+      //room_id: parseInt(message.roomId),
+    //});
   })
   socket.on('subscribe', roomId => {
-    // console.log('joining room', room);
     socket.join(roomId);
+    console.log('joining room', roomId);
     // let messages = db.Messages.findAll({
     //   where: {room_id: parseInt(roomId)},
     //   order: [[ 'createdAt', 'DESC' ]]
     // });
     // socket.emit('message', messages);
   })
-  console.log('user connected', io.engine.clientsCount)
+  console.log('user connected', io.engine.clientsCount);
 })
 
 io.on('disconnect', socket => {
