@@ -11,58 +11,71 @@ class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rooms: [{friend: "Jordan", id: "1", message: "hello", img: ""}],
       results: [],
+      input: ''
     }
   } 
 
   componentDidMount() {
-    axios.get('api/chats/' + this.props.userId)
-    .then(({ data }) => {
-      this.setState({rooms: data})
+    // this.props.actions.getRooms(this.screenProps);
+    this.props.actions.getRooms(1);
+    
+  }
+
+  searchMessages(input) {
+    this.setState({
+      results: this.props.rooms.filter(room => {
+        if (room.sender.name.includes(input) || room.recipient.name.includes(input)) {
+          return room; 
+        }
+      })
     })
   }
 
+
   render() {
     let friend = '';
+    let img = '';
     const {navigate} = this.props.navigation;
+    //if results.length use this.state.results
     return (
       <View>
         <SearchBar 
           placeholder="Search messages"
+          onChangeText={(text) => this.setState({input: text})}
+          onSubmitEditing={() => this.searchMessages()}
         /> 
         <Button title="Go back" onPress={() => navigate('Friends')} /> 
-        {/* {this.state.rooms.forEach((room) => {
-          if (room.chatroom_sender !== this.props.userId) {
-            friend = room.chatroom_sender; 
+        <Button title="New chat" onPress={() => navigate('NewChat')} /> 
+        {this.props.rooms.map((room) => {
+          if (room.chatroom_sender !== this.screenProps.userId) {
+            friend = room.sender.name; 
+            // img = room.sender.img;
           } else {
-            friend = room.chatroom_recepient; 
+            friend = room.recipient.name; 
+            // img = room.sender.img;
           }
+          //get must current message
           axios.get('/chats/' + room.id)
-          .then(({ data }) => { */}
-            {/* return ( */}
-              {this.state.rooms.map(room => {
+          .then(({ data }) => { 
+            return (
+              this.state.rooms.map(room => {
                 return (
                   <MessageEntry 
                     navigation={this.props.navigation} 
                     roomId={room.id} 
-                    message={room.message} 
-                    friend={room.friend} 
-                    img={room.img}
+                    message={data} 
+                    friend={friend} 
+                    img={img}
                   /> 
                 )
-              })}
-              {/* <MessageEntry 
-                navigation={this.props.navigation} 
-                roomId={room.id} message={data.message} 
-                friend={friend.User.name} 
-                img={friend.User.img}/>  */}
-            {/* ) */}
-          {/* })
+              })
+            )
+          })
           .catch(err => {
             console.log('error getting previews', err);
           })
-        })} */}
+        })}
       </View> 
     )
   }
@@ -70,8 +83,15 @@ class Messages extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    userId: store.Auth.userId
+    rooms: store.Chat.rooms
    }
  }
 
-export default connect(mapStateToProps, null)(Messages);
+ const chatDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(chatActions, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, chatDispatch)(Messages);
+
