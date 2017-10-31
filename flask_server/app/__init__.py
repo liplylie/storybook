@@ -42,7 +42,7 @@ db = SQLAlchemy()
 db.init_app(app)
 db.app = app
 
-from schema import Images, Users, friendships, Chatrooms, Messages, Comments, Likes
+from schema import Images, Users, friendships, chatrooms, Messages, Comments, Likes
 
 from sqlalchemy.schema import DropTable
 from sqlalchemy.ext.compiler import compiles
