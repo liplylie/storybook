@@ -1,5 +1,6 @@
 const initialState = {
-  currentRoom: ''
+  currentRoom: '', 
+  rooms: []
 }
 
 const chatReducer = (state=initialState, action) => {
