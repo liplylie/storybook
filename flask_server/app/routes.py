@@ -29,35 +29,31 @@ def add_photo():
   #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
 
-  #image URL
-  print(request_data, 'request data bro')
-  url = request_data["url"][0]
+  url = request_data["url"]
   parsed_url = url.encode('utf-8')
 
   #tags
   request_body = "{'url': '" + parsed_url + "'}"
 
   image_tags = get_tags(request_body)
+  image_tags = []
 
-  #scn_code(currently set to '0')
-  # scn_code = request_data["scn_code"][0]
   scn_code = '0'
   parsed_scn_code = scn_code.encode('utf-8')
-
-  image_user_id = request_data["image_user_id"][0]
+  image_user_id = request_data["image_user_id"]
   parsed_image_user_id = int(image_user_id)
   
   #geolocation
-  latitude = request_data["latitude"][0]
+  latitude = request_data["latitude"]
   parsed_latitude = int(latitude)
 
-  longitude = request_data["longitude"][0]
+  longitude = request_data["longitude"]
   parsed_longitude = int(longitude)
 
-  likes_count = request_data["likes_count"][0]
+  likes_count = 0
   parsed_likes_count = int(likes_count)
 
-  image_caption = request_data["caption"][0]
+  image_caption = request_data["caption"]
   parsed_image_caption = image_caption.encode('utf-8')
 
   db.session.add(Images(parsed_url,parsed_scn_code, parsed_image_user_id, parsed_latitude, parsed_longitude, parsed_likes_count, parsed_image_caption, image_tags)) #replace later with actual values
