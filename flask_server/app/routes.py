@@ -348,17 +348,19 @@ def remove_friend():
     resp = make_response('removed successfully!', 201)
     return resp
 
-# @app.route('/api/get_recent_message', methods=['GET'])
-# def get_recent_message():
-#   print('getting most recent message...')
-#   request_data = dict(request.form)
-#   get_recent_message_user_id = request_data["userId"][0]
-#   parsed_get_recent_message_user_id = str(get_recent_message_user_id)
+@app.route('/api/get_recent_message', methods=['GET'])
+def get_recent_message():
+  print('getting most recent message...')
+  request_data = dict(request.form)
+  get_recent_message_user_id = request_data["userId"][0]
+  parsed_get_recent_message_user_id = str(get_recent_message_user_id)
+
+  most_recent_message_query = Messages.query.filter_by(image_user_id=parsed_user_id).order_by(Images.id.desc()).first()
+
+
   
    
   
-
-  # .order_by(Images.id.desc()).first()
 
 
 # @app.route('/api/search_for_user', methods=['GET'])
