@@ -108,6 +108,26 @@ db.session.execute("insert into friendships (relating_user_id, related_user_id, 
 db.session.commit()
 
 
+db.session.execute("insert into chatrooms (chatroom_id, chatroom_first_member, chatroom_second_member) values (1,4,3)")
+db.session.commit()
+db.session.execute("insert into chatrooms (chatroom_id, chatroom_first_member, chatroom_second_member) values (2,4,5)")
+db.session.commit()
+db.session.execute("insert into chatrooms (chatroom_id, chatroom_first_member, chatroom_second_member) values (3,4,6)")
+db.session.commit()
+db.session.execute("insert into chatrooms (chatroom_id, chatroom_first_member, chatroom_second_member) values (4,1,5)")
+db.session.commit()
+db.session.execute("insert into chatrooms (chatroom_id, chatroom_first_member, chatroom_second_member) values (5,4,1)")
+db.session.commit()
+
+db.session.execute("insert into messages (message, message_chatroom, sender) values ('hello',1,4)")
+db.session.commit()
+db.session.execute("insert into messages (message, message_chatroom, sender) values ('hello again',1,4)")
+db.session.commit()
+db.session.execute("insert into messages (message, message_chatroom, sender) values ('WHAT',1,3)")
+db.session.commit()
+db.session.execute("insert into messages (message, message_chatroom, sender) values ('chicken butt',1,4)")
+db.session.commit()
+
 query_image = Images.query.all()
 print(query_image)
 
@@ -119,6 +139,9 @@ print(query_comment)
 
 query_like = Likes.query.all()
 print(query_like)
+
+query_chatroom = Chatrooms.query.all()
+print(query_chatroom)
 
 ##############################
 #load Routes:
