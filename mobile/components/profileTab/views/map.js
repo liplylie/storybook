@@ -105,7 +105,7 @@ class UserMap extends Component {
 
   viewTargetPictures(){
     // clicking here renders ar view. Leave commented unless ar kit is installed
-    //this.props.navigation.navigate("ARView")
+    this.props.navigation.navigate("ARView")
   }
 
   render() {
