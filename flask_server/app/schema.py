@@ -96,6 +96,36 @@ class Users(db.Model):
     })
 
 
+
+chatrooms = db.Table(
+    'chatrooms',  db.metadata,
+    db.Column('sender_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
+                                        primary_key=True),
+    db.Column('recipient_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
+                                        primary_key=True),
+    db.Column('chatroom_id', db.Integer)
+)
+
+
+# this relationship is viewonly and selects across the union of all
+# chatroom members
+chatroom_union = select([
+                        chatrooms.c.sender_user_id, 
+                        chatrooms.c.recipient_user_id
+                        ]).union(
+                            select([
+                              chatrooms.c.recipient_user_id, 
+                              chatrooms.c.sender_user_id]
+                            )
+                          ).alias()
+Users.all_chatroom_members = relationship('Users',
+                       secondary=chatroom_union,
+                       primaryjoin=Users.id==chatroom_union.c.sender_user_id,
+                       secondaryjoin=Users.id==chatroom_union.c.recipient_user_id,
+                       viewonly=True) 
+
+
+
 # this relationship is viewonly and selects across the union of all
 # friends
 friendship_union = select([
@@ -113,24 +143,8 @@ Users.all_friends = relationship('Users',
                        secondaryjoin=Users.id==friendship_union.c.related_user_id,
                        viewonly=True) 
 
-class Chatrooms(db.Model):
-  __tablename__ = 'chatrooms'
-  id = db.Column(db.Integer, primary_key=True)
-  admin = db.Column(db.String(250), nullable=True)
 
-  #foreign keys (this table belongs to...)
-  chatroom_member = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
 
-  #database relationships (this table has many...)
-  chatroom_messages = db.relationship("Messages", backref='chatrooms', lazy=True)
-
-  def __init__(self, admin):
-    self.admin = admin
-
-  def __repr__(self):
-    return json.dumps({
-      "admin": self.admin,
-    })
 
 
 class Messages(db.Model):
@@ -140,18 +154,20 @@ class Messages(db.Model):
 
   #foreign keys (this table belongs to...)
   message_chatroom = db.Column(db.Integer, db.ForeignKey("chatrooms.id"))
-  sender = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
 
-  def __init__(self, user_id, message, room_id):
-    self.user_id = user_id
+  #database relationships (this table has many...)
+  chatroom_member = db.relationship("Users", backref='messages', lazy=True)
+
+  def __init__(self, message, message_chatroom, sender, recipient):
     self.message = message
-    self.room_id = room_id
+    self.message_chatroom = message_chatroom
+    self.sender = sender
+    self.recipient = recipient
 
   def __repr__(self):
     return json.dumps({
-      "user_id": self.user_id,
       "message": self.message,
-      "room_id": self.room_id
+      "message_chatroom": self.message_chatroom
     })
 
 class Comments(db.Model):
