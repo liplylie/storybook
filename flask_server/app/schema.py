@@ -119,8 +119,7 @@ class Chatrooms(db.Model):
   admin = db.Column(db.String(250), nullable=True)
 
   #foreign keys (this table belongs to...)
-  chatroom_sender = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
-  chatroom_recipient = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
+  chatroom_member = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
 
   #database relationships (this table has many...)
   chatroom_messages = db.relationship("Messages", backref='chatrooms', lazy=True)
