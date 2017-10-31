@@ -140,25 +140,19 @@ class Comments(db.Model):
   __tablename__ = 'comments'
   id = db.Column(db.Integer, primary_key=True)
   text = db.Column(db.String(750))
-  likes_count = db.Column(db.Integer, nullable=True)
 
   #foreign keys (this table belongs to...)
   comment_user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE')) 
   comment_image_id = db.Column(db.Integer, db.ForeignKey("images.id")) 
 
-  #database relationships (this table has many...)
-  comment_likes = db.relationship("Likes", backref='comments', lazy=True)
-
-  def __init__(self,text, likes_count, comment_user_id, comment_image_id):
+  def __init__(self,text, comment_user_id, comment_image_id):
     self.text = text
-    self.likes_count = likes_count
     self.comment_user_id = comment_user_id
     self.comment_image_id = comment_image_id
 
   def __repr__(self):
     return json.dumps({
       "text": self.text,
-      "likes_count": self.likes_count,
       "comment_user_id": self.comment_user_id,
       "comment_image_id": self.comment_image_id
     })
@@ -167,23 +161,17 @@ class Comments(db.Model):
 class Likes(db.Model):
   __tablename__ = 'likes'
   id = db.Column(db.Integer, primary_key=True)
-  like_type = db.Column(db.String(250))
 
   #foreign keys (this table belongs to...)
   like_user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE')) 
   like_image_id = db.Column(db.Integer, db.ForeignKey("images.id")) 
-  like_comment_id = db.Column(db.Integer, db.ForeignKey("comments.id")) 
 
-  def __init__(self, like_type, like_user_id, like_image_id, like_comment_id):
-    self.like_type = like_type
+  def __init__(self, like_user_id, like_image_id):
     self.like_user_id = like_user_id
     self.like_image_id = like_image_id
-    self.like_comment_id = like_comment_id
 
   def __repr__(self):
     return json.dumps({
-      "like_type": self.like_type,
       "like_user_id": self.like_user_id,
-      "like_image_id": self.like_image_id,
-      "like_comment_id": self.like_comment_id
+      "like_image_id": self.like_image_id
     })
