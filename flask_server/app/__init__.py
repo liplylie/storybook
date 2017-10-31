@@ -42,7 +42,7 @@ db = SQLAlchemy()
 db.init_app(app)
 db.app = app
 
-from schema import Images, Users, friendships, chatrooms, Messages, Comments, Likes
+from schema import Images, Users, friendships, messages, Comments, Likes
 
 from sqlalchemy.schema import DropTable
 from sqlalchemy.ext.compiler import compiles
@@ -107,6 +107,16 @@ db.session.commit()
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,5,'pending')")
 db.session.commit()
 
+
+# db.session.execute("insert into messages (message, message_chatroom, sender) values ('hello',1,4)")		
+# db.session.commit()		
+# db.session.execute("insert into messages (message, message_chatroom, sender) values ('hello again',1,4)")		
+# db.session.commit()		
+# db.session.execute("insert into messages (message, message_chatroom, sender) values ('WHAT',1,3)")		
+# db.session.commit()		
+# db.session.execute("insert into messages (message, message_chatroom, sender) values ('chicken butt',1,4)")		
+# db.session.commit()
+
 query_image = Images.query.all()
 print(query_image)
 
@@ -119,8 +129,8 @@ print(query_comment)
 query_like = Likes.query.all()
 print(query_like)
 
-query_chatroom = Chatrooms.query.all()
-print(query_chatroom)
+# query_chatroom = Chatrooms.query.all()
+# print(query_chatroom)
 
 ##############################
 #load Routes:
