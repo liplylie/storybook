@@ -8,6 +8,7 @@ import * as friendActions from '../../../../actions/friendActions'
 
 import { SearchBar } from 'react-native-elements'
 
+
 //import FriendProfile from './FriendProfile'
 
 class Friends extends Component {
@@ -52,7 +53,7 @@ class Friends extends Component {
     //     }
     //   })
     // });
-    this.state.results.filter()
+    
   }
 
   sendRequest(friendId) {
@@ -103,7 +104,7 @@ class Friends extends Component {
             for (let i = 0; i < this.props.friends.length; i++) {
               if (result.id === friends[i].id) {
                 return (
-                  <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id})}>
+                  <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id, type: "friend"})}>
                     <Text>{result.name}</Text> 
                     <Image source={result.img} />
                   </TouchableWithoutFeedback>
@@ -111,7 +112,7 @@ class Friends extends Component {
               } else {
                 return (
                   <View>
-                    <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id})}>
+                    <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: result.id, type: "result"})}>
                       <Text>{result.name}</Text> 
                       <Image source={result.img} />
                     </TouchableWithoutFeedback>
@@ -147,7 +148,7 @@ class Friends extends Component {
           /> 
           {this.props.friends.map(friend => {
             return (
-              <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: friend.id})}>
+              <TouchableWithoutFeedback onPress={() => navgiate('FriendProfile', {userId: friend.id, type: "friend"})}>
                   <View>
                     <Text>{friend.name}</Text>
                     <Image source={friend.profile_img_url}/> 
