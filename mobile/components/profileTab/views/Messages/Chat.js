@@ -1,54 +1,74 @@
 import React, { Component } from 'react'
 import axios from 'axios' 
-import { View, Button } from 'react-native'
+import { View, Button, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 import io from 'socket.io-client'
 
 import MessageInput from './MessageInput'
+import ChatBubble from './ChatBubble'
+
 
 class Chat extends Component { 
   constructor(props) {
     super(props);
     this.state = { 
-      messages: [],
+      messages: [{message: "hello", sender: "angie", roomId: "1"}, {message: "hello", sender: "daniel", roomId: "1"}],
     }
     this.socket = io('http://localhost:3000')
   }
   
   componentDidMount() {
-    this.socket.emit('subscription', this.props.room);
-    this.socket.on('message', message => {
+    // this.socket.emit('subscription', this.props.roomId.toString());
+    // this.socket.emit('subscription', '1');
+    this.socket.on(this.props.roomId.toString(), message => {
       this.setState({messages: this.state.messages.concat(message)})
     }); 
+    
   }
 
   componentWillUnmount() {
-    //disconnect from socket
+    this.socket.disconnect;
+  }
+
+  handleSubmit(input) {
+    let message = {
+      message: input,
+      sender: 'angie',
+      roomId: '1'
+    }
+    this.socket.emit('message', message);
+    this.setState({messages: this.state.messages.concat(message)});
   }
 
   render () {
     const {navigate} = this.props.navigation;
-    <View>
-      <Button 
-        name="Back"
-        onPress={() => {
-          navigate('Messages'); 
-        }}
-      /> 
-      <MessageInput /> 
-      {this.state.messages.map(message => {
-        <ChatBubble message={message.message} sender={message.sender}/> 
-      })}
-    </View>
+    console.log(this.state.messages);
+    return (
+      <View>
+        <Button 
+          title="Back"
+          onPress={() => {
+            navigate('Messages'); 
+          }}
+        /> 
+        <MessageInput handleSubmit={this.handleSubmit.bind(this)}/> 
+        <Text>Messages</Text>
+        {this.state.messages.map(message => {
+          return  ( 
+            <Text>{message.sender}:{message.message}</Text> 
+          )
+        })}
+      </View>
+    )
   }
 }
 
-const chatState = (state) => {
+const chatStore = (store) => {
   return {
-    room: state.Chat.currentRoom,
+    room: store.Chat.currentRoom,
   }
 }
 
-export default connect(chatState)(Chat);
+export default connect(chatStore)(Chat);
 

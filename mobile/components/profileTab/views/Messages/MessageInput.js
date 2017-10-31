@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ioClient from 'socket.io-client'
-import { TextInput, Button } from 'react-native'
+// import ioClient from 'socket.io-client'
+import { TextInput, Button, View } from 'react-native'
 
 class MessageInput extends Component {
   constructor(props) {
@@ -9,30 +9,23 @@ class MessageInput extends Component {
     this.state = {
       input: '',
     }
-
-  this.socket = ioClient('http://localhost:3000')
-  }
-
-  handleSubmit() {
-    this.socket.emit('message', {
-      message: this.state.input,
-      from: this.props.user,
-      room: this.props.roomId,
-    });
   }
 
   render () {
-    <View>
-      <TextInput
-        onChangeText={(text) => this.setState({input: text})}
-        value={this.state.input}
-        onSubmitEditing={this.handleSubmit.bind(this)}
-      /> 
-      <Button 
-        onPress={this.handleSubmit.bind(this)}
-        name="Send"
-      />
-    </View> 
+    /* onSubmitEditing={this.props.handleSubmit(this.state.input)} */
+    console.log('input to chat', this.state.input);
+    return ( 
+      <View>
+        <TextInput
+          onChangeText={(text) => this.setState({input: text})}
+          value={this.state.input}
+        /> 
+        <Button 
+          onPress={() => {this.props.handleSubmit(this.state.input)}}
+          title="Send"
+        />
+      </View> 
+    )
   }
 }
 

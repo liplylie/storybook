@@ -1,21 +1,19 @@
 import React from 'react'
 import { View, Text, Button, Image } from 'react-native'
 
-const Request = (props) => {
-  return (
+const Request = (props) => (
     <View> 
-      <Text>{this.props.name}</Text>
-      <Image>{this.props.img}</Image>
+      <Text>{props.name}</Text>
+      <Image>{props.img}</Image>
       <Button 
-        name="Accept"
-        onPress={this.props.acceptRequest(this.props.friendId)}
+        title="Accept"
+        /* onPress={props.acceptRequest(props.friendId)} */
       /> 
       <Button 
-        name="Delete"
-        onPress={this.props.deleteRequest(this.props.friendId)}
+        title="Delete"
+        /* onPress={props.deleteRequest(props.friendId)} */
       />
     </View> 
-  )
-}
+)
 
 export default Request; 

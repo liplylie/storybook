@@ -8,7 +8,7 @@ router.get('/chat/:userId', roomController.getRooms);
 router.get('/chats/:roomId', roomController.getPreview);
 
 //only use from friends view
-router.post('/chat', roomController.createRoom);
+// router.post('/chat', roomController.createRoom);
 
 router.get('/friends/:userId', friendController.getFriendList)
 // router.get('/friends/:friendId', friendController.getFriendInfo) 

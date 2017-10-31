@@ -87,6 +87,7 @@ class Users(db.Model):
 
   def __repr__(self):
     return json.dumps({
+      "id": self.id,
       "name": self.name,
       "email": self.email,
       "profile_image_url": self.profile_image_url,
