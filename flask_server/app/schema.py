@@ -58,6 +58,12 @@ friendships = db.Table(
     db.Column('friendship_type', db.String(250)), #blocked, friend
 )
 
+messages = db.Table(
+    'messages',  db.metadata,
+    db.Column('sender_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE')),
+    db.Column('recipient_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE')),
+    db.Column('message', db.String(250))
+)
 
 class Users(db.Model):
   __tablename__ = 'users'
@@ -70,13 +76,12 @@ class Users(db.Model):
 
   #database relationships (this table has many...)
   user_images = db.relationship("Images", backref='users', lazy=True)
-  user_messages = db.relationship("Messages", backref='users', lazy=True)
-  # user_relationships = db.relationship("friendship", backref='user', lazy=True)
   user_comments = db.relationship("Comments", backref='users', lazy=True)
   user_likes = db.relationship("Likes", backref='users', lazy=True)
-  # user_sender = db.relationship("Chatroom", backref='user', lazy=True)
-  # user_recipient = db.relationship("Chatroom", backref='user', lazy=True)
+
+  #many-to_many relationships
   user_friendship = db.relationship("Users", secondary=friendships, primaryjoin=id==friendships.c.relating_user_id, secondaryjoin=id==friendships.c.related_user_id)
+  user_messages = db.relationship("Users", secondary=messages, primaryjoin=id==messages.c.sender_id, secondaryjoin=id==messages.c.recipient_id)
 
   def __init__(self, name, email, profile_image_url, friends_count, user_tags_array):
     self.name = name
@@ -97,6 +102,24 @@ class Users(db.Model):
 
 
 # this relationship is viewonly and selects across the union of all
+# message members
+message_union = select([
+                        messages.c.sender_id, 
+                        messages.c.recipient_id
+                        ]).union(
+                            select([
+                              messages.c.recipient_id, 
+                              messages.c.sender_id]
+                            )
+                          ).alias()
+Users.all_message_members = relationship('Users',
+                       secondary=message_union,
+                       primaryjoin=Users.id==message_union.c.sender_id,
+                       secondaryjoin=Users.id==message_union.c.recipient_id,
+                       viewonly=True) 
+
+
+# this relationship is viewonly and selects across the union of all
 # friends
 friendship_union = select([
                         friendships.c.relating_user_id, 
@@ -112,48 +135,6 @@ Users.all_friends = relationship('Users',
                        primaryjoin=Users.id==friendship_union.c.relating_user_id,
                        secondaryjoin=Users.id==friendship_union.c.related_user_id,
                        viewonly=True) 
-
-class Chatrooms(db.Model):
-  __tablename__ = 'chatrooms'
-  id = db.Column(db.Integer, primary_key=True)
-  admin = db.Column(db.String(250), nullable=True)
-
-  #foreign keys (this table belongs to...)
-  chatroom_sender = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
-  chatroom_recipient = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
-
-  #database relationships (this table has many...)
-  chatroom_messages = db.relationship("Messages", backref='chatrooms', lazy=True)
-
-  def __init__(self, admin):
-    self.admin = admin
-
-  def __repr__(self):
-    return json.dumps({
-      "admin": self.admin,
-    })
-
-
-class Messages(db.Model):
-  __tablename__ = 'messages'
-  id = db.Column(db.Integer, primary_key=True)
-  message = db.Column(db.String(250))
-
-  #foreign keys (this table belongs to...)
-  message_chatroom = db.Column(db.Integer, db.ForeignKey("chatrooms.id"))
-  sender = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
-
-  def __init__(self, user_id, message, room_id):
-    self.user_id = user_id
-    self.message = message
-    self.room_id = room_id
-
-  def __repr__(self):
-    return json.dumps({
-      "user_id": self.user_id,
-      "message": self.message,
-      "room_id": self.room_id
-    })
 
 class Comments(db.Model):
   __tablename__ = 'comments'

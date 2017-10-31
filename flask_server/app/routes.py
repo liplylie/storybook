@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 from sqlalchemy import Integer, Table, Column, ForeignKey
 from app import app, db, DropTable
-from schema import Images, Users, friendships, Chatrooms, Messages, Comments, Likes
+from schema import Images, Users, friendships, messages, Comments, Likes
 from config import app_config, basedir
 from azure_get_tags import get_tags
 from werkzeug.datastructures import ImmutableMultiDict
@@ -27,11 +27,7 @@ def index():
 @app.route('/api/add_image', methods=['POST'])
 def add_photo():
   #request.args, .forms, .files, .values also exist. look them up in the docs
-
-  request_data = dict(request.form)
-  print(request_data, 'request bro')
-
-  print(request.json, 'json obj of post')
+  request_data = dict(request.json)
 
   #image URL
   print(request_data, 'request data bro')
@@ -74,7 +70,7 @@ def add_photo():
 @app.route('/api/add_user', methods=['POST'])
 def add_user():
   #request.args, .forms, .files, .values also exist. look them up in the docs
-  request_data = dict(request.form)
+  request_data = dict(request.json)
 
   name = request_data["name"][0]
   parsed_name = name.encode('utf-8')
@@ -100,7 +96,7 @@ def add_user():
 @app.route('/api/add_comment', methods=['POST'])
 def add_comment():
   #request.args, .forms, .files, .values also exist. look them up in the docs
-  request_data = dict(request.form)
+  request_data = dict(request.json)
 
   text = request_data["text"][0]
   parsed_text = text.encode('utf-8')
@@ -117,7 +113,7 @@ def add_comment():
 @app.route('/api/add_like', methods=['POST'])
 def add_like():
   #request.args, .forms, .files, .values also exist. look them up in the docs
-  request_data = dict(request.form)
+  request_data = dict(request.json)
 
   like_type = request_data["like_type"][0]
   parsed_like_type = like_type.encode('utf-8')
@@ -163,7 +159,14 @@ def get_user_info():
   get_user_info_query = db.session.query(Users).filter(Users.id == parsed_get_user_info_user_id)
   user_info = []
   for i in get_user_info_query:
-    user_info.append(i)
+    queried_user = {
+      "userId": i.id,
+      "name": i.name,
+      "email": i.email,
+      "profile_image_url": i.profile_image_url,
+      "friends_count": i.friends_count
+    }
+    user_info.append(queried_user)
   result = {}
   result["data"] = user_info
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
@@ -282,26 +285,24 @@ def get_friend_requests():
 
 @app.route('/api/add_friend', methods=['POST'])
 def add_friend():
-    print("adding friend...")
-    print("request values: ", request.values)
-    # request_data = dict(request.form)
-    # add_friend_relating_user_id = request_data["userId"][0]
-    # parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
+    request_data = dict(request.json)
+    add_friend_relating_user_id = request_data["userId"][0]
+    parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
 
-    # add_friend_related_user_id = request_data["friendId"][0]
-    # parsed_add_friend_related_user_id = str(add_friend_related_user_id)
+    add_friend_related_user_id = request_data["friendId"][0]
+    parsed_add_friend_related_user_id = str(add_friend_related_user_id)
 
-    # db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
-    # db.session.commit()
+    db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
+    db.session.commit()
 
-    # resp = make_response('added successfully!', 201)
-    # return resp
+    resp = make_response('added successfully!', 201)
+    return resp
 
 
 @app.route('/api/accept_friend_request', methods=['POST'])
 def accept_friend_request():
     print("accepting friend request...")
-    request_data = dict(request.form)
+    request_data = dict(request.json)
     accept_friend_request_relating_user_id = request_data["userId"][0]
     parsed_accept_friend_request_relating_user_id = str(accept_friend_request_relating_user_id)
 
@@ -318,7 +319,7 @@ def accept_friend_request():
 @app.route('/api/block_friend', methods=['POST'])
 def block_friend():
     print("blocking friend...")
-    request_data = dict(request.form)
+    request_data = dict(request.json)
     block_friend_relating_user_id = request_data["userId"][0]
     parsed_block_friend_relating_user_id = str(block_friend_relating_user_id)
 
@@ -335,7 +336,7 @@ def block_friend():
 @app.route('/api/remove_friend', methods=['POST'])
 def remove_friend():
     print("removing friend...")
-    request_data = dict(request.form)
+    request_data = dict(request.json)
     remove_friend_relating_user_id = request_data["userId"][0]
     parsed_remove_friend_relating_user_id = str(remove_friend_relating_user_id)
 
@@ -347,6 +348,20 @@ def remove_friend():
 
     resp = make_response('removed successfully!', 201)
     return resp
+
+@app.route('/api/get_recent_message', methods=['GET'])
+def get_recent_message():
+  print('getting most recent message...')
+  request_data = dict(request.json)
+  get_recent_message_chatroom_id = request_data["chatroomId"][0]
+  parsed_get_recent_message_chatroom_id = str(get_recent_message_chatroom_id)
+
+  most_recent_message_query = Messages.query.filter_by(message_chatroom=parsed_get_recent_message_chatroom_id).order_by(Messages.id.desc()).first()
+
+
+  
+   
+  
 
 
 # @app.route('/api/search_for_user', methods=['GET'])
@@ -366,3 +381,16 @@ def remove_friend():
     # resp = make_response(list_of_friends, 200)
     # return resp
 
+#getting most recent message (preview)
+#all messages
+#search all users
+
+#get al likes for a specific image
+
+#get all images for a specific user
+
+#posting comments for a specific image
+
+#getting all comments for a specific image. make this a join table with the users
+
+#retrieve all photos for specific
