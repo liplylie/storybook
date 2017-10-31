@@ -55,8 +55,7 @@ class Page extends Component{
 				      	<Text style={styles.caption}> My Life is Great </Text>
 						  	<Text style={styles.likes}> Likes: 0 </Text>
 						  	<View>
-									<CommentView />
-						  		<Text style={styles.userCommentName}> SquidWard <Text style={styles.userComment}> I hate you SpongeBob</Text></Text>
+									<CommentView imageId={1} />
 						  	</View>
 						  	<TouchableOpacity onPress={this.showTextInput.bind(this)}>
 						  		<Text> Add Comment</Text> 
