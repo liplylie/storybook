@@ -391,3 +391,5 @@ def get_recent_message():
 #posting comments for a specific image
 
 #getting all comments for a specific image. make this a join table with the users
+
+#retrieve all photos for specific
