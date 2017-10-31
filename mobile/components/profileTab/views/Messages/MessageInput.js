@@ -12,12 +12,12 @@ class MessageInput extends Component {
   }
 
   render () {
-    /* onSubmitEditing={this.props.handleSubmit(this.state.input)} */
     console.log('input to chat', this.state.input);
     return ( 
       <View>
         <TextInput
           onChangeText={(text) => this.setState({input: text})}
+          /* onSubmitEditing={this.props.handleSubmit(this.state.input)} */
           value={this.state.input}
         /> 
         <Button 

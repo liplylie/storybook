@@ -7,6 +7,8 @@ import axios from 'axios'
 import MessageEntry from './MessageEntry'
 import { SearchBar } from 'react-native-elements'
 
+import * as chatActions from '../../../../actions/chatActions'
+
 class NewChat extends Component {
   constructor(props) {
     super(props);
@@ -18,15 +20,12 @@ class NewChat extends Component {
   } 
 
   componentDidMount() {
-    // axios.get('api/chats/' + this.props.userId)
-    // .then(({ data }) => {
-    //   this.setState({rooms: data})
-    // })
+
   }
 
   searchFriends(input) {
     this.setState({
-      chatFriends: this.props.friends.filter(friend => {
+      results: this.props.friends.filter(friend => {
         if (friend.name.includes(input)) {
           return friend;
         }
@@ -35,12 +34,12 @@ class NewChat extends Component {
   }
 
   createRoom(friendId) {
-    this.props.rooms.forEach(room => {
+    this.props.rooms.map(room => {
       if (room.chatroom_sender === friendId || room.chatroom_recipient === friendId) {
         this.setState({chatroom: room.id})
       } else {
-        axios.post('/chat', {
-          userId: this.screenProps.userId, 
+        axios.post('', {
+          userId: this.screenProps, 
           friendId: friendId
         })
         .then(({ data }) => {
@@ -54,31 +53,40 @@ class NewChat extends Component {
   }
 
   render() {
-    // console.log('friends list', this.props.friends);
-    let friend = '';
-    let img = '';
     const {navigate} = this.props.navigation;
-    //if results.length use this.state.results
-    return (
-      <View>
+    if (this.state.results.length) {
+      return (
+        <View>
+          <SearchBar 
+            placeholder="Search friends"
+            onChangeText={(text) => this.setState({input: text})}
+            onSubmitEditing={() => this.searchFriends()}
+          /> 
+          {this.props.results.map((result) => {
+            return (
+              <TouchableWithoutFeedback onPress={() => {
+                createRoom(result.id);
+                this.props.actions.enterRoom(this.state.chatroom);
+                navigate('Chat');
+              }}>
+                <Text>{result.name}</Text> 
+              </TouchableWithoutFeedback>
+            )
+          })}
+        </View> 
+      )
+    } else {
+      return (
+        <View>
         <SearchBar 
           placeholder="Search friends"
           onChangeText={(text) => this.setState({input: text})}
           onSubmitEditing={() => this.searchFriends()}
-        /> 
-        {this.props.currentFriends.map((friend) => {
-          return (
-            <TouchableWithoutFeedback onPress={() => {
-              createRoom(friend.id);
-              this.props.actions.enterRoom(this.state.chatroom);
-              navigate('Chat');
-            }}>
-              <Text>{friend.name}</Text> 
-            </TouchableWithoutFeedback>
-          )
-        })}
+        />
+        <Text>No results yet</Text> 
       </View> 
-    )
+      )
+    }
   }
 }
 
@@ -89,4 +97,9 @@ const mapStateToProps = (store) => {
    }
  }
 
-export default connect(mapStateToProps, null)(NewChat);
+const chatActions = (dispatch) => {
+  return {
+    actions: bindActionCreators(chatActions, dispatch) 
+  }
+}
+export default connect(mapStateToProps, chatActions)(NewChat);
