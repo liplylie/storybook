@@ -25,9 +25,30 @@ export const postImage = (obj) => {
     }, (err, data) => {
       if(err) {
         console.log('Error uploading photo to AWS: ', err)
-      } else {
+      } else if(data) {
         console.log('Successfully uploaded photo: ', data);
-        axios.post('http://localhost:5000/api/add_image', data)
+        let url = data.Location
+        let id = obj.userId
+        let caption = obj.description
+        let imageTags = obj.name
+        let latitude = obj.location.latitude
+        let longitude = obj.location.longitude
+        const image_post = {
+          url: url,
+          image_user_id: id,
+          latitude: latitude,
+          longitude: longitude,
+          likes_count: 0,
+          caption: caption,
+          image_tags: imageTags
+        }
+
+        // get long and lat from store 
+        axios.post('http://localhost:5000/api/add_image', image_post, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
         .then(function (response) {
           console.log(response);
         })
@@ -39,3 +60,13 @@ export const postImage = (obj) => {
     })
   }
 }
+
+// {
+//   "url": "adsffad",
+//   "image_user_id":"afds",
+//   "latitude": 1,
+//   "longitude":1,
+//   "likes_count": 1,
+//   "caption": "afs",
+//    "image_tags": 'asdf'
+// }

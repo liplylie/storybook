@@ -27,9 +27,14 @@ def index():
 @app.route('/api/add_image', methods=['POST'])
 def add_photo():
   #request.args, .forms, .files, .values also exist. look them up in the docs
+
   request_data = dict(request.form)
+  print(request_data, 'request bro')
+
+  print(request.json, 'json obj of post')
 
   #image URL
+  print(request_data, 'request data bro')
   url = request_data["url"][0]
   parsed_url = url.encode('utf-8')
 

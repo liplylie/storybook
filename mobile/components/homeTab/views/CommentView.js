@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View, Text } from 'react-native'
 
 class CommentView extends Component {
   constructor(props) {
@@ -7,6 +8,11 @@ class CommentView extends Component {
   }
 
   render() {
+  	return(
+  			<View>
+  			<Text> comment view</Text>
+  			</View>
+  		)
   }
 }
 

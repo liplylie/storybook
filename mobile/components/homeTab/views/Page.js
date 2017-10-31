@@ -76,7 +76,6 @@ class Page extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15,
     alignItems: 'center',
     backgroundColor: 'white'
   },
