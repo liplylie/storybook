@@ -58,6 +58,33 @@ friendships = db.Table(
     db.Column('friendship_type', db.String(250)), #blocked, friend
 )
 
+chatrooms = db.Table(
+    'chatrooms',  db.metadata,
+    db.Column('chat_member_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
+                                        primary_key=True),
+    db.Column('message_id', db.Integer, db.ForeignKey('messages.id', ondelete='CASCADE'), 
+                                        primary_key=True)
+)
+
+class Messages(db.Model):
+  __tablename__ = 'messages'
+  id = db.Column(db.Integer, primary_key=True)
+  message = db.Column(db.String(250))
+
+  message_chatrooms = db.relationship("Messages", secondary=chatrooms, primaryjoin=id==chatrooms.c.message_id, secondaryjoin=id==chatrooms.c.chat_member_id)
+
+  def __init__(self, message, message_chatroom, sender, recipient):
+    self.message = message
+    self.message_chatroom = message_chatroom
+    self.sender = sender
+    self.recipient = recipient
+
+  def __repr__(self):
+    return json.dumps({
+      "message": self.message,
+      "message_chatroom": self.message_chatroom
+    })
+
 
 class Users(db.Model):
   __tablename__ = 'users'
@@ -70,13 +97,18 @@ class Users(db.Model):
 
   #database relationships (this table has many...)
   user_images = db.relationship("Images", backref='users', lazy=True)
-  user_messages = db.relationship("Messages", backref='users', lazy=True)
+
+
+  # user_messages = db.relationship("Messages", backref='users', lazy=True)
+
+  
   # user_relationships = db.relationship("friendship", backref='user', lazy=True)
   user_comments = db.relationship("Comments", backref='users', lazy=True)
   user_likes = db.relationship("Likes", backref='users', lazy=True)
   # user_sender = db.relationship("Chatroom", backref='user', lazy=True)
   # user_recipient = db.relationship("Chatroom", backref='user', lazy=True)
   user_friendship = db.relationship("Users", secondary=friendships, primaryjoin=id==friendships.c.relating_user_id, secondaryjoin=id==friendships.c.related_user_id)
+  user_chatrooms = db.relationship("Users", secondary=chatrooms, primaryjoin=id==chatrooms.c.chat_member_id, secondaryjoin=id==chatrooms.c.message_id)
 
   def __init__(self, name, email, profile_image_url, friends_count, user_tags_array):
     self.name = name
@@ -96,34 +128,22 @@ class Users(db.Model):
     })
 
 
-
-chatrooms = db.Table(
-    'chatrooms',  db.metadata,
-    db.Column('sender_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
-                                        primary_key=True),
-    db.Column('recipient_user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), 
-                                        primary_key=True),
-    db.Column('chatroom_id', db.Integer)
-)
-
-
 # this relationship is viewonly and selects across the union of all
 # chatroom members
 chatroom_union = select([
-                        chatrooms.c.sender_user_id, 
-                        chatrooms.c.recipient_user_id
+                        chatrooms.c.chat_member_id, 
+                        chatrooms.c.message_id
                         ]).union(
                             select([
-                              chatrooms.c.recipient_user_id, 
-                              chatrooms.c.sender_user_id]
+                              chatrooms.c.message_id, 
+                              chatrooms.c.chat_member_id]
                             )
                           ).alias()
 Users.all_chatroom_members = relationship('Users',
                        secondary=chatroom_union,
-                       primaryjoin=Users.id==chatroom_union.c.sender_user_id,
-                       secondaryjoin=Users.id==chatroom_union.c.recipient_user_id,
+                       primaryjoin=Users.id==chatroom_union.c.chat_member_id,
+                       secondaryjoin=Users.id==chatroom_union.c.message_id,
                        viewonly=True) 
-
 
 
 # this relationship is viewonly and selects across the union of all
@@ -142,33 +162,6 @@ Users.all_friends = relationship('Users',
                        primaryjoin=Users.id==friendship_union.c.relating_user_id,
                        secondaryjoin=Users.id==friendship_union.c.related_user_id,
                        viewonly=True) 
-
-
-
-
-
-class Messages(db.Model):
-  __tablename__ = 'messages'
-  id = db.Column(db.Integer, primary_key=True)
-  message = db.Column(db.String(250))
-
-  #foreign keys (this table belongs to...)
-  message_chatroom = db.Column(db.Integer, db.ForeignKey("chatrooms.id"))
-
-  #database relationships (this table has many...)
-  chatroom_member = db.relationship("Users", backref='messages', lazy=True)
-
-  def __init__(self, message, message_chatroom, sender, recipient):
-    self.message = message
-    self.message_chatroom = message_chatroom
-    self.sender = sender
-    self.recipient = recipient
-
-  def __repr__(self):
-    return json.dumps({
-      "message": self.message,
-      "message_chatroom": self.message_chatroom
-    })
 
 class Comments(db.Model):
   __tablename__ = 'comments'
