@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		borderRadius: 10,
 		marginLeft: 30,
+		marginRight: 50
 	},
 	email: {
 		paddingTop: 5,

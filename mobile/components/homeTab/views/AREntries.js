@@ -11,9 +11,9 @@ export default class AREntries extends Component {
 		let x = this.props.x
 		let image = this.props.image
 		return(
-					<ARKit.Sprite position={{ x: x, y: 0, z: -2}}>
-	          <Image source={{uri:image}} style={{height: 200, width: 200}}/>
-	        </ARKit.Sprite>
+			<ARKit.Sprite position={{ x: x, y: 0, z: -2}}>
+        <Image source={{uri:image}} style={{height: 200, width: 200}}/>
+      </ARKit.Sprite>
 		)
 	}
 }
