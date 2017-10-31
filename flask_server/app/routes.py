@@ -68,16 +68,16 @@ def add_user():
   #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
 
-  name = request_data["name"][0]
+  name = request_data["name"]
   parsed_name = name.encode('utf-8')
 
-  email = request_data["email"][0]
+  email = request_data["email"]
   parsed_email = email.encode('utf-8')
 
-  profile_image_url = request_data["profile_image_url"][0]
+  profile_image_url = request_data["profile_image_url"]
   parsed_profile_image_url = profile_image_url.encode('utf-8')
 
-  friends_count = request_data["friends_count"][0]
+  friends_count = request_data["friends_count"]
   parsed_friends_count = int(friends_count)
 
   # user_tags_array = 
@@ -94,13 +94,14 @@ def add_comment():
   #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
 
-  text = request_data["text"][0]
+  text = request_data["text"]
   parsed_text = text.encode('utf-8')
-  likes_count = 0
-  comment_user_id = request_data["comment_user_id"][0]
-  comment_image_id = request_data["comment_image_id"][0]
+  comment_user_id = request_data["comment_user_id"]
+  parsed_comment_user_id = int(comment_user_id)
+  comment_image_id = request_data["comment_image_id"]
+  parsed_comment_image_id = int(comment_image_id)
 
-  db.session.add(Comments(parsed_text, likes_count, comment_user_id, comment_image_id)) #replace later with actual values
+  db.session.add(Comments(parsed_text, parsed_comment_user_id, parsed_comment_image_id)) #replace later with actual values
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
@@ -111,19 +112,13 @@ def add_like():
   #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
 
-  like_type = request_data["like_type"][0]
-  parsed_like_type = like_type.encode('utf-8')
-
-  like_user_id = request_data["like_user_id"][0]
+  like_user_id = request_data["like_user_id"]
   parsed_like_user_id = int(like_user_id)
   
-  like_image_id = request_data["like_image_id"][0]
+  like_image_id = request_data["like_image_id"]
   parsed_like_image_id = int(like_image_id)
 
-  like_comment_id = request_data["like_comment_id"][0]
-  parsed_like_comment_id = int(like_comment_id)
-
-  db.session.add(Likes(parsed_like_type, parsed_like_user_id, parsed_like_image_id, parsed_like_comment_id)) #replace later with actual values
+  db.session.add(Likes(parsed_like_user_id, parsed_like_image_id)) #replace later with actual values
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
@@ -142,17 +137,35 @@ def grab_all_locations():
     coords.append(new_loc)
   result = {}
   result["data"] = coords
-  # coords = str(coords)
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
+
+@app.route('/api/get_all_locations_for_user', methods=['GET'])
+def get_all_locations_for_user():
+  request_data = dict(request.args)
+  get_all_locations_for_user_user_id = request_data["userId"][0]
+  print(get_all_locations_for_user_user_id)
+  parsed_get_all_locations_for_user_user_id = int(get_all_locations_for_user_user_id)
+  get_all_locations_for_user_query = db.session.query(Images).filter(Images.image_user_id == parsed_get_all_locations_for_user_user_id) #returns all images
+  coords = []
+  for i in get_all_locations_for_user_query:
+    new_loc = {
+      "latitude": i.latitude,
+      "longitude": i.longitude
+    }
+    coords.append(str(new_loc))
+  result = {}
+  result["data"] = coords
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
 
 @app.route('/api/get_user_info', methods=['GET'])
 def get_user_info():
   request_data = dict(request.args)
-  get_user_info_user_id = request_data["userId"][0]
-  parsed_get_user_info_user_id = int(get_user_info_user_id)
+  get_user_info_user_email = request_data["email"][0]
+  parsed_get_user_info_user_email = str(get_user_info_user_email)
 
-  get_user_info_query = db.session.query(Users).filter(Users.id == parsed_get_user_info_user_id)
+  get_user_info_query = db.session.query(Users).filter(Users.email == parsed_get_user_info_user_email)
   user_info = []
   for i in get_user_info_query:
     queried_user = {
@@ -166,6 +179,32 @@ def get_user_info():
   result = {}
   result["data"] = user_info
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
+
+@app.route('/api/add_user_info', methods=['POST'])
+def add_user_info():
+  request_data = dict(request.json)
+  add_user_info_user_name = request_data["name"]
+  parsed_add_user_info_user_name = str(add_user_info_user_name)
+
+  add_user_info_email = request_data["email"]
+  parsed_add_user_info_email = str(add_user_info_email)
+
+  add_user_info_profile_image_url = request_data["profile_image_url"]
+  parsed_add_user_info_profile_image_url = str(add_user_info_profile_image_url)
+
+  add_user_info_friends_count = 0
+  parsed_add_user_info_friends_count = int(0)
+  
+  user_tags_array = []
+
+  db.session.add(Users(parsed_add_user_info_user_name, parsed_add_user_info_email, parsed_add_user_info_profile_image_url, parsed_add_user_info_friends_count, user_tags_array))
+  db.session.commit()
+  new_user_id = db.session.query(Users).filter(Users.email == parsed_add_user_info_email)
+  parsed_new_user_id = -1
+  for i in new_user_id:
+    parsed_new_user_id = i.id
+  resp = make_response(json.dumps({"userId": parsed_new_user_id}), 201)
   return resp
 
 @app.route('/api/get_imgs_by_loc', methods=['GET'])
@@ -264,7 +303,7 @@ def get_friend_requests():
         pending_friend_query = db.session.execute('SELECT * FROM users WHERE id = ' + str(i.related_user_id))
         for j in pending_friend_query:
           temp = {
-            "id": j[0],
+            "id": j,
             "name": j[1],
             "email": j[2],
             "profile_image_url": j[3]
@@ -282,10 +321,10 @@ def get_friend_requests():
 @app.route('/api/add_friend', methods=['POST'])
 def add_friend():
     request_data = dict(request.json)
-    add_friend_relating_user_id = request_data["userId"][0]
+    add_friend_relating_user_id = request_data["userId"]
     parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
 
-    add_friend_related_user_id = request_data["friendId"][0]
+    add_friend_related_user_id = request_data["friendId"]
     parsed_add_friend_related_user_id = str(add_friend_related_user_id)
 
     db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
@@ -299,10 +338,10 @@ def add_friend():
 def accept_friend_request():
     print("accepting friend request...")
     request_data = dict(request.json)
-    accept_friend_request_relating_user_id = request_data["userId"][0]
+    accept_friend_request_relating_user_id = request_data["userId"]
     parsed_accept_friend_request_relating_user_id = str(accept_friend_request_relating_user_id)
 
-    accept_friend_request_related_user_id = request_data["friendId"][0]
+    accept_friend_request_related_user_id = request_data["friendId"]
     parsed_accept_friend_request_related_user_id = str(accept_friend_request_related_user_id)
 
     db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_relating_user_id + " AND related_user_id=" + parsed_accept_friend_request_related_user_id)
@@ -316,10 +355,10 @@ def accept_friend_request():
 def block_friend():
     print("blocking friend...")
     request_data = dict(request.json)
-    block_friend_relating_user_id = request_data["userId"][0]
+    block_friend_relating_user_id = request_data["userId"]
     parsed_block_friend_relating_user_id = str(block_friend_relating_user_id)
 
-    block_friend_related_user_id = request_data["friendId"][0]
+    block_friend_related_user_id = request_data["friendId"]
     parsed_block_friend_related_user_id = str(block_friend_related_user_id)
 
     db.session.execute("UPDATE friendships SET friendship_type='blocked' WHERE relating_user_id=" + parsed_block_friend_relating_user_id + " AND related_user_id=" + parsed_block_friend_related_user_id)
@@ -333,10 +372,10 @@ def block_friend():
 def remove_friend():
     print("removing friend...")
     request_data = dict(request.json)
-    remove_friend_relating_user_id = request_data["userId"][0]
+    remove_friend_relating_user_id = request_data["userId"]
     parsed_remove_friend_relating_user_id = str(remove_friend_relating_user_id)
 
-    remove_friend_related_user_id = request_data["friendId"][0]
+    remove_friend_related_user_id = request_data["friendId"]
     parsed_remove_friend_related_user_id = str(remove_friend_related_user_id)
 
     db.session.execute("DELETE FROM friendships WHERE relating_user_id=" + parsed_remove_friend_relating_user_id + " AND related_user_id=" + parsed_remove_friend_related_user_id)
@@ -349,7 +388,7 @@ def remove_friend():
 def get_recent_message():
   print('getting most recent message...')
   request_data = dict(request.json)
-  get_recent_message_chatroom_id = request_data["chatroomId"][0]
+  get_recent_message_chatroom_id = request_data["chatroomId"]
   parsed_get_recent_message_chatroom_id = str(get_recent_message_chatroom_id)
 
   most_recent_message_query = Messages.query.filter_by(message_chatroom=parsed_get_recent_message_chatroom_id).order_by(Messages.id.desc()).first()
@@ -365,7 +404,7 @@ def get_recent_message():
 #     print("grabbing list of user's friends...")
 #     request_data = dict(request.args)
     
-    # get_all_friends_user_id = request_data["userId"][0]
+    # get_all_friends_user_id = request_data["userId"]
     # parsed_get_all_friends_user_id = int(get_all_friends_user_id)
     
     # get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
