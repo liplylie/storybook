@@ -24,11 +24,15 @@ class CommentView extends Component {
     const { showAll } = this.props;
 
     if (comments.length > 3 && !showAll) {
+      let tempComments = [];
+      for(let i = 0; i < 3; i++){
+        tempComments.push(comments[i])
+      }
       return (
         <View>
-          {for(let i = 0; i < 3; i++) {
-            <Comment comment={comments[i]} />
-          }}
+        {tempComments.map((comment, i) =>{
+          return <Comment key={i} comment={comment} />
+        })}
           <Button
             title="show rest of comments"
             onPress={() => {
