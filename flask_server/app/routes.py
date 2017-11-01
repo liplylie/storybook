@@ -564,3 +564,13 @@ def search():
   parsed_search_user_name = str(search_user_name)
   
   search_user_name_query = db.session.execute("SELECT * FROM users WHERE name = " + parsed_search_user_name)
+
+  result = {}
+  for i in last_message_query:
+      result["name"]= str(i.name)
+      result["email"]= i.email
+      result["profile_image_url"] = i.profile_image_url
+      result["friends_count"] = i.friends_count
+
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
