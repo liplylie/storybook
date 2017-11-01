@@ -408,7 +408,7 @@ def remove_friend():
 
 @app.route('/api/get_convo', methods=['GET'])
 def get_convo():
-  print('getting most recent message...')
+  print('getting conversation...')
   request_data = dict(request.args)
   get_convo_sender_id = request_data["senderId"][0]
   parsed_get_convo_sender_id = str(get_convo_sender_id)
@@ -436,54 +436,34 @@ def get_convo():
   return resp
 
 
-# @app.route('/api/get_convo', methods=['GET'])
-# def get_convo():
-#   print('getting most recent message...')
-#   request_data = dict(request.args)
-#   get_convo_sender_id = request_data["senderId"][0]
-#   parsed_get_convo_sender_id = str(get_convo_sender_id)
-#   print(parsed_get_convo_sender_id)
 
-#   get_convo_recipient_id = request_data["recipientId"][0]
-#   parsed_get_convo_recipient_id = str(get_convo_recipient_id)
-#   print(parsed_get_convo_recipient_id)
-#   print("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
+@app.route('/api/get_last_message', methods=['GET'])
+def get_last_message():
+  print('getting most recent message...')
+  request_data = dict(request.args)
+  get_last_message_sender_id = request_data["senderId"][0]
+  parsed_get_last_message_sender_id = str(get_last_message_sender_id)
+  print(parsed_get_last_message_sender_id)
 
-#   convo_query = db.session.execute("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
-#   # most_recent_message_query_2 = db.session.execute("select * from messages where sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + "ORDER BY recipient_id DESC")
+  get_last_message_recipient_id = request_data["recipientId"][0]
+  parsed_get_last_message_recipient_id = str(get_last_message_recipient_id)
+  print(parsed_get_last_message_recipient_id)
+  # print("select * from messages where (sender_id=" + parsed_get_last_message_sender_id + "and recipient_id=" + parsed_get_last_message_recipient_id + ") OR (sender_id=" + parsed_get_last_message_recipient_id + "and recipient_id=" + parsed_get_last_message_sender_id + ")")
+  # select * from messages where ((sender_id=1 and recipient_id=4) OR (sender_id=4 and recipient_id=1)) and date_created IN (SELECT max(date_created) FROM messages);
+
+  last_message_query = db.session.execute("select * from messages where ((sender_id=" + parsed_get_last_message_sender_id + "and recipient_id=" + parsed_get_last_message_recipient_id + ") OR (sender_id=" + parsed_get_last_message_recipient_id + "and recipient_id=" + parsed_get_last_message_sender_id + ")) AND date_created IN (SELECT max(date_created) FROM messages)")
+  # most_recent_message_query_2 = db.session.execute("select * from messages where sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + "ORDER BY recipient_id DESC")
   
-#   convo_array = []
-#   for i in convo_query:
-#     convo_array.append({
-#       "sender_id": i.sender_id,
-#       "recipient_id": i.recipient_id,
-#       "message": str(i.message)
-#     })
-#   print(convo_array)
-   
-  
+  result = {}
+  for i in last_message_query:
+      result["sender_id"]= i.sender_id
+      result["recipient_id"]= i.recipient_id
+      result["message"]= str(i.message)
+
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
 
 
-# @app.route('/api/search_for_user', methods=['GET'])
-# def search_for_user():
-#     print("grabbing list of user's friends...")
-#     request_data = dict(request.args)
-    
-    # get_all_friends_user_id = request_data["userId"]
-    # parsed_get_all_friends_user_id = int(get_all_friends_user_id)
-    
-    # get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
-    
-    # list_of_friends = []
-    # for i in get_all_friends_query:
-    #   list_of_friends.append(i.related_user_id)
-    # list_of_friends = str(list_of_friends)
-    # resp = make_response(list_of_friends, 200)
-    # return resp
-
-#getting most recent message (preview)
-#all messages
-#search all users
 
 #get all likes for a specific image
 @app.route('/api/get_all_likes_by_image', methods=['GET'])
@@ -573,3 +553,5 @@ def get_all_photos_loc_by_user():
   result["data"] = all_images_array
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
+
+#search friends
