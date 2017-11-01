@@ -1,5 +1,6 @@
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
+import axios from 'axios';
 
 import secret from '../../sensitive.json';
 
@@ -38,8 +39,25 @@ export const getFBToken = () => {
             }
           }
         }, (err, res) => {
-          err ? dispatch({type: 'USER_INFO_FAIL', payload: err})
-            : null;
+          if (err) {
+            dispatch({type: 'USER_INFO_FAIL', payload: err});
+          } else {
+            const dispatchUser = {
+              name: res.name,
+              email: res.email,
+              profile_image_url: res.picture.data.url
+            }
+
+            axios.post(secret.flask_server + 'api/add_user_info', dispatchUser)
+              .then(data => {
+                console.log('This is data back after user post: ', data);
+                dispatchUser['id'] = data.id; //fill this in later
+                dispatch({type: 'USER_INFO_RETRIEVED', payload: res});
+              })
+              .catch(err => {
+                console.log('Error posting to user table: ', err);
+              });
+          }
     
           res ? dispatch({type: 'USER_INFO_RETRIEVED', payload: res}) : null;
         });

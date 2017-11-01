@@ -45,7 +45,7 @@ const authReducer = (state=initialState, action) => {
       return Object.assign({}, state, {
         authorized: true,
         name: action.payload.name,
-        picture: action.payload.picture.data.url,
+        picture: action.payload.profile_image_url,
         email: action.payload.email,
         userId: action.payload.id
       })
