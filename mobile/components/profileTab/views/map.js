@@ -88,11 +88,12 @@ class UserMap extends Component {
     // change this with api/get_all_locations_for_user
       // add filter button that gets all locations
     var that = this
-    axios.get(`${PythonServer}api/get_all_locations`)
-    .then(function (data) {
+    axios.get(`http://localhost:5000/api/get_all_locations`)
+    .then(function ({data}) {
       console.log(data, 'api map response');
-      // const locations = data.data
-      // that.location = [...locations]
+      const locations = data.data
+      console.log(locations, 'location from api')
+      that.location = [...locations]
     })
     .catch(function (error) {
       console.log(error, 'api map response');
