@@ -110,13 +110,17 @@ db.session.execute("insert into friendships (relating_user_id, related_user_id, 
 db.session.commit()
 
 
-db.session.execute("insert into messages (sender_id, recipient_id, message) values ('1,4, 'hello')")		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,4,'hello')")		
 db.session.commit()		
-db.session.execute("insert into messages (sender_id, recipient_id, message) values ('1,4, 'what')")		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,4,'hello again')")		
 db.session.commit()		
-db.session.execute("insert into messages (sender_id, recipient_id, message) values ('1,3, 'chicken butt')")		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,3,'chicken butt')")		
 db.session.commit()		
-db.session.execute("insert into messages (sender_id, recipient_id, message) values ('1,4, 'ghosts n stuff')")		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (4,1,'hey man. hows it going?')")		
+db.session.commit()
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,4,'all is good! and you?')")		
+db.session.commit()
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (4,1,'all is well...')")		
 db.session.commit()
 
 query_image = Images.query.all()
