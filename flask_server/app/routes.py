@@ -547,4 +547,24 @@ def get_all_comments_by_image():
   return resp
 
 
-#retrieve all photos for specific
+#retrieve all photos for specific user
+@app.route('/api/get_all_photos_loc_by_user', methods=['GET'])
+def get_all_photos_loc_by_user():
+  print('getting all image locations by user')
+  request_data = dict(request.args)
+  get_all_images_by_user_id = request_data["userId"][0]
+  parsed_get_all_images_by_user_id = str(get_all_images_by_user_id)
+  
+  get_all_images_by_user_query = db.session.execute('SELECT * FROM images WHERE image_user_id = ' + parsed_get_all_images_by_user_id)
+  all_images_array = []
+  for i in get_all_images_by_user_query:
+    user_loc = {
+      "longitude": i.longitude,
+      "latitdue": i.latitude
+    }
+    all_images_array.append(user_loc)
+
+  result = {}
+  result["data"] = all_images_array
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
