@@ -4,11 +4,17 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import MessageEntry from './MessageEntry'
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, Icon } from 'react-native-elements'
 
 import * as chatActions from '../../../../actions/chatActions'
 
 class Messages extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `Messages`,
+    headerRight: <Icon name='new-message' type='entypo' onPress={() => navigation.navigate('NewChat')} />  
+  });
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -46,8 +52,7 @@ class Messages extends Component {
           onChangeText={(text) => this.setState({input: text})}
           onSubmitEditing={() => this.searchMessages()}
         /> 
-        <Button title="Go back" onPress={() => navigate('Friends')} /> 
-        <Button title="New chat" onPress={() => navigate('NewChat')} /> 
+        {/* <Button title="Go back" onPress={() => navigate('Friends')} />   */}
         {this.props.rooms.map((room) => {
           if (room.chatroom_sender !== this.screenProps) {
             friend = room.sender.name; 

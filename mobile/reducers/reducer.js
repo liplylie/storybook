@@ -6,7 +6,7 @@ import Profile from './profileReducer'
 import TabBar from './tabBarReducer'
 import CameraPost from './cameraPostReducer'
 import Chat from './chatReducer'
-import Friends from './friendsReducer'
+import Friends from './friendReducer'
 import Comment from './commentReducer'
 
 const reducer = combineReducers({

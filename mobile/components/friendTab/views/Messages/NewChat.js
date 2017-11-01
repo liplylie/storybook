@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 import MessageEntry from './MessageEntry'
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, List, ListItem } from 'react-native-elements'
 
 import * as chatActions from '../../../../actions/chatActions'
 
@@ -23,14 +23,15 @@ class NewChat extends Component {
 
   }
 
-  searchFriends(input) {
+  searchFriends() {
     this.setState({
       results: this.props.friends.filter(friend => {
-        if (friend.name.includes(input)) {
+        if (friend.name.includes(this.state.input)) {
           return friend;
         }
       })
     })
+    console.log('new chat search results', this.state.results);
   }
 
   createRoom(friendId) {
@@ -59,20 +60,31 @@ class NewChat extends Component {
         <View>
           <SearchBar 
             placeholder="Search friends"
-            onChangeText={(text) => this.setState({input: text})}
+            onChangeText={(text) => {
+              if (text === '') {
+                this.setState({results: []})
+              }
+              this.setState({input: text});
+            }}
             onSubmitEditing={() => this.searchFriends()}
+            clearIcon={	{ color: '#86939e', name: 'clear' } }
           /> 
-          {this.props.results.map((result) => {
+          <List>
+          {this.state.results.map((result) => {
             return (
-              <TouchableWithoutFeedback onPress={() => {
-                createRoom(result.id);
+              <ListItem 
+                roundAvatar
+                avatar={{uri: result.img}}
+                title={result.name}
+                onPress={() => {
+                this.createRoom(result.id);
                 this.props.actions.enterRoom(this.state.chatroom);
                 navigate('Chat');
               }}>
-                <Text>{result.name}</Text> 
-              </TouchableWithoutFeedback>
+              </ListItem>
             )
           })}
+          </List> 
         </View> 
       )
     } else {
@@ -83,7 +95,7 @@ class NewChat extends Component {
           onChangeText={(text) => this.setState({input: text})}
           onSubmitEditing={() => this.searchFriends()}
         />
-        <Text>No results yet</Text> 
+        <Text>No results</Text> 
       </View> 
       )
     }
@@ -93,7 +105,7 @@ class NewChat extends Component {
 const mapStateToProps = (store) => {
   return {
     rooms: store.Chat.rooms,
-    friends: store.Friends.friends,
+    friends: store.Chat.friends,
    }
  }
 
