@@ -21,6 +21,8 @@ class Page extends Component{
 	}
 	componentDidMount(){
 		// send get request for all images from clicked user
+		// need clicked user id 
+		
 	}
 
 	showTextInput(){

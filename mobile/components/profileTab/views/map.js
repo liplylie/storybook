@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    top: 30,
+    top: 40,
     position: 'absolute'
   },
   radius:{
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     alignSelf: 'center',
-    marginTop: 5,
+    marginTop: 10,
   }
 });
 

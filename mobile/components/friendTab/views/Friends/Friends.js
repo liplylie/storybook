@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 class Friends extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `Friends`,
-    headerRight: <Icon name='message' type='entypo' onPress={() => navigation.navigate('Messages')} />  
+    headerRight: <Icon name='message' type='entypo' style={{marginRight: 10}} onPress={() => navigation.navigate('Messages')} />  
   });
 
   constructor(props) {
