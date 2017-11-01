@@ -35,7 +35,7 @@ class Collection extends Component {
 		.then(response=>{
 			console.log(response, 'collection response imgs at location')
 			that.setState({
-				images: [...that.state.images,...response.data]
+				images: [...response.data]
 			})
 		})
 		.catch(err => {
