@@ -237,7 +237,7 @@ def get_all_friends():
     
     list_of_friends = []
     for i in get_all_friends_query:
-      if i[len(i) - 1] == 'friend':
+      # if i[len(i) - 1] == 'friend':
         relative_info_query = db.session.query(Users).filter(Users.id == i.related_user_id)
         for j in relative_info_query:
           temp = {

@@ -16,7 +16,11 @@ const Profile = ( props ) => {
 
 		const viewFriends = () => {
     	props.navigation.navigate("Friends")
-  	}
+		}
+		
+		const viewRequests = () => {
+			props.navigation.navigate("FriendRequests")
+		}
 
   	const getFriends = () => {
   		// get all friends, count them all, return count
@@ -27,6 +31,9 @@ const Profile = ( props ) => {
 		return (
 	    <ScrollView style={styles.profileContainer}>
 	    	<View style={{flex:.3, backgroundColor: 'white', marginTop:10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+					<TouchableHighlight onPress={viewRequests} >
+			      <Image source={{uri:friendIcon}} style={styles.friendIcon}/> 
+			  	</TouchableHighlight>
 	    		<Text style={styles.email}>
 		      	{email}
 		      </Text>

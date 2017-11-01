@@ -2,9 +2,11 @@ import { TabNavigator } from 'react-navigation'
 import HomeNav from '../homeTab/views/HomeNav'
 import CameraNav from '../cameraTab/views/CameraNav'
 import ProfileNav from '../profileTab/views/ProfileNav'
+import FriendNav from '../friendTab/views/FriendNav'
 
 var routeConfig = {
   HomeNav: { screen: HomeNav },
+  FriendNav: {screen: FriendNav },
   CameraNav: { screen: CameraNav },
   ProfileNav: { screen: ProfileNav },
 }

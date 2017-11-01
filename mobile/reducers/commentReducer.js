@@ -5,7 +5,7 @@ const initialState = {
   comments: []
 }
 
-const commentReducer = (state=initialState, dispatch) => {
+const commentReducer = (state=initialState, action) => {
   switch(action.type) {
     case "POSTING_COMMENT": {
       return Object.assign({}, state, {
