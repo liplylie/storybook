@@ -29,10 +29,10 @@ class Messages extends Component {
     
   }
 
-  searchMessages(input) {
+  searchMessages() {
     this.setState({
       results: this.props.rooms.filter(room => {
-        if (room.sender.name.includes(input) || room.recipient.name.includes(input)) {
+        if (room.sender.name.includes(this.state.input) || room.recipient.name.includes(this.state.input)) {
           return room; 
         }
       })
@@ -49,8 +49,14 @@ class Messages extends Component {
       <View>
         <SearchBar 
           placeholder="Search messages"
-          onChangeText={(text) => this.setState({input: text})}
+          onChangeText={(text) => {
+            if (text === '') {
+              this.setState({results: []})
+            }
+            this.setState({input: text});
+          }}
           onSubmitEditing={() => this.searchMessages()}
+          clearIcon={	{ color: '#86939e', name: 'clear' } }
         /> 
         {/* <Button title="Go back" onPress={() => navigate('Friends')} />   */}
         {this.props.rooms.map((room) => {

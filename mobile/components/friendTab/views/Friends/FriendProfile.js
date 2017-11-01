@@ -17,6 +17,21 @@ class FriendProfile extends Component {
     //get user profile using this.props.navigation.state.params.userId
   }
 
+
+  sendRequest(friendId) {
+    axios.post('http://localhost:5000/api/add_friend', {
+      friendId: friendId,
+      // userId: this.screenProps,
+      userId: 1
+    })
+    .then(({ data }) => {
+      console.log('Success sending request', data);
+    })
+    .catch(err => {
+      console.log('Request failed', err);
+    })
+  }
+  
   deleteFriend(friendId) {
     axios.post(key.flask_server + 'api/remove_friend', {
       userId: this.screenProps,
