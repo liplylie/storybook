@@ -91,11 +91,11 @@ for i in data_images:
 db.session.commit()
 
 for i in data_comments:
-  db.session.add(Comments(i['text'],  i['likes_count'], i['comment_user_id'], i['comment_image_id']))
+  db.session.add(Comments(i['text'], i['comment_user_id'], i['comment_image_id']))
 db.session.commit()
 
 for i in data_likes:
-  db.session.add(Likes(i['like_type'],  i['like_user_id'], i['like_image_id'], i['like_comment_id']))
+  db.session.add(Likes(i['like_user_id'], i['like_image_id']))
 db.session.commit()
 
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (1,2,'pending')")
@@ -106,16 +106,22 @@ db.session.execute("insert into friendships (relating_user_id, related_user_id, 
 db.session.commit()
 db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (2,5,'pending')")
 db.session.commit()
+db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (5, 1, 'friend')")
+db.session.commit()
 
 
-# db.session.execute("insert into messages (message, message_chatroom, sender) values ('hello',1,4)")		
-# db.session.commit()		
-# db.session.execute("insert into messages (message, message_chatroom, sender) values ('hello again',1,4)")		
-# db.session.commit()		
-# db.session.execute("insert into messages (message, message_chatroom, sender) values ('WHAT',1,3)")		
-# db.session.commit()		
-# db.session.execute("insert into messages (message, message_chatroom, sender) values ('chicken butt',1,4)")		
-# db.session.commit()
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,4,'hello')")		
+db.session.commit()		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,4,'hello again')")		
+db.session.commit()		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,3,'chicken butt')")		
+db.session.commit()		
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (4,1,'hey man. hows it going?')")		
+db.session.commit()
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (1,4,'all is good! and you?')")		
+db.session.commit()
+db.session.execute("insert into messages (sender_id, recipient_id, message) values (4,1,'all is well...')")		
+db.session.commit()
 
 query_image = Images.query.all()
 print(query_image)
