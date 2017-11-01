@@ -6,7 +6,9 @@ from sqlalchemy import Integer, Table, Column, ForeignKey, \
     create_engine, String, select
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
 import json
+import datetime
 
 
 class Images(db.Model):
@@ -62,7 +64,8 @@ messages = db.Table(
     'messages',  db.metadata,
     db.Column('sender_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE')),
     db.Column('recipient_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE')),
-    db.Column('message', db.String(250))
+    db.Column('message', db.String(250)),
+    db.Column('date_created', db.DateTime(), server_default=func.now())
 )
 
 class Users(db.Model):
