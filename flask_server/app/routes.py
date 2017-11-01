@@ -216,7 +216,7 @@ def get_imgs_by_loc():
     get_imgs_by_loc_longitude = request_data["longitude"][0]
     get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
     
-    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.002)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.002)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.002)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.002)))
+    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.002)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.01)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.01)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.002)))
     all_images = []
     for i in get_imgs_by_loc_query:
       all_images.append({
@@ -228,7 +228,6 @@ def get_imgs_by_loc():
     result["data"] = all_images
     resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp
-
 
 
 @app.route('/api/get_imgs_by_frs_at_loc', methods=['GET'])
@@ -245,16 +244,20 @@ def get_imgs_by_frs_at_loc():
     get_imgs_by_frs_at_loc_user_id = request_data["userId"][0]
     parsed_get_imgs_by_frs_at_loc_user_id = int(get_imgs_by_frs_at_loc_user_id)
     
-    get_list_of_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_imgs_by_frs_at_loc_user_id))
+    get_list_of_friends_query = db.session.execute("SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = " + str(parsed_get_imgs_by_frs_at_loc_user_id) + "AND friendship_type='friend'")
 
     list_of_photos = []
     for i in get_list_of_friends_query:
       print(i.related_user_id)
       parsed_user_id = int(i.related_user_id)
-      most_recent_image_at_loc = Images.query.filter_by(image_user_id=parsed_user_id).filter((Images.latitude > (parsed_get_imgs_by_frs_at_loc_latitude - 0.001)) & (Images.latitude < (parsed_get_imgs_by_frs_at_loc_latitude + 0.001)) & (Images.longitude > (parsed_get_imgs_by_frs_at_loc_longitude - 0.001)) & (Images.longitude < (parsed_get_imgs_by_frs_at_loc_longitude + 0.001))).order_by(Images.id.desc()).first()
-      print(most_recent_image_at_loc)
+      most_recent_image_at_loc = Images.query.filter_by(image_user_id=parsed_user_id).filter((Images.latitude > (parsed_get_imgs_by_frs_at_loc_latitude - 0.01)) & (Images.latitude < (parsed_get_imgs_by_frs_at_loc_latitude + 0.01)) & (Images.longitude > (parsed_get_imgs_by_frs_at_loc_longitude - 0.001)) & (Images.longitude < (parsed_get_imgs_by_frs_at_loc_longitude + 0.001))).order_by(Images.id.desc()).first()
       if (most_recent_image_at_loc):
-        list_of_photos.append(most_recent_image_at_loc)
+        # list_of_photos.append(most_recent_image_at_loc.image_url)
+        list_of_photos.append({
+          "image_user_id": most_recent_image_at_loc.image_user_id,
+          "image_id": most_recent_image_at_loc.id,
+          "imageUrl": most_recent_image_at_loc.image_url
+        })
       print("list of photos...", list_of_photos)
     
     result = {}
@@ -272,11 +275,12 @@ def get_all_friends():
     get_all_friends_user_id = request_data["userId"][0]
     parsed_get_all_friends_user_id = int(get_all_friends_user_id)
     
-    get_all_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
+    get_all_relating_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
+    get_all_related_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.related_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
     
     list_of_friends = []
-    for i in get_all_friends_query:
-      # if i[len(i) - 1] == 'friend':
+    for i in get_all_relating_friends_query:
+      if i[len(i) - 1] == 'friend':
         relative_info_query = db.session.query(Users).filter(Users.id == i.related_user_id)
         for j in relative_info_query:
           temp = {
@@ -286,7 +290,19 @@ def get_all_friends():
             "profile_image_url": j.profile_image_url
           }
           list_of_friends.append(temp)
-    
+
+    for i in get_all_related_friends_query:
+      if i[len(i) - 1] == 'friend':
+        relative_info_query = db.session.query(Users).filter(Users.id == i.relating_user_id)
+        for j in relative_info_query:
+          temp = {
+            "id": j.id,
+            "name": j.name,
+            "email": j.email,
+            "profile_image_url": j.profile_image_url
+          }
+          list_of_friends.append(temp)
+
     result = {}
     result["data"] = list_of_friends
     resp = make_response(json.dumps(result), 200)
@@ -302,12 +318,11 @@ def get_friend_requests():
     get_friend_requests_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_friend_requests_user_id))
     list_of_requests = []
     for i in get_friend_requests_query:
-      print("this is i: ", i)
       if i[len(i) - 1] == 'pending':
         pending_friend_query = db.session.execute('SELECT * FROM users WHERE id = ' + str(i.related_user_id))
         for j in pending_friend_query:
           temp = {
-            "id": j,
+            "id": j[0],
             "name": j[1],
             "email": j[2],
             "profile_image_url": j[3]
@@ -348,28 +363,28 @@ def accept_friend_request():
     accept_friend_request_related_user_id = request_data["friendId"]
     parsed_accept_friend_request_related_user_id = str(accept_friend_request_related_user_id)
 
-    db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_relating_user_id + " AND related_user_id=" + parsed_accept_friend_request_related_user_id)
+    db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_related_user_id + " AND related_user_id=" + parsed_accept_friend_request_relating_user_id)
     db.session.commit()
 
     resp = make_response('modified successfully!', 201)
     return resp
 
 
-@app.route('/api/block_friend', methods=['POST'])
-def block_friend():
-    print("blocking friend...")
-    request_data = dict(request.json)
-    block_friend_relating_user_id = request_data["userId"]
-    parsed_block_friend_relating_user_id = str(block_friend_relating_user_id)
+# @app.route('/api/block_friend', methods=['POST'])
+# def block_friend():
+#     print("blocking friend...")
+#     request_data = dict(request.json)
+#     block_friend_relating_user_id = request_data["userId"]
+#     parsed_block_friend_relating_user_id = str(block_friend_relating_user_id)
 
-    block_friend_related_user_id = request_data["friendId"]
-    parsed_block_friend_related_user_id = str(block_friend_related_user_id)
+#     block_friend_related_user_id = request_data["friendId"]
+#     parsed_block_friend_related_user_id = str(block_friend_related_user_id)
 
-    db.session.execute("UPDATE friendships SET friendship_type='blocked' WHERE relating_user_id=" + parsed_block_friend_relating_user_id + " AND related_user_id=" + parsed_block_friend_related_user_id)
-    db.session.commit()
+#     db.session.execute("UPDATE friendships SET friendship_type='blocked' WHERE relating_user_id=" + parsed_block_friend_relating_user_id + " AND related_user_id=" + parsed_block_friend_related_user_id)
+#     db.session.commit()
 
-    resp = make_response('modified successfully!', 201)
-    return resp
+#     resp = make_response('modified successfully!', 201)
+#     return resp
 
 
 @app.route('/api/remove_friend', methods=['POST'])
@@ -385,6 +400,9 @@ def remove_friend():
     db.session.execute("DELETE FROM friendships WHERE relating_user_id=" + parsed_remove_friend_relating_user_id + " AND related_user_id=" + parsed_remove_friend_related_user_id)
     db.session.commit()
 
+    db.session.execute("DELETE FROM friendships WHERE relating_user_id=" + parsed_remove_friend_related_user_id + " AND related_user_id=" + parsed_remove_friend_relating_user_id)
+    db.session.commit()
+
     resp = make_response('removed successfully!', 201)
     return resp
 
@@ -395,7 +413,7 @@ def get_recent_message():
   get_recent_message_chatroom_id = request_data["chatroomId"]
   parsed_get_recent_message_chatroom_id = str(get_recent_message_chatroom_id)
 
-  most_recent_message_query = Messages.query.filter_by(message_chatroom=parsed_get_recent_message_chatroom_id).order_by(Messages.id.desc()).first()
+  most_recent_message_query = Messages.query.filter_by(mes   sage_chatroom=parsed_get_recent_message_chatroom_id).order_by(Messages.id.desc()).first()
 
 
   
