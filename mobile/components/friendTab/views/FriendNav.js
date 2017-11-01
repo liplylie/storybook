@@ -10,7 +10,7 @@ class FriendNav extends Component {
     tabBarIcon: '',
     tabBarIcon: ({tintColor}) => (
       <Image 
-      source={require('../../../image_icon.png')}
+      source={require('../../../friendIcon.png')}
       style={{width:30, height:30, tintColor:'white'}}>
       </Image>
     )

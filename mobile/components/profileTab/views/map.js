@@ -11,7 +11,8 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import Marker from './Marker.js'
 import { connect } from 'react-redux';
@@ -29,9 +30,6 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const PythonServer = key.flask_server
-console.log(PythonServer, 'PythonServer')
-
-
 
 class UserMap extends Component {
   constructor(props){
@@ -51,6 +49,8 @@ class UserMap extends Component {
     }
     this.location = [];
     this.viewTargetPictures = this.viewTargetPictures.bind(this)
+    this.viewUserMarkers = this.viewUserMarkers.bind(this)
+    this.viewWorldMarkers = this.viewWorldMarkers.bind(this)
   }
 
   markerID: ?number = null;
@@ -85,13 +85,15 @@ class UserMap extends Component {
       this.setState({initialPosition: initialRegion})
       this.setState({markerPosition: initialRegion})
     })
-
+    // change this with api/get_all_locations_for_user
+      // add filter button that gets all locations
     var that = this
-    axios.get(`${PythonServer}api/get_all_locations`)
-    .then(function (data) {
+    axios.get(`http://localhost:5000/api/get_all_locations`)
+    .then(function ({data}) {
       console.log(data, 'api map response');
-      // const locations = data.data
-      // that.location = [...locations]
+      const locations = data.data
+      console.log(locations, 'location from api')
+      that.location = [...locations]
     })
     .catch(function (error) {
       console.log(error, 'api map response');
@@ -105,13 +107,40 @@ class UserMap extends Component {
 
   viewTargetPictures(){
     // clicking here renders ar view. Leave commented unless ar kit is installed
-    //this.props.navigation.navigate("ARView")
+    this.props.navigation.navigate("ARView")
+  }
+
+  viewUserMarkers(){
+    console.log('userMarkers')
+    // send get request for all locations from user
+    // let userId = this.props.profileInfo.userId
+    // api/get_all_locations_for_user
+      // put user id in request
+
+  }
+
+  viewWorldMarkers(){
+    console.log('worldMarker')
+    // var that = this
+    // axios.get(`${PythonServer}api/get_all_locations`)
+    // .then(function (data) {
+    //   console.log(data, 'api map response');
+    //   // const locations = data.data
+    //   // that.location = [...locations]
+    // })
+    // .catch(function (error) {
+    //   console.log(error, 'api map response');
+    // })
   }
 
   render() {
      console.log(this.location, 'this location')
     return (
       <View style={styles.container}>
+        <View style={styles.filterButtonContainer}>
+          <TouchableOpacity style={{flex:1}} onPress={this.viewUserMarkers}><Image style={styles.filterButtons} source={require('../../../image_icon.png')}/></TouchableOpacity>
+          <TouchableOpacity style= {{flex:1}} onPress={this.viewWorldMarkers}><Image style={styles.filterButtons} source={require('../../../worldIcon.png')}/></TouchableOpacity>
+        </View>
         <MapView
           style={styles.map}
            region={this.state.initialPosition}>
@@ -143,7 +172,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    top: 0,
+    top: 40,
     position: 'absolute'
   },
   radius:{
@@ -165,6 +194,17 @@ const styles = StyleSheet.create({
     borderRadius: 20 / 2,
     overflow: 'hidden',
     backgroundColor: '#007AFF'
+  },
+  filterButtonContainer:{
+    flexDirection: 'row',
+    flex: 1,
+    backgroundColor: 'azure'
+  },
+  filterButtons:{
+    height: 20,
+    width: 20,
+    alignSelf: 'center',
+    marginTop: 10,
   }
 });
 

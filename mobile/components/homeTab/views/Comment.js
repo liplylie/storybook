@@ -7,7 +7,7 @@ export const Comment = (props) => (
       {/* User Profile Image goes here */}
     </View>
     <View>
-      <Text style={styles.userCommentName}> {'SquidWard' } <Text style={styles.userComment}> {"I hate you SpongeBob"} </Text></Text>
+      <Text> {'SquidWard' } <Text> {"I hate you SpongeBob"} </Text></Text>
     </View>
   </View>
 )

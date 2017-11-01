@@ -1,89 +1,96 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import UserMap from './map.js';
 import Login from '../../auth/Login'
 
+
 const { width, height } =  Dimensions.get('window');
-const Profile = ( props ) => {
-	console.log(props, 'profile props')
-	if (props.profileInfo.Auth.name){
-		let name = props.profileInfo.Auth.name;
-		let email = props.profileInfo.Auth.email;
-		let picture = props.profileInfo.Auth.picture;
-		let id = props.profileInfo.Auth.id;
-		let friendIcon = "https://cdn.iconscout.com/public/images/icon/premium/png-512/profile-group-friend-team-user-avatar-3d104201ce065c29-512x512.png"
 
-		const viewFriends = () => {
-    	props.navigation.navigate("Friends")
-		}
-		
-		const viewRequests = () => {
-			props.navigation.navigate("FriendRequests")
-		}
+class Profile extends Component {
+	constructor(props){
+		super(props)
+		this.viewRequests = this.viewRequests.bind(this)
+	}
+	static navigationOptions = {
+    header: null
+  }
+	
+	viewRequests(){
+		this.props.navigation.navigate("FriendRequests")
+	}
 
-  	const getFriends = () => {
-  		// get all friends, count them all, return count
-  		// put user id in get request params
-  		//'/api/get_all_friends'
-  	}
+	getFriends(){
+		// change to component did mount
+		let userId = this.props.profileInfo.Auth.userId
+		axios.get('http://localhost:5000/api/get_all_friends', {
+			params:{
+				userId: userId
+			}
+		})
+		.then(response =>{
+			console.log(response, 'response from getFriends')
+		})
+		.catch(err =>{
+			console.log(err, 'response from getFriends')
+		})
+		// get all friends, count them all, return count
+		// put user id in get request params
+		//'/api/get_all_friends'
+	}
+	render(){
+		if (this.props.profileInfo.Auth.name){
+			let name = this.props.profileInfo.Auth.name;
+			let email = this.props.profileInfo.Auth.email;
+			let picture = this.props.profileInfo.Auth.picture;
+			let id = this.props.profileInfo.Auth.id;
+			let navigation = this.props.navigation
 
-		return (
-	    <ScrollView style={styles.profileContainer}>
-	    	<View style={{flex:.3, backgroundColor: 'white', marginTop:10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-					<TouchableHighlight onPress={viewRequests} >
-			      <Image source={{uri:friendIcon}} style={styles.friendIcon}/> 
-			  	</TouchableHighlight>
-	    		<Text style={styles.email}>
-		      	{email}
-		      </Text>
-		      <TouchableHighlight onPress={viewFriends} >
-			      <Image source={{uri:friendIcon}} style={styles.friendIcon}/> 
-			    </TouchableHighlight>
-	    	</View>
-	    	<View style ={styles.profileDetails}>
-	    		<View style={{flexDirection: 'row', flex: 1}}>
-	    			<View style={{flexDirection: 'column', flex: 1}}>
-	    				<View style={{flexDirection: 'row', alignItems: 'center'}}>
-			    			<Image source={{uri:picture}} style={styles.profilePicture}/>
-			    			<View style={{paddingLeft: 150, justifyContent: 'space-around', flexDirection: 'row'}}>
-			    				<View style={{marginRight: 20}}>
-				    				<Text> Photos </Text>
-				    				<Text style={{textAlign: 'center'}}> 0 </Text>
-				    			</View>
-				    			<View>
-					    			<Text> Friends </Text>
-				    				<Text style={{textAlign: 'center'}}> 0 </Text>
-				    			</View>
-			    			</View>
-			    		</View>
-			    		<Text style={styles.profileName}> {name} </Text>
-			    	</View>
-		    		<View style={{ marginLeft: 180}}>
-			    		
-		      	</View>
+			return (
+		    <ScrollView style={styles.profileContainer}>
+		    	<View style={{flex:.3, backgroundColor: 'white', marginTop:10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+		    		<Text style={styles.email}>
+			      	{email}
+			      </Text>
+			      <TouchableHighlight onPress={this.viewRequests}>
+				      <Image source={require('../../../friendIcon.png')} style={styles.friendIcon}/> 
+				    </TouchableHighlight>
 		    	</View>
-		      	
-		      	<View style={{margin: 5}}>
-		      		<Login />
-		      	</View>
-		    </View>
-
-
-
-
-
-
-	      <View style={styles.profileMap}>
-	      	<UserMap navigation={props.navigation}/>
-	      </View>
-	    </ScrollView> 
-	  )
-	}	else {
-		  return (
-		    <View>
-		    </View> 
-	  	)
+		    	<View style ={styles.profileDetails}>
+		    		<View style={{flexDirection: 'row', flex: 1}}>
+		    			<View style={{flexDirection: 'column', flex: 1}}>
+		    				<View style={{flexDirection: 'row', alignItems: 'center'}}>
+				    			<Image source={{uri:picture}} style={styles.profilePicture}/>
+				    			<View style={{paddingLeft: 150, justifyContent: 'space-around', flexDirection: 'row'}}>
+				    				<View style={{marginRight: 20}}>
+					    				<Text> Photos </Text>
+					    				<Text style={{textAlign: 'center'}}> 0 </Text>
+					    			</View>
+					    			<View>
+						    			<Text> Friends </Text>
+					    				<Text style={{textAlign: 'center'}}> 0 </Text>
+					    			</View>
+				    			</View>
+				    		</View>
+				    		<Text style={styles.profileName}> {name} </Text>
+				    	</View>
+			    	</View>
+			      	<View style={{margin: 5}}>
+			      		<Login />
+			      	</View>
+			    </View>
+		      <View style={styles.profileMap}>
+		      	<UserMap navigation={navigation}/>
+		      </View>
+		    </ScrollView> 
+		  )
+		}	else {
+			  return (
+			    <View>
+			    </View> 
+		  	)
+		}
 	}
 }
 
@@ -113,20 +120,21 @@ const styles = StyleSheet.create({
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 20
+		borderRadius: 20,
 	}, 
 	friendIcon: {
-		width: 40, 
-		height: 40,
+		width: 35, 
+		height: 25,
 		borderRadius: 10,
-		marginLeft: 30,
+		
 	},
 	email: {
+		marginRight: 80,
+		marginLeft: 110,
 		paddingTop: 5,
 		fontSize: 14,
 		fontFamily: 'Verdana',
 		fontWeight: 'bold',
-		marginRight: 20,
 	},
 	profileName: {
 		fontSize: 14,

@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (store) =>{
+  console.log(store, 'home store')
   return {
     profileInfo: store.Profile,
     friends: store.Chat.friends
