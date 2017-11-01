@@ -78,7 +78,8 @@ class NewChat extends Component {
                 title={result.name}
                 onPress={() => {
                 this.createRoom(result.id);
-                this.props.actions.enterRoom(this.state.chatroom);
+                // this.props.actions.enterRoom(this.state.chatroom);
+                this.props.enterRoom(1);
                 navigate('Chat');
               }}>
               </ListItem>
@@ -111,7 +112,7 @@ const mapStateToProps = (store) => {
 
 const chatDispatch = (dispatch) => {
   return {
-    actions: bindActionCreators(chatActions, dispatch) 
+    actions: bindActionCreators(chatActions, dispatch)
   }
 }
 
