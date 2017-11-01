@@ -554,4 +554,13 @@ def get_all_photos_loc_by_user():
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
 
+
 #search friends
+@app.route('/api/search', methods=['GET'])
+def search():
+  print('searching for user...')
+  request_data = dict(request.args)
+  search_user_name = request_data["userName"][0]
+  parsed_search_user_name = str(search_user_name)
+  
+  search_user_name_query = db.session.execute("SELECT * FROM users WHERE name = " + parsed_search_user_name)
