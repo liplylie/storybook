@@ -328,11 +328,11 @@ def get_friend_requests():
             "profile_image_url": j[3]
           }
           list_of_requests.append(temp)
-    
+
     result = {}
     result["data"] = list_of_requests
     resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
-    return resp 
+    return resp
 
 # get all friend requests using req.params.userId along with name and profile pic
   #DONE
@@ -406,17 +406,60 @@ def remove_friend():
     resp = make_response('removed successfully!', 201)
     return resp
 
-@app.route('/api/get_recent_message', methods=['GET'])
-def get_recent_message():
+@app.route('/api/get_convo', methods=['GET'])
+def get_convo():
   print('getting most recent message...')
-  request_data = dict(request.json)
-  get_recent_message_chatroom_id = request_data["chatroomId"]
-  parsed_get_recent_message_chatroom_id = str(get_recent_message_chatroom_id)
+  request_data = dict(request.args)
+  get_convo_sender_id = request_data["senderId"][0]
+  parsed_get_convo_sender_id = str(get_convo_sender_id)
+  print(parsed_get_convo_sender_id)
 
-  most_recent_message_query = Messages.query.filter_by(mes   sage_chatroom=parsed_get_recent_message_chatroom_id).order_by(Messages.id.desc()).first()
+  get_convo_recipient_id = request_data["recipientId"][0]
+  parsed_get_convo_recipient_id = str(get_convo_recipient_id)
+  print(parsed_get_convo_recipient_id)
+  print("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
 
-
+  convo_query = db.session.execute("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
+  # most_recent_message_query_2 = db.session.execute("select * from messages where sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + "ORDER BY recipient_id DESC")
   
+  convo_array = []
+  for i in convo_query:
+    convo_array.append({
+      "sender_id": i.sender_id,
+      "recipient_id": i.recipient_id,
+      "message": str(i.message)
+    })
+
+  result = {}
+  result["data"] = convo_array
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
+
+
+# @app.route('/api/get_convo', methods=['GET'])
+# def get_convo():
+#   print('getting most recent message...')
+#   request_data = dict(request.args)
+#   get_convo_sender_id = request_data["senderId"][0]
+#   parsed_get_convo_sender_id = str(get_convo_sender_id)
+#   print(parsed_get_convo_sender_id)
+
+#   get_convo_recipient_id = request_data["recipientId"][0]
+#   parsed_get_convo_recipient_id = str(get_convo_recipient_id)
+#   print(parsed_get_convo_recipient_id)
+#   print("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
+
+#   convo_query = db.session.execute("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
+#   # most_recent_message_query_2 = db.session.execute("select * from messages where sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + "ORDER BY recipient_id DESC")
+  
+#   convo_array = []
+#   for i in convo_query:
+#     convo_array.append({
+#       "sender_id": i.sender_id,
+#       "recipient_id": i.recipient_id,
+#       "message": str(i.message)
+#     })
+#   print(convo_array)
    
   
 
