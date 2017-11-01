@@ -485,12 +485,66 @@ def get_convo():
 #all messages
 #search all users
 
-#get al likes for a specific image
+#get all likes for a specific image
+@app.route('/api/get_all_likes_by_image', methods=['GET'])
+def get_all_likes_by_image():
+  print('getting all likes for specific image')
+  request_data = dict(request.args)
+  get_all_likes_image_id = request_data["imageId"][0]
+  parsed_get_all_likes_image_id = str(get_all_likes_image_id)
+
+  get_all_likes_by_image_query = db.session.execute('SELECT * FROM likes WHERE like_image_id = ' + parsed_get_all_likes_image_id)
+  all_likes_array = []
+  for i in get_all_likes_by_image_query:
+    like_obj = {
+      "user_id": i.like_user_id
+    }
+    all_likes_array.append(like_obj)
+  
+  result = {}
+  result["data"] = all_likes_array
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp 
 
 #get all images for a specific user
+@app.route('/api/get_all_images_by_user', methods=['GET'])
+def get_all_images_by_user():
+  print('getting all images for specific user')
+  request_data = dict(request.args)
+  get_all_images_user_id = request_data["userId"][0]
+  parsed_get_all_images_user_id = str(get_all_images_user_id)
 
-#posting comments for a specific image
+  get_all_images_by_user_query = db.session.execute('SELECT * FROM images WHERE image_user_id = ' + parsed_get_all_images_user_id)
+  all_images_array = []
+  for i in get_all_images_by_user_query:
+    image_obj = {
+      "imageUrl": i.image_url,
+      "imageId": i.id
+    }
+    all_images_array.append(image_obj)
+
+  result = {}
+  result["data"] = all_images_array
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp 
 
 #getting all comments for a specific image. make this a join table with the users
+@app.route('/api/get_all_comments_by_image', methods=['GET'])
+def get_all_comments_by_image():
+  print('getting all comments by image')
+  request_data = dict(request.args)
+  get_all_comments_image_id = request_data["imageId"][0]
+  parsed_get_all_comments_image_id = str(get_all_comments_image_id)
+
+  get_all_comments_by_image_query = db.session.execute('SELECT * FROM comments RIGHT JOIN users ON comment_user_id = users.id WHERE comment_image_id = ' + parsed_get_all_comments_image_id)
+  all_comments_array = []
+  for i in get_all_comments_by_image_query:
+    print('this is i: ', i)
+
+  result = {}
+  result["data"] = all_comments_array
+  resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
+  return resp
+
 
 #retrieve all photos for specific

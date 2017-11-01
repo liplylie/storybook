@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableOpacity, Button } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
@@ -35,39 +35,45 @@ class Page extends Component{
 	}
 	render(){
 		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
-	  	 return (
-          <View style={styles.container}>
-            <View style={styles.title}> 
-              <Image 
-                style={styles.logo}
-                resizeMethod='resize'
-                resizeMode='contain'
-                source={require('../../../logo.jpg')} 
-              />
-            </View>
-				    <ScrollView>
-				    	<View>
-				    		<View style={styles.profileInfo}>
-				    			<Image style={styles.profilePicture} source={{uri:img1}} />
-				    			<Text> SpongeBob </Text>
-				    		</View>
-				      	<Image style={styles.image} source={{uri:img1}}/>
-				      	<Text style={styles.caption}> My Life is Great </Text>
-						  	<Text style={styles.likes}> Likes: 0 </Text>
-						  	<View>
-									<CommentView imageId={1} />
-						  	</View>
-						  	<TouchableOpacity onPress={this.showTextInput.bind(this)}>
-						  		<Text> Add Comment</Text> 
-						  	</TouchableOpacity>
-					      <TextInput
-					        style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
-					        onChangeText={(comment) => this.handleComment(comment)}
-					        placeholder='Add a Comment ...'
-					      />
-				      </View>
-				  	</ScrollView>
-			   </View> 
+		return (
+			<View style={styles.container}>
+				<View style={styles.title}> 
+					<Image 
+						style={styles.logo}
+						resizeMethod='resize'
+						resizeMode='contain'
+						source={require('../../../logo.jpg')} 
+					/>
+				</View>
+				<ScrollView>
+					<View>
+						<View style={styles.profileInfo}>
+							<Image style={styles.profilePicture} source={{uri:img1}} />
+							<Text> SpongeBob </Text>
+						</View>
+						<Image style={styles.image} source={{uri:img1}}/>
+						<Text style={styles.caption}> My Life is Great </Text>
+						<Text style={styles.likes}> Likes: 0 </Text>
+						<View>
+							<CommentView imageId={1} />
+						</View>
+						<TouchableOpacity onPress={this.showTextInput.bind(this)}>
+							<Text> Add Comment</Text> 
+						</TouchableOpacity>
+						<TextInput
+							style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
+							onChangeText={(comment) => this.handleComment(comment)}
+							placeholder='Add a Comment ...'
+						/>
+						<Button
+							title="Enter"
+							onPress={() => {
+								
+							}}
+						/>
+					</View>
+				</ScrollView>
+			</View> 
 	  )
 	}
 }
@@ -131,10 +137,11 @@ const styles = StyleSheet.create({
 	}
 
 })
-const mapStateToProps = (store) =>{
- 
+const mapStateToProps = (store) => {
   return {
     pageInfo: store
   }
 }
+
+const 
 export default connect(mapStateToProps)(Page)
