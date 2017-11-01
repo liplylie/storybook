@@ -20,22 +20,16 @@ const styles = StyleSheet.create({
 
 const Book = (props) => {
 	console.log(props, 'book props')
-	var test = [];
 	const viewPage = ()=>{
 		props.navigation.navigate("Page")
   }
-		 for (var i=0; i < 100; i++){
-	      test.push( 
-	      	<View>
-		    		<Text style={styles.text}> User Name </Text>
-			      <TouchableHighlight onPress={viewPage}>
-		    			<Image source={{uri:props.image}} style={styles.image}/>
-		    		</TouchableHighlight>
-	    		</View> 
-    	  )
-	    }
   return (
-    test
+  	<View>
+  		<Text style={styles.text}> User Name </Text>
+      <TouchableHighlight onPress={viewPage}>
+  			<Image source={{uri:props.image}} style={styles.image}/>
+  		</TouchableHighlight>
+		</View> 
   )
 }
 

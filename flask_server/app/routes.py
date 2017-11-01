@@ -539,7 +539,12 @@ def get_all_comments_by_image():
   get_all_comments_by_image_query = db.session.execute('SELECT * FROM comments RIGHT JOIN users ON comment_user_id = users.id WHERE comment_image_id = ' + parsed_get_all_comments_image_id)
   all_comments_array = []
   for i in get_all_comments_by_image_query:
-    print('this is i: ', i)
+    comment_obj = {
+      "comment": i[1],
+      "userName": i[5],
+      "profileImage": i[7]
+    }
+    all_comments_array.append(comment_obj)
 
   result = {}
   result["data"] = all_comments_array

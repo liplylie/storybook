@@ -48,18 +48,22 @@ export const getFBToken = () => {
               profile_image_url: res.picture.data.url
             }
 
-            axios.post(secret.flask_server + 'api/add_user_info', dispatchUser)
+            axios.post('http://localhost:5000/' + 'api/add_user_info', dispatchUser)
               .then(data => {
-                console.log('This is data back after user post: ', data);
-                dispatchUser['id'] = data.id; //fill this in later
-                dispatch({type: 'USER_INFO_RETRIEVED', payload: res});
+                dispatchUser['id'] = data.data.id; //fill this in later
+                dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
               })
               .catch(err => {
-                console.log('Error posting to user table: ', err);
+                axios.get('http://localhost:5000/' + 'api/get_user_info?email=' + dispatchUser.email)
+                  .then(data => {
+                    dispatchUser['id'] = data.data.data[0].userId
+                    dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
+                  })
+                  .catch(err => {
+                    dispatch({type: 'USER_INFO_FAIL', payload: err});
+                  })
               });
           }
-    
-          res ? dispatch({type: 'USER_INFO_RETRIEVED', payload: res}) : null;
         });
     
         new GraphRequestManager().addRequest(req).start();

@@ -145,5 +145,4 @@ const mapStateToProps = (store) => {
   }
 }
 
-const 
 export default connect(mapStateToProps)(Page)

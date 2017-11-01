@@ -1,9 +1,10 @@
-'use strict'
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import UserMap from './map.js';
 import Login from '../../auth/Login'
+
 
 const { width, height } =  Dimensions.get('window');
 
@@ -21,6 +22,19 @@ class Profile extends Component {
 	}
 
 	getFriends(){
+		// change to component did mount
+		let userId = this.props.profileInfo.Auth.userId
+		axios.get('http://localhost:5000/api/get_all_friends', {
+			params:{
+				userId: userId
+			}
+		})
+		.then(response =>{
+			console.log(response, 'response from getFriends')
+		})
+		.catch(err =>{
+			console.log(err, 'response from getFriends')
+		})
 		// get all friends, count them all, return count
 		// put user id in get request params
 		//'/api/get_all_friends'
