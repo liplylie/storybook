@@ -62,30 +62,6 @@ def add_photo():
   return resp
 
 
-#add user
-@app.route('/api/add_user', methods=['POST'])
-def add_user():
-  #request.args, .forms, .files, .values also exist. look them up in the docs
-  request_data = dict(request.json)
-
-  name = request_data["name"]
-  parsed_name = name.encode('utf-8')
-
-  email = request_data["email"]
-  parsed_email = email.encode('utf-8')
-
-  profile_image_url = request_data["profile_image_url"]
-  parsed_profile_image_url = profile_image_url.encode('utf-8')
-
-  friends_count = request_data["friends_count"]
-  parsed_friends_count = int(friends_count)
-
-  db.session.add(Users(parsed_name, parsed_email, parsed_profile_image_url, parsed_friends_count)) #replace later with actual values
-  db.session.commit()
-  resp = make_response('added successfully!', 201)
-  return resp
-
-
 @app.route('/api/add_comment', methods=['POST'])
 def add_comment():
   #request.args, .forms, .files, .values also exist. look them up in the docs
@@ -284,7 +260,6 @@ def get_all_friends():
     parsed_get_all_friends_user_id = int(get_all_friends_user_id)
     
     get_all_relating_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
-    # get_all_related_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.related_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
     
     list_of_friends = []
     for i in get_all_relating_friends_query:
@@ -298,18 +273,6 @@ def get_all_friends():
             "profile_image_url": j.profile_image_url
           }
           list_of_friends.append(temp)
-
-    # for i in get_all_related_friends_query:
-    #   if i[len(i) - 1] == 'friend':
-    #     relative_info_query = db.session.query(Users).filter(Users.id == i.relating_user_id)
-    #     for j in relative_info_query:
-    #       temp = {
-    #         "id": j.id,
-    #         "name": j.name,
-    #         "email": j.email,
-    #         "profile_image_url": j.profile_image_url
-    #       }
-    #       list_of_friends.append(temp)
 
     result = {}
     result["data"] = list_of_friends
@@ -380,23 +343,6 @@ def accept_friend_request():
     return resp
 
 
-# @app.route('/api/block_friend', methods=['POST'])
-# def block_friend():
-#     print("blocking friend...")
-#     request_data = dict(request.json)
-#     block_friend_relating_user_id = request_data["userId"]
-#     parsed_block_friend_relating_user_id = str(block_friend_relating_user_id)
-
-#     block_friend_related_user_id = request_data["friendId"]
-#     parsed_block_friend_related_user_id = str(block_friend_related_user_id)
-
-#     db.session.execute("UPDATE friendships SET friendship_type='blocked' WHERE relating_user_id=" + parsed_block_friend_relating_user_id + " AND related_user_id=" + parsed_block_friend_related_user_id)
-#     db.session.commit()
-
-#     resp = make_response('modified successfully!', 201)
-#     return resp
-
-
 @app.route('/api/remove_friend', methods=['POST'])
 def remove_friend():
     print("removing friend...")
@@ -430,7 +376,6 @@ def get_convo():
   print("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
 
   convo_query = db.session.execute("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
-  # most_recent_message_query_2 = db.session.execute("select * from messages where sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + "ORDER BY recipient_id DESC")
   
   convo_array = []
   for i in convo_query:
@@ -458,11 +403,8 @@ def get_last_message():
   get_last_message_recipient_id = request_data["recipientId"][0]
   parsed_get_last_message_recipient_id = str(get_last_message_recipient_id)
   print(parsed_get_last_message_recipient_id)
-  # print("select * from messages where (sender_id=" + parsed_get_last_message_sender_id + "and recipient_id=" + parsed_get_last_message_recipient_id + ") OR (sender_id=" + parsed_get_last_message_recipient_id + "and recipient_id=" + parsed_get_last_message_sender_id + ")")
-  # select * from messages where ((sender_id=1 and recipient_id=4) OR (sender_id=4 and recipient_id=1)) and date_created IN (SELECT max(date_created) FROM messages);
 
   last_message_query = db.session.execute("select * from messages where ((sender_id=" + parsed_get_last_message_sender_id + "and recipient_id=" + parsed_get_last_message_recipient_id + ") OR (sender_id=" + parsed_get_last_message_recipient_id + "and recipient_id=" + parsed_get_last_message_sender_id + ")) AND date_created IN (SELECT max(date_created) FROM messages)")
-  # most_recent_message_query_2 = db.session.execute("select * from messages where sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + "ORDER BY recipient_id DESC")
   
   result = {}
   for i in last_message_query:
@@ -576,15 +518,21 @@ def get_user_name():
   print("SELECT * FROM users WHERE name = " + parsed_search_user_name)
   search_user_name_query = db.session.execute("SELECT * FROM users WHERE name = '" + parsed_search_user_name + "'")
 
-  result = {}
+  names_list  = []
+  temp = {}
   for i in search_user_name_query:
-      result["name"]= str(i.name)
-      result["email"]= i.email
-      result["profile_image_url"] = i.profile_image_url
-      result["friends_count"] = i.friends_count
+    temp["name"]= str(i.name)
+    temp["email"]= i.email
+    temp["profile_image_url"] = i.profile_image_url
+    temp["friends_count"] = i.friends_count
+    names_list.append(temp)
+  
+  result = {
+    "data": names_list
+  }
 
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
 
-###############
 
+###############

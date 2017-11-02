@@ -27,17 +27,17 @@ with open('../sensitive.json') as data_file:
 with open('../db/sample_metadata/sampleUserData.json') as data_file:    
     data_users = json.load(data_file)
 
-with open('../db/sample_metadata/sampleImagesSanFrancisco.json') as data_file:    
-    data_sf_images = json.load(data_file)
+# with open('../db/sample_metadata/sampleImagesSanFrancisco.json') as data_file:    
+#     data_sf_images = json.load(data_file)
 
-with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
-    data_images = json.load(data_file)
+# with open('../db/sample_metadata/sampleMetadata.json') as data_file:    
+#     data_images = json.load(data_file)
 
-with open('../db/sample_metadata/sampleCommentData.json') as data_file:    
-    data_comments = json.load(data_file)
+# with open('../db/sample_metadata/sampleCommentData.json') as data_file:    
+#     data_comments = json.load(data_file)
 
-with open('../db/sample_metadata/sampleLikes_Data.json') as data_file:    
-    data_likes = json.load(data_file)
+# with open('../db/sample_metadata/sampleLikes_Data.json') as data_file:    
+#     data_likes = json.load(data_file)
 
 # for j in data_users:
 #   db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count']))
