@@ -9,33 +9,27 @@ import json
 import os
 import unittest
 
-with open('../sensitive.json') as data_file:    
+with open('./sensitive.json') as data_file:    
     sensitive = json.load(data_file)
     rds_endpoint = sensitive['rds_endpoint']
     username = sensitive['username']
     password = sensitive['password']
 
-with open('../db/sample_metadata/sampleImagesSanFrancisco.json') as data_file:    
-    data_images = json.load(data_file)
-
-with open('../db/sample_metadata/sampleUserData.json') as data_file:    
-    data_users = json.load(data_file)
-
 #############################
 #initialize app:
-app = Flask(__name__, instance_relative_config=True, static_folder="../../client/public", template_folder="../../client/public")
+app = Flask(__name__, instance_relative_config=True)
 
 #############################
 #load compiled assets:
-assets = Environment(app)
-js = Bundle('bundle.js', output='gen/packed.js')
-assets.register('js_all', js)
+# assets = Environment(app)
+# js = Bundle('bundle.js', output='gen/packed.js')
+# assets.register('js_all', js)
 
 #############################
 #app configs:
 app.config.from_object('config')
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://"+username+":"+password+"@"+rds_endpoint+"/"+username
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://socyjgwo:QD38AgZgQutwEkRMyDW8-6bGdvPsMI1k@pellefant.db.elephantsql.com:5432/socyjgwo"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://"+username+":"+password+"@"+rds_endpoint+"/"+username
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://socyjgwo:QD38AgZgQutwEkRMyDW8-6bGdvPsMI1k@pellefant.db.elephantsql.com:5432/socyjgwo"
 
 #############################
 #load database:
