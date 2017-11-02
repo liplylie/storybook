@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import UserMap from './map.js';
 import Login from '../../auth/Login'
+import secret from '../../../../sensitive.json'
 
 
 const { width, height } =  Dimensions.get('window');
@@ -11,26 +12,33 @@ const { width, height } =  Dimensions.get('window');
 class Profile extends Component {
 	constructor(props){
 		super(props)
+		this.state = {
+			friends:[]
+		}
+		console.log(props, 'profile props')
 		this.viewRequests = this.viewRequests.bind(this)
 	}
 	static navigationOptions = {
     header: null
   }
-	
-	viewRequests(){
-		this.props.navigation.navigate("FriendRequests")
-	}
 
-	getFriends(){
+  	componentDidMount(){
 		// change to component did mount
 		let userId = this.props.profileInfo.Auth.userId
-		axios.get('http://localhost:5000/api/get_all_friends', {
+		console.log(userId, 'user id in profiel')
+		let that = this
+		axios.get(`http://localhost:5000/api/get_all_friends`, {
 			params:{
 				userId: userId
 			}
 		})
-		.then(response =>{
-			console.log(response, 'response from getFriends')
+		.then(({data}) =>{
+			console.log(data, 'response from getFriends')
+			that.setState({
+				friends:[...data.data]
+			})
+			console.log(that.state.friends, 'that friends')
+
 		})
 		.catch(err =>{
 			console.log(err, 'response from getFriends')
@@ -39,6 +47,12 @@ class Profile extends Component {
 		// put user id in get request params
 		//'/api/get_all_friends'
 	}
+	
+	viewRequests(){
+		this.props.navigation.navigate("FriendRequests")
+	}
+
+
 	render(){
 		if (this.props.profileInfo.Auth.name){
 			let name = this.props.profileInfo.Auth.name;
@@ -69,7 +83,7 @@ class Profile extends Component {
 					    			</View>
 					    			<View>
 						    			<Text> Friends </Text>
-					    				<Text style={{textAlign: 'center'}}> 0 </Text>
+					    				<Text style={{textAlign: 'center'}}> {this.state.friends.length} </Text>
 					    			</View>
 				    			</View>
 				    		</View>

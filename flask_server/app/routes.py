@@ -35,7 +35,7 @@ def add_photo():
   #tags
   request_body = "{'url': '" + parsed_url + "'}"
 
-  image_tags = get_tags(request_body)
+  # image_tags = get_tags(request_body)
   image_tags = []
 
   scn_code = '0'
@@ -80,10 +80,7 @@ def add_user():
   friends_count = request_data["friends_count"]
   parsed_friends_count = int(friends_count)
 
-  # user_tags_array = 
-  user_tags_array = ['']
-
-  db.session.add(Users(parsed_name, parsed_email, parsed_profile_image_url, parsed_friends_count, user_tags_array)) #replace later with actual values
+  db.session.add(Users(parsed_name, parsed_email, parsed_profile_image_url, parsed_friends_count)) #replace later with actual values
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
@@ -195,10 +192,8 @@ def add_user_info():
 
   add_user_info_friends_count = 0
   parsed_add_user_info_friends_count = int(0)
-  
-  user_tags_array = []
 
-  db.session.add(Users(parsed_add_user_info_user_name, parsed_add_user_info_email, parsed_add_user_info_profile_image_url, parsed_add_user_info_friends_count, user_tags_array))
+  db.session.add(Users(parsed_add_user_info_user_name, parsed_add_user_info_email, parsed_add_user_info_profile_image_url, parsed_add_user_info_friends_count))
   db.session.commit()
   new_user_id = db.session.query(Users).filter(Users.email == parsed_add_user_info_email)
   parsed_new_user_id = -1
@@ -215,15 +210,27 @@ def get_imgs_by_loc():
     get_imgs_by_loc_latitude = float(get_imgs_by_loc_latitude)
     get_imgs_by_loc_longitude = request_data["longitude"][0]
     get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
+
+    print("longitude: ", get_imgs_by_loc_longitude)
     
-    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.002)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.01)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.01)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.002)))
+    # get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.002)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.01)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.01)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.002)))
+    get_imgs_by_loc_query = db.session.query(Images)
     all_images = []
     for i in get_imgs_by_loc_query:
-      all_images.append({
-        "image_user_id": i.image_user_id,
-        "image_id": i.id,
-        "imageUrl": i.image_url
-      })
+      print('Jeff says hello')
+      if (i.image_user_id == 104):
+        image_to_post = {
+          "image_user_id": i.image_user_id,
+          "image_id": i.id,
+          "imageUrl": i.image_url,
+          "caption": i.caption,
+        }
+        get_image_user_info = db.session.execute("SELECT * FROM users WHERE id = " + str(i.image_user_id))
+        for j in get_image_user_info:
+          image_to_post["image_user_name"] = j.name
+          image_to_post["image_user_pic"] = j.profile_image_url
+        all_images.append(image_to_post)
+
     result = {}
     result["data"] = all_images
     resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
@@ -251,8 +258,10 @@ def get_imgs_by_frs_at_loc():
       print(i.related_user_id)
       parsed_user_id = int(i.related_user_id)
       most_recent_image_at_loc = Images.query.filter_by(image_user_id=parsed_user_id).filter((Images.latitude > (parsed_get_imgs_by_frs_at_loc_latitude - 0.01)) & (Images.latitude < (parsed_get_imgs_by_frs_at_loc_latitude + 0.01)) & (Images.longitude > (parsed_get_imgs_by_frs_at_loc_longitude - 0.001)) & (Images.longitude < (parsed_get_imgs_by_frs_at_loc_longitude + 0.001))).order_by(Images.id.desc()).first()
+      print('Hello')
       if (most_recent_image_at_loc):
         # list_of_photos.append(most_recent_image_at_loc.image_url)
+        print('Hi')
         list_of_photos.append({
           "image_user_id": most_recent_image_at_loc.image_user_id,
           "image_id": most_recent_image_at_loc.id,
@@ -276,7 +285,7 @@ def get_all_friends():
     parsed_get_all_friends_user_id = int(get_all_friends_user_id)
     
     get_all_relating_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
-    get_all_related_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.related_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
+    # get_all_related_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.related_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
     
     list_of_friends = []
     for i in get_all_relating_friends_query:
@@ -291,17 +300,17 @@ def get_all_friends():
           }
           list_of_friends.append(temp)
 
-    for i in get_all_related_friends_query:
-      if i[len(i) - 1] == 'friend':
-        relative_info_query = db.session.query(Users).filter(Users.id == i.relating_user_id)
-        for j in relative_info_query:
-          temp = {
-            "id": j.id,
-            "name": j.name,
-            "email": j.email,
-            "profile_image_url": j.profile_image_url
-          }
-          list_of_friends.append(temp)
+    # for i in get_all_related_friends_query:
+    #   if i[len(i) - 1] == 'friend':
+    #     relative_info_query = db.session.query(Users).filter(Users.id == i.relating_user_id)
+    #     for j in relative_info_query:
+    #       temp = {
+    #         "id": j.id,
+    #         "name": j.name,
+    #         "email": j.email,
+    #         "profile_image_url": j.profile_image_url
+    #       }
+    #       list_of_friends.append(temp)
 
     result = {}
     result["data"] = list_of_friends
@@ -347,6 +356,7 @@ def add_friend():
     parsed_add_friend_related_user_id = str(add_friend_related_user_id)
 
     db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
+    db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_related_user_id + ", " + parsed_add_friend_relating_user_id + ", 'pending')")
     db.session.commit()
 
     resp = make_response('added successfully!', 201)
@@ -364,6 +374,7 @@ def accept_friend_request():
     parsed_accept_friend_request_related_user_id = str(accept_friend_request_related_user_id)
 
     db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_related_user_id + " AND related_user_id=" + parsed_accept_friend_request_relating_user_id)
+    db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_relating_user_id + " AND related_user_id=" + parsed_accept_friend_request_related_user_id)
     db.session.commit()
 
     resp = make_response('modified successfully!', 201)

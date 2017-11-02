@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
 const Book = (props) => {
 	console.log(props, 'book props')
 	const viewPage = ()=>{
-		props.navigation.navigate("Page")
+		props.navigation.navigate("Page", props.image)
   }
   return (
   	<View>
-  		<Text style={styles.text}> User Name </Text>
+  		<Text style={styles.text}> {props.image.image_user_name} </Text>
       <TouchableHighlight onPress={viewPage}>
-  			<Image source={{uri:props.image}} style={styles.image}/>
+  			<Image source={{uri:props.image.imageUrl}} style={styles.image}/>
   		</TouchableHighlight>
 		</View> 
   )

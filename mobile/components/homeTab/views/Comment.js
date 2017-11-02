@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 
-export const Comment = (props) => (
+const Comment = (props) => (
   <View>
     <View>
-      {/* User Profile Image goes here */}
+      <Image source={{uri: props.comment.profileImage}} style={{height:30, width: 30, borderRadius: 20, marginLeft: 3}} />
     </View>
     <View>
-      <Text> {'SquidWard' } <Text> {"I hate you SpongeBob"} </Text></Text>
+      <Text style={{fontWeight: 'bold'}}>{props.comment.userName}{" "}<Text style={{fontWeight: 'normal', fontSize: 12}}>{props.comment.comment}</Text></Text>
     </View>
   </View>
 )
+
+export default Comment;

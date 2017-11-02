@@ -18,7 +18,8 @@ class Page extends Component{
 		this.state = {
 			visibleHeight: 0,
 			visibleWidth:0,
-			commentText: ''
+			commentText: '',
+			refresh: true
 		}
 		
 	}
@@ -37,6 +38,9 @@ class Page extends Component{
 
 	render(){
 		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
+		console.log('this should be image id: ', this.props.navigation.state.params.image_id)
+		const { refresh } = this.state;
+
 		return (
 			<View style={styles.container}>
 				<View style={styles.title}> 
@@ -50,14 +54,14 @@ class Page extends Component{
 				<ScrollView>
 					<View>
 						<View style={styles.profileInfo}>
-							<Image style={styles.profilePicture} source={{uri:img1}} />
-							<Text> SpongeBob </Text>
+							<Image style={styles.profilePicture} source={{uri:this.props.navigation.state.params.image_user_pic}} />
+							<Text> {this.props.navigation.state.params.image_user_name} </Text>
 						</View>
-						<Image style={styles.image} source={{uri:img1}}/>
-						<Text style={styles.caption}> My Life is Great </Text>
+						<Image style={styles.image} source={{uri:this.props.navigation.state.params.imageUrl}}/>
+						<Text style={styles.caption}> {this.props.navigation.state.params.caption} </Text>
 						<Text style={styles.likes}> Likes: 0 </Text>
 						<View>
-							<CommentView imageId={1} />
+							<CommentView imageId={this.props.navigation.state.params.image_id} />
 						</View>
 						<TouchableOpacity onPress={this.showTextInput.bind(this)}>
 							<Text> Add Comment</Text> 
@@ -77,9 +81,11 @@ class Page extends Component{
 								const obj = {
 									text: this.state.commentText,
 									comment_user_id: this.props.userId,
-									comment_image_id: 1
+									comment_image_id: this.props.navigation.state.params.image_id
 								}
+								console.log(obj)
 								this.props.actions.postComments(obj);
+								this.forceUpdate();
 							}}
 						/>
 					</View>

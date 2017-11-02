@@ -25,17 +25,33 @@ class Collection extends Component {
 		let longitude = this.props.location.longitude
 		let userId = this.props.profileInfo.userId
 
-		axios.get('http://localhost:5000/api/get_imgs_by_frs_at_loc', {
+		// axios.get('http://localhost:5000/api/get_imgs_by_frs_at_loc', {
+		// 	params:{
+		// 		latitude: latitude,
+		// 		longitude: longitude,
+		// 		userId: userId
+		// 	}
+		// })
+		// .then(response=>{
+		// 	console.log(response, 'collection response imgs at location')
+		// 	that.setState({
+		// 		images: [...response.data]
+		// 	})
+		// })
+		// .catch(err => {
+		// 	console.log(err, 'err from imgs at location')
+		// })
+
+		axios.get('http://localhost:5000/api/get_imgs_by_loc', {
 			params:{
 				latitude: latitude,
-				longitude: longitude,
-				userId: userId
+				longitude: longitude
 			}
 		})
 		.then(response=>{
 			console.log(response, 'collection response imgs at location')
 			that.setState({
-				images: [...that.state.images,...response.data]
+				images: [...response.data.data]
 			})
 		})
 		.catch(err => {
@@ -44,7 +60,7 @@ class Collection extends Component {
 	}
 
 	render(){
-		//let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
+		// let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
 		let navigation = this.props.navigation
 		console.log(this.state.images, 'this state images')
 		if (this.state.images.length === 0){
