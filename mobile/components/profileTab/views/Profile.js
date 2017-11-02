@@ -43,9 +43,6 @@ class Profile extends Component {
 		.catch(err =>{
 			console.log(err, 'response from getFriends')
 		})
-		// get all friends, count them all, return count
-		// put user id in get request params
-		//'/api/get_all_friends'
 	}
 	
 	viewRequests(){

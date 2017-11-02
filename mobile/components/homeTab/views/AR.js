@@ -20,6 +20,21 @@ class ARView extends Component {
     let longitude = this.props.location.longitude
     // make axios request for images at location
       // axios.get('/api/get_imgs_by_loc', location)
+    axios.get('http://localhost:5000/api/get_imgs_by_loc', {
+      params:{
+        latitude: latitude,
+        longitude: longitude
+      }
+    })
+    .then(response=>{
+      console.log(response, 'collection response imgs at location')
+      that.setState({
+        images: [...response.data.data]
+      })
+    })
+    .catch(err => {
+      console.log(err, 'err from imgs at location')
+    })
   }
   render() {
   	return (
