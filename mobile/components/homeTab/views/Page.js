@@ -37,6 +37,7 @@ class Page extends Component{
 
 	render(){
 		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
+		console.log('this is page props: ', this.props)
 		return (
 			<View style={styles.container}>
 				<View style={styles.title}> 
