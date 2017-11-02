@@ -1,6 +1,7 @@
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
 import axios from 'axios';
+import { fetch } from 'react-native'
 
 import secret from '../../sensitive.json';
 
@@ -47,22 +48,36 @@ export const getFBToken = () => {
               email: res.email,
               profile_image_url: res.picture.data.url
             }
-
-            axios.post('http://localhost:5000/' + 'api/add_user_info', dispatchUser)
+            console.log(dispatchUser, 'dispatchUser')
+            axios.post('http://localhost:5000/' + 'api/add_user_info', dispatchUser, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
               .then(data => {
-                dispatchUser['id'] = data.data.id; //fill this in later
+                console.log(data, 'add user info data')
+                dispatchUser['id'] = data.data.id; 
                 dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
               })
               .catch(err => {
-                axios.get('http://localhost:5000/' + 'api/get_user_info?email=' + dispatchUser.email)
+                console.log(err, 'err 2')
+                axios.get('http://localhost:5000/' + 'api/get_user_info', {
+                  params: {
+                    email: dispatchUser.email
+                  }
+                })
                   .then(data => {
                     dispatchUser['id'] = data.data.data[0].userId
                     dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
                   })
-                  .catch(err => {
-                    dispatch({type: 'USER_INFO_FAIL', payload: err});
-                  })
+                  // .catch(err => {
+                  //   console.log(err, 'last err')
+                  //   dispatch({type: 'USER_INFO_FAIL', payload: err});
+                  // })
               });
+           
+            // }).then(response => {console.log('this is fetch response: ', response)})
+            // .catch(err => {console.log('this is error fetching: ', err)})
           }
         });
     
@@ -80,3 +95,9 @@ export const logoutUser = () => {
     dispatch({type: 'USER_LOGOUT_FULFILLED'});
   }
 }
+
+   //fetch(secret.flask_server + 'api/get_all_locations', {
+              // method: 'GET',
+              // headers: {
+              //   'Accept': 'application/json'
+              // }

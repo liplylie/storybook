@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import UserMap from './map.js';
 import Login from '../../auth/Login'
+import secret from '../../../../sensitive.json'
 
 
 const { width, height } =  Dimensions.get('window');
@@ -16,15 +17,12 @@ class Profile extends Component {
 	static navigationOptions = {
     header: null
   }
-	
-	viewRequests(){
-		this.props.navigation.navigate("FriendRequests")
-	}
 
-	getFriends(){
+  	componentDidMount(){
 		// change to component did mount
 		let userId = this.props.profileInfo.Auth.userId
-		axios.get('http://localhost:5000/api/get_all_friends', {
+		console.log(userId, 'user id in profiel')
+		axios.get(`http://localhost:5000/api/get_all_friends`, {
 			params:{
 				userId: userId
 			}
@@ -39,6 +37,12 @@ class Profile extends Component {
 		// put user id in get request params
 		//'/api/get_all_friends'
 	}
+	
+	viewRequests(){
+		this.props.navigation.navigate("FriendRequests")
+	}
+
+
 	render(){
 		if (this.props.profileInfo.Auth.name){
 			let name = this.props.profileInfo.Auth.name;
