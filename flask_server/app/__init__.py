@@ -79,7 +79,7 @@ with open('../db/sample_metadata/sampleLikes_Data.json') as data_file:
     data_likes = json.load(data_file)
 
 for j in data_users:
-  db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count'], j['user_tags_array']))
+  db.session.add(Users(j['name'], j['email'], j['profile_image_url'], j['friends_count']))
 db.session.commit()
 
 for i in data_sf_images:
