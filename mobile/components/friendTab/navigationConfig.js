@@ -20,7 +20,7 @@ const routeConfig = {
 }
 
 const stackNavigatorConfig = {
-  initialRouteName: 'FriendProfile',
+  initialRouteName: 'Friends',
   headerMode: 'screen',
   // transitionConfig: customAnimationFunc
 }

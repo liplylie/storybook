@@ -52,16 +52,16 @@ from sqlalchemy.ext.compiler import compiles
 def _compile_drop_table(element, compiler, **kwargs):
     return compiler.visit_drop_table(element) + " CASCADE"
 
-DropTable('chatrooms')
-DropTable('comments')
-DropTable('friendships')
-DropTable('images')
-DropTable('likes')
-DropTable('messages')
-DropTable('relationships')
-DropTable('users')
+# DropTable('chatrooms')
+# DropTable('comments')
+# DropTable('friendships')
+# DropTable('images')
+# DropTable('likes')
+# DropTable('messages')
+# DropTable('relationships')
+# DropTable('users')
 
-db.drop_all()
+# db.drop_all()
 db.create_all()
 
 # with open('../db/sample_metadata/sampleUserData.json') as data_file:    

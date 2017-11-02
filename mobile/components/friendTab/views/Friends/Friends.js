@@ -7,7 +7,7 @@ import { bindActionCreators} from 'redux'
 
 import axios from 'axios'
 
-import * as friendActions from '../../../../actions/friendActions'
+import * as chatActions from '../../../../actions/chatActions'
 
 const styles = StyleSheet.create({
 	image: {
@@ -47,8 +47,9 @@ class Friends extends Component {
   }
 
   componentDidMount() {
-    // this.props.actions.getFriends(this.screenProps);
-    this.props.actions.getFriends(1);
+    // console.log('screen props to friends', this.props.screenProps); 
+    this.props.actions.getFriends(this.props.screenProps);
+    // this.props.actions.getFriends(1);
   }
   
 
@@ -61,7 +62,7 @@ class Friends extends Component {
             return (
               <Card>
               <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: friend.id, type: "friend"})}>
-                <Image style={styles.image} resizeMode="cover" source={{uri: friend.img}}/>
+                <Image style={styles.image} resizeMode="cover" source={{uri: friend.profile_image_url}}/>
               </TouchableWithoutFeedback >
               <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: friend.id, type: "friend"})}>
                 <Text style={styles.text}>{friend.name}</Text>
@@ -80,11 +81,11 @@ const mapStateToProps = (store) => {
    }
  }
 
- const friendDispatch = (dispatch) => {
+ const chatDispatch = (dispatch) => {
    return {
-     actions: bindActionCreators(friendActions, dispatch),
+     actions: bindActionCreators(chatActions, dispatch),
    }
  }
 
-export default connect(mapStateToProps, friendDispatch)(Friends);
+export default connect(mapStateToProps, chatDispatch)(Friends);
 

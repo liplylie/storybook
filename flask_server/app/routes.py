@@ -80,10 +80,6 @@ def add_user():
   friends_count = request_data["friends_count"]
   parsed_friends_count = int(friends_count)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Fix server
   db.session.add(Users(parsed_name, parsed_email, parsed_profile_image_url, parsed_friends_count)) #replace later with actual values
   db.session.commit()
   resp = make_response('added successfully!', 201)
@@ -222,18 +218,17 @@ def get_imgs_by_loc():
     all_images = []
     for i in get_imgs_by_loc_query:
       print('Jeff says hello')
-      if (i.image_user_id == 104):
-        image_to_post = {
-          "image_user_id": i.image_user_id,
-          "image_id": i.id,
-          "imageUrl": i.image_url,
-          "caption": i.caption,
-        }
-        get_image_user_info = db.session.execute("SELECT * FROM users WHERE id = " + str(i.image_user_id))
-        for j in get_image_user_info:
-          image_to_post["image_user_name"] = j.name
-          image_to_post["image_user_pic"] = j.profile_image_url
-        all_images.append(image_to_post)
+      image_to_post = {
+        "image_user_id": i.image_user_id,
+        "image_id": i.id,
+        "imageUrl": i.image_url,
+        "caption": i.caption,
+      }
+      get_image_user_info = db.session.execute("SELECT * FROM users WHERE id = " + str(i.image_user_id))
+      for j in get_image_user_info:
+        image_to_post["image_user_name"] = j.name
+        image_to_post["image_user_pic"] = j.profile_image_url
+      all_images.append(image_to_post)
 
     result = {}
     result["data"] = all_images
