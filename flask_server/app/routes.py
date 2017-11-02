@@ -521,15 +521,11 @@ def get_user_name():
   names_list  = []
   temp = {}
   for i in search_user_name_query:
-    temp["name"]= str(i.name)
-    temp["email"]= i.email
-    temp["profile_image_url"] = i.profile_image_url
-    temp["friends_count"] = i.friends_count
-    names_list.append(temp)
-  
-  result = {
-    "data": names_list
-  }
+      result["name"]= str(i.name)
+      result["email"]= i.email
+      result["profile_image_url"] = i.profile_image_url
+      result["friends_count"] = i.friends_count
+      result["id"] = i.id
 
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
