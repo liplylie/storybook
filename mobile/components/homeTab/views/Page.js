@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, TouchableOpacity, Button } from 'react-native'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import CommentView from './CommentView'
+import * as commentActions from '../../../actions/commentActions'
 
 const { width, height } =  Dimensions.get('window')
 let visibleHeight = 0
@@ -15,7 +17,8 @@ class Page extends Component{
 		console.log(props, 'page props')
 		this.state = {
 			visibleHeight: 0,
-			visibleWidth:0
+			visibleWidth:0,
+			commentText: ''
 		}
 		
 	}
@@ -32,9 +35,6 @@ class Page extends Component{
 		})
 	}
 
-	handleComment(comment){
-		console.log(comment, 'comment')
-	}
 	render(){
 		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
 		return (
@@ -64,13 +64,22 @@ class Page extends Component{
 						</TouchableOpacity>
 						<TextInput
 							style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
-							onChangeText={(comment) => this.handleComment(comment)}
+							onChangeText={(text) => {
+								this.setState({
+									commentText: text
+								})
+							}}
 							placeholder='Add a Comment ...'
 						/>
 						<Button
 							title="Enter"
 							onPress={() => {
-								
+								const obj = {
+									text: this.state.commentText,
+									comment_user_id: this.props.userId,
+									comment_image_id: 1
+								}
+								this.props.actions.postComments(obj);
 							}}
 						/>
 					</View>
@@ -141,8 +150,15 @@ const styles = StyleSheet.create({
 })
 const mapStateToProps = (store) => {
   return {
-    pageInfo: store
+		pageInfo: store,
+		userId: store.Auth.userId
   }
 }
 
-export default connect(mapStateToProps)(Page)
+const pageDispatch = (dispatch) => {
+	return {
+		actions: bindActionCreators(commentActions, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, pageDispatch)(Page)
