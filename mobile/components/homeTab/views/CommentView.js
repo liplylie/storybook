@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as commentActions from '../../../actions/commentActions';
-import Comment from './Comment.js';
+import CommentV from './Comment.js';
 
 class CommentView extends Component {
   constructor(props) {
@@ -22,36 +22,15 @@ class CommentView extends Component {
   render() {
     const { comments } = this.props;
     const { showAll } = this.props;
+    console.log('Theses are the comments: ', comments);
 
-    if (comments.length > 3 && !showAll) {
-      let tempComments = [];
-      for(let i = 0; i < 3; i++){
-        tempComments.push(comments[i])
-      }
-      return (
-        <View>
-        {tempComments.map((comment, i) =>{
-          return <Comment key={i} comment={comment} />
-        })}
-          <Button
-            title="show rest of comments"
-            onPress={() => {
-              this.setState({
-                showAll: true
-              })
-            }}
-          />
-        </View>
-      )
-    } else if (comments.length < 3 || showAll) {
-      return (
-        <View>
-          {comments.map(comment => (
-            <Comment comment={comment} />
-          ))}
-        </View>
-      )
-    }
+    return (
+      <View>
+        {comments.map(comment => (
+          <CommentV comment={comment} />
+        ))}
+      </View>
+    )
   }
 }
 

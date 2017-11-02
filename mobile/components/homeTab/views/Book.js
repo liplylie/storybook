@@ -25,9 +25,9 @@ const Book = (props) => {
   }
   return (
   	<View>
-  		<Text style={styles.text}> User Name </Text>
+  		<Text style={styles.text}> {props.image.image_user_name} </Text>
       <TouchableHighlight onPress={viewPage}>
-  			<Image source={{uri:props.image}} style={styles.image}/>
+  			<Image source={{uri:props.image.imageUrl}} style={styles.image}/>
   		</TouchableHighlight>
 		</View> 
   )

@@ -3,10 +3,10 @@ import axios from 'axios';
 export const getComments = (imageId) => {
   return function(dispatch) {
     dispatch({type: "GETTING_COMMENT"})
-    axios.get('http://localhost:5000/get_all_comments_by_image' + imageId)
+    axios.get('http://localhost:5000/api/get_all_comments_by_image?imageId=' + imageId)
       .then(data => {
         console.log('I am data: ', data.data);
-        // dispatch({type: "GOT_COMMENT", payload: data.data})
+        dispatch({type: "GOT_COMMENT", payload: data.data.data})
       })
       .catch(err => {
         console.log('Error getting comments from server: ', err);
@@ -16,9 +16,13 @@ export const getComments = (imageId) => {
 }
 
 export const postComments = (commentObj) => {
-  dispatch({type: "POSTING_COMMENT"});
   return function(dispatch) {
-    axios.post('http://localhost:5000/add_comment', commentObj)
+    dispatch({type: "POSTING_COMMENT"});
+    axios.post('http://localhost:5000/api/add_comment', commentObj, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then(data => {
         console.log('Successfully posted comment and got back: ', data);
         dispatch({type: "POSTED_COMMENT"});

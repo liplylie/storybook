@@ -12,6 +12,10 @@ const { width, height } =  Dimensions.get('window');
 class Profile extends Component {
 	constructor(props){
 		super(props)
+		this.state = {
+			friends:[]
+		}
+		console.log(props, 'profile props')
 		this.viewRequests = this.viewRequests.bind(this)
 	}
 	static navigationOptions = {
@@ -22,13 +26,19 @@ class Profile extends Component {
 		// change to component did mount
 		let userId = this.props.profileInfo.Auth.userId
 		console.log(userId, 'user id in profiel')
+		let that = this
 		axios.get(`http://localhost:5000/api/get_all_friends`, {
 			params:{
 				userId: userId
 			}
 		})
-		.then(response =>{
-			console.log(response, 'response from getFriends')
+		.then(({data}) =>{
+			console.log(data, 'response from getFriends')
+			that.setState({
+				friends:[...data.data]
+			})
+			console.log(that.state.friends, 'that friends')
+
 		})
 		.catch(err =>{
 			console.log(err, 'response from getFriends')
@@ -73,7 +83,7 @@ class Profile extends Component {
 					    			</View>
 					    			<View>
 						    			<Text> Friends </Text>
-					    				<Text style={{textAlign: 'center'}}> 0 </Text>
+					    				<Text style={{textAlign: 'center'}}> {this.state.friends.length} </Text>
 					    			</View>
 				    			</View>
 				    		</View>
