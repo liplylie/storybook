@@ -6,14 +6,51 @@ import {
   Text,
   View,
   Image,
-  ScrollView
+  ScrollView, 
+  Header
 } from 'react-native';
 import Collection from './Collection';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
 
-
+import ImageHeader from './ImageHeader'
 //import Login from '../../auth/Login.js'
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 15,
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  title:{
+    flexDirection: 'column',
+    margin: 10
+  },
+  image: {
+    width: 250,
+    height: 50,
+    margin: 2,
+    marginTop: 10,
+  },
+  header: { 
+    height: 100,
+    backgroundColor: 'white'
+  }, 
+  collection: {
+    backgroundColor: 'skyblue',
+    flex:1,
+  },
+  spinnerContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
 
 class Home extends Component {
   constructor(props) {
@@ -24,7 +61,11 @@ class Home extends Component {
     }
   }
   static navigationOptions = {
-    header: null
+    // headerTitleStyle: { color: '#fff' },
+    // header: (props) => <ImageHeader {...props} />
+    headerTitle: <Image resizeMethod='resize'
+    resizeMode='contain' style={styles.image} source={require('../../../logo.jpg')}/>,
+    headerStyle: styles.header, 
   }
 
   searchUsers(input) {
@@ -86,9 +127,11 @@ class Home extends Component {
       let location = this.props.profileInfo.userLocation;
       let navigation = this.props.navigation
       return (
-          <View style={styles.container}>
-             <SearchBar
+          <View>
+            <SearchBar
                 placeholder="Search"
+                lightTheme
+                round
                 onChangeText={(text) => {
                   if (text === '') {
                     this.setState({results: []});
@@ -100,19 +143,13 @@ class Home extends Component {
                 }}
                 clearIcon={	{ color: '#86939e', name: 'clear' } }
              //add icon to clear searches
-            /> 
-            <View style={styles.title}> 
-              <Image 
-                style={styles.image}
-                resizeMethod='resize'
-                resizeMode='contain'
-                source={require('../../../logo.jpg')} 
-              />
-            </View>
+            />
+          <View style={styles.container}>
             <View style={styles.collection}>
               <Collection location={location} navigation={navigation}/>
-            </View>
+           </View>
         </View>
+      </View>
       );
     } else {
       return (
@@ -123,37 +160,6 @@ class Home extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 15,
-    alignItems: 'center',
-    backgroundColor: 'white'
-  },
-  title:{
-    flexDirection: 'column',
-    margin: 10
-  },
-  image: {
-    width: 250,
-    height: 50,
-    margin: 2
-  },
-  collection: {
-    backgroundColor: 'skyblue',
-    flex:1,
-  },
-  spinnerContainer:{
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  spinner:{
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
 const mapStateToProps = (store) =>{
   console.log(store, 'home store')
