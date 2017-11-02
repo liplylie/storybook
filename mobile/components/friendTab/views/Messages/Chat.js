@@ -126,8 +126,38 @@ class Chat extends Component {
     this.setState({
       messages: [
         {
+          _id: 4,
+          text: 'Please',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 3,
+          text: 'Please talk to me',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
           _id: 1,
           text: 'Hello',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 2,
+          text: 'Hi',
           createdAt: new Date(),
           user: {
             _id: 2,
