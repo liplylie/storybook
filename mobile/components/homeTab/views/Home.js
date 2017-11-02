@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, List, ListItem } from 'react-native-elements'
 import {
   Platform,
   StyleSheet,
@@ -7,11 +7,13 @@ import {
   View,
   Image,
   ScrollView, 
-  Header
+  Header,
 } from 'react-native';
 import Collection from './Collection';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
+
+import axios from 'axios'
 
 //import Login from '../../auth/Login.js'
 
@@ -67,16 +69,26 @@ class Home extends Component {
   }
 
   searchUsers(input) {
-    // this.state.results.concat(this.props.searchResults);
+    axios.get('http://localhost:5000/' + 'api/get_user_name?name=' + input)
+    .then(({ data }) => {
+      this.setState({results: [...this.state.results, data]}, () => {
+        console.log('this is the state ', this.state.results)
+      })
+    })
+    .catch(err => {
+      console.log('error searching users', err);
+    })
   }
 
   render() {
     const {navigate} = this.props.navigation;
-    if (this.state.results.length) {
+    if (this.state.results.length > 0) {
       return (
         <View>
           <SearchBar
             placeholder="Search"
+            lightTheme
+            round
             onChangeText={(text) => {
               if (text === '') {
                 this.setState({results: []});
@@ -84,40 +96,24 @@ class Home extends Component {
               this.setState({input: text});
             }}
             onSubmitEditing={() => {
-              this.searchFriends(this.state.input);
+              this.searchUsers(this.state.input);
             }}
-            clearIcon={	{ color: '#86939e', name: 'clear' } }
+            clearIcon={{ color: '#86939e', name: 'clear' }}
           /> 
           <List>
           {this.state.results.map((result) => {
-            for (let i = 0; this.props.friends.length; i++) {
-              if (result.id === friends[i].id) {
                 return (
                   <ListItem 
                     roundAvatar
-                    avatar={{uri: result.img}}
+                    avatar={{uri: result.profile_image_url}}
                     title={result.name}
                     onPress={() => {
-                      navigate('FriendProfile', {userId: result.id, name: result.name, type: 'friend'});
+                      navigate('FriendProfile', {friendId: result.id, name: result.name, type: 'result'});
                     }}>
                   </ListItem>
                 )
-              } else {
-                return (
-                  <ListItem 
-                    roundAvatar
-                    avatar={{uri: result.img}}
-                    title={result.name}
-                    onPress={() => {
-                      navigate('FriendProfile', {userId: result.id, name: result.name, type: 'result'});
-                    }}>
-                  </ListItem>
-                )
-              }
-            }})
           })}
           </List>
-          }}
         </View> 
       )
     } else if (this.props.profileInfo.userLocation) {
@@ -137,7 +133,7 @@ class Home extends Component {
                   this.setState({input: text});
                 }}
                 onSubmitEditing={() => {
-                  this.searchFriends(this.state.input);
+                  this.searchUsers(this.state.input);
                 }}
                 clearIcon={	{ color: '#86939e', name: 'clear' } }
             />

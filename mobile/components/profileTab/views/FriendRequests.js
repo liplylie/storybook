@@ -33,8 +33,8 @@ class FriendRequests extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requests: [{name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}]
-      // requests: []
+      // requests: [{name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}]
+      requests: []
     }
   }
 
@@ -52,7 +52,7 @@ class FriendRequests extends Component {
   acceptRequest(friendId) {
     axios.post(key.flask_server + 'api/accept_friend_request', {
       // userId: this.screenProps,
-      userId: 1,
+      userId: this.props.screenProps,
       friendId: friendId
     })
     .then(({ data }) => {
@@ -65,8 +65,15 @@ class FriendRequests extends Component {
     )
   }
 
-  removeRequest(request) {
-    this.setState({requests: this.state.requests.splice(indexOf(request), 1)});
+  deleteRequest(friendId) {
+    axios.post(key.flask_server + 'api/remove_friend', {
+      userId: this.props.screenProps,
+      friendId: friendId
+    })
+  }
+
+  removeRequest(request, key) {
+    this.setState({requests: this.state.requests.splice(key, 1)});
   }
 
   // deleteRequest(friendId) {
@@ -82,22 +89,23 @@ class FriendRequests extends Component {
   render() {
     return ( 
       <List>
-        {this.state.requests.map((request) => {
+        {this.state.requests.map((request, i) => {
           console.log('inside map: ', request);
           return (
             <ListItem
               roundAvatar
+              key={i}
               avatar={{uri:request.img}}
               title={request.name}
-              rightIcon={{name:'delete'}}
-                onPressRightIcon={() => {
+              leftIcon={{name:'delete'}}
+                onPressLeftIcon={() => {
                 this.deleteRequest(request.id);
-                this.removeRequest(request);
+                this.removeRequest(request, this.key);
               }}
               rightIcon={{name:'check', style: styles.rightIcon}}
               onPressRightIcon={() => {
                 this.acceptRequest(request.id);
-                this.removeRequest(request);
+                this.removeRequest(request, this.key);
               }}
             > 
             </ListItem>
