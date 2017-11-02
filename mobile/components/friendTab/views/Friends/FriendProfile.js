@@ -2,6 +2,7 @@
 //block user
 //unfriend
 import React, { Component } from 'react'
+import { Card, Button } from 'react-native-elements'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -11,6 +12,9 @@ import key from '../../../../../sensitive.json'
 class FriendProfile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      added: false
+    }
   }
   
   componentDidMount() {
@@ -32,6 +36,13 @@ class FriendProfile extends Component {
     })
   }
   
+  addFriend(friendId) {
+    axios.post('', {
+      userId: friendId,
+      friendId: this.screenProps
+    })
+  }
+
   deleteFriend(friendId) {
     axios.post(key.flask_server + 'api/remove_friend', {
       userId: this.screenProps,
@@ -47,19 +58,32 @@ class FriendProfile extends Component {
   }
 
   render() {
-    if (this.props.navigation.state.params.type === "result") {
+    // if (this.props.navigation.state.params.type === "result") {
       return (
-        <View>
-          <Text>This profile is private</Text>
-        </View>
+        <Card
+          title='Daniel'
+          //title=this.props.state.params.
+          image={{uri: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}}>
+          <Text style={{marginBottom: 10}}>
+            Bio?
+          </Text>
+          <Button
+            backgroundColor='#03A9F4'
+            //fontFamily='Lato'
+            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+            title={this.state.added ? 'Request sent' : 'Add friend'} 
+            onPress={() => {this.setState({added: !this.state.added})}}
+            /* onPress={this.addFriend(this.props.navigation.state.params.userId)} */
+            icon={{name: 'plus', type: 'entypo'}} />
+        </Card>
       )
-    } else {
-      return (
-        <View>
-          <Text>Friend's profile</Text> 
-        </View>
-      )
-    }
+    // } else {
+    //   return (
+    //     <View>
+    //       <Text>Friend's profile</Text> 
+    //     </View>
+    //   )
+    // }
   }
 }
 
