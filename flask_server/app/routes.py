@@ -80,6 +80,10 @@ def add_user():
   friends_count = request_data["friends_count"]
   parsed_friends_count = int(friends_count)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Fix server
   db.session.add(Users(parsed_name, parsed_email, parsed_profile_image_url, parsed_friends_count)) #replace later with actual values
   db.session.commit()
   resp = make_response('added successfully!', 201)
