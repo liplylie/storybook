@@ -55,12 +55,10 @@ export const getFBToken = () => {
               }
             })
               .then(data => {
-                console.log(data, 'add user info data')
                 dispatchUser['id'] = data.data.id; 
                 dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
               })
               .catch(err => {
-                console.log(err, 'err 2')
                 axios.get('http://localhost:5000/' + 'api/get_user_info', {
                   params: {
                     email: dispatchUser.email
@@ -70,10 +68,10 @@ export const getFBToken = () => {
                     dispatchUser['id'] = data.data.data[0].userId
                     dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
                   })
-                  // .catch(err => {
-                  //   console.log(err, 'last err')
-                  //   dispatch({type: 'USER_INFO_FAIL', payload: err});
-                  // })
+                  .catch(err => {
+                    console.log(err, 'last err')
+                    dispatch({type: 'USER_INFO_FAIL', payload: err});
+                  })
               });
            
             // }).then(response => {console.log('this is fetch response: ', response)})

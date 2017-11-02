@@ -39,3 +39,9 @@ export const getFriends = (userId) => {
   }
 }
 
+
+export const clearSearch = () => {
+  return function(dispatch) {
+    dispatch({type: 'CLEAR_SEARCH', payload: []});
+  }
+}
