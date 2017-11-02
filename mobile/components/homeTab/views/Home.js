@@ -13,13 +13,11 @@ import Collection from './Collection';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
 
-import ImageHeader from './ImageHeader'
 //import Login from '../../auth/Login.js'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15,
     alignItems: 'center',
     backgroundColor: 'white'
   },
@@ -28,13 +26,13 @@ const styles = StyleSheet.create({
     margin: 10
   },
   image: {
-    width: 250,
-    height: 50,
-    margin: 2,
-    marginTop: 10,
+    width: 200,
+    height: 30,
+    // margin: 2,
+    // marginTop: 10,
   },
   header: { 
-    height: 100,
+    height: 70,
     backgroundColor: 'white'
   }, 
   collection: {
@@ -69,7 +67,7 @@ class Home extends Component {
   }
 
   searchUsers(input) {
-    //axios.get
+    // this.state.results.concat(this.props.searchResults);
   }
 
   render() {
@@ -100,7 +98,7 @@ class Home extends Component {
                     avatar={{uri: result.img}}
                     title={result.name}
                     onPress={() => {
-                      navigate('FriendProfile', {userId: result.id, type: 'friend'});
+                      navigate('FriendProfile', {userId: result.id, name: result.name, type: 'friend'});
                     }}>
                   </ListItem>
                 )
@@ -111,7 +109,7 @@ class Home extends Component {
                     avatar={{uri: result.img}}
                     title={result.name}
                     onPress={() => {
-                      navigate('FriendProfile', {userId: result.id, type: 'result'});
+                      navigate('FriendProfile', {userId: result.id, name: result.name, type: 'result'});
                     }}>
                   </ListItem>
                 )
@@ -127,7 +125,7 @@ class Home extends Component {
       let location = this.props.profileInfo.userLocation;
       let navigation = this.props.navigation
       return (
-          <View>
+          <View style={{flex:1}}>
             <SearchBar
                 placeholder="Search"
                 lightTheme
@@ -142,14 +140,13 @@ class Home extends Component {
                   this.searchFriends(this.state.input);
                 }}
                 clearIcon={	{ color: '#86939e', name: 'clear' } }
-             //add icon to clear searches
             />
           <View style={styles.container}>
             <View style={styles.collection}>
               <Collection location={location} navigation={navigation}/>
            </View>
         </View>
-      </View>
+       </View>
       );
     } else {
       return (
