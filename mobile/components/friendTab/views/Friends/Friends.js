@@ -46,14 +46,15 @@ class Friends extends Component {
     }
   }
 
-  componentDidMount() {
-    // console.log('screen props to friends', this.props.screenProps); 
-    this.props.actions.getFriends(this.props.screenProps);
+  componentWillMount() {
+    console.log('screen props to friends', this.props); 
+    
     // this.props.actions.getFriends(1);
   }
   
 
   render() {
+    this.props.actions.getFriends(this.props.screenProps);
     const {navigate} = this.props.navigation; 
     console.log('props passed to friends', this.props);
       return (
@@ -61,10 +62,10 @@ class Friends extends Component {
           {this.props.friends.map(friend => {
             return (
               <Card>
-              <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: friend.id, type: "friend"})}>
+              <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {friendId: friend.id, type: "friend", name: friend.name})}>
                 <Image style={styles.image} resizeMode="cover" source={{uri: friend.profile_image_url}}/>
               </TouchableWithoutFeedback >
-              <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: friend.id, type: "friend"})}>
+              <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {friendId: friend.id, type: "friend", name: friend.name})}>
                 <Text style={styles.text}>{friend.name}</Text>
               </TouchableWithoutFeedback> 
               </Card>
