@@ -1,16 +1,20 @@
 const initialState = {
   currentRoom: '', 
   rooms: [
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Hello"}, 
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "How are you"}, 
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Please talk to me"}, 
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Please"}
+    {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Daniel: Please"}, 
+    // {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "How are you"}, 
+    // {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Please talk to me"}, 
+    // {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Please"}
   ],
   friends: [
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
-    {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}
+    {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
+    {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
+    {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
+    {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}
+  ],
+  searchResults: [
+    {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 
+    {name: "Daniel Lien", img: "https://img1.etsystatic.com/181/0/12072196/il_570xN.1282613201_91qn.jpg"}, 
   ],
   err: ''
 }
