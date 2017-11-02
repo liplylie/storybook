@@ -556,17 +556,18 @@ def get_all_photos_loc_by_user():
 
 
 #search friends
-@app.route('/api/search', methods=['GET'])
-def search():
+@app.route('/api/get_user_name', methods=['GET'])
+def get_user_name():
   print('searching for user...')
   request_data = dict(request.args)
-  search_user_name = request_data["userName"][0]
+  search_user_name = request_data["name"][0]
+  print(search_user_name)
   parsed_search_user_name = str(search_user_name)
-  
-  search_user_name_query = db.session.execute("SELECT * FROM users WHERE name = " + parsed_search_user_name)
+  print("SELECT * FROM users WHERE name = " + parsed_search_user_name)
+  search_user_name_query = db.session.execute("SELECT * FROM users WHERE name = '" + parsed_search_user_name + "'")
 
   result = {}
-  for i in last_message_query:
+  for i in search_user_name_query:
       result["name"]= str(i.name)
       result["email"]= i.email
       result["profile_image_url"] = i.profile_image_url
@@ -574,3 +575,6 @@ def search():
 
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
+
+###############
+
