@@ -1,11 +1,12 @@
-// import React, { Component } from 'react'
-// import axios from 'axios' 
-// import { View, Button, Text } from 'react-native'
-// import { Icon } from 'react-native-elements'
-// import { GiftedChat } from 'react-native-gifted-chat'
-// import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { View, Button, Text, StyleSheet } from 'react-native'
+import { Icon } from 'react-native-elements'
+import { connect } from 'react-redux'
 
-// import io from 'socket.io-client'
+import { NavigationActions } from 'react-navigation'
+
+import axios from 'axios' 
+import io from 'socket.io-client'
 
 // import MessageInput from './MessageInput'
 // import ChatBubble from './ChatBubble'
@@ -73,14 +74,52 @@
 // export default connect(chatStore)(Chat);
 
 import { GiftedChat } from 'react-native-gifted-chat';
-import React, { Component } from 'react'
+
+const styles = StyleSheet.create({
+	headerRight: {
+    paddingRight: 5, 
+	}
+})
+
+const backAction = NavigationActions.back({
+  key: 'id-1509577519747-12'
+}) 
 
 class Chat extends Component {
+  static navigationOptions = ({ navigation }) => ({
+  title: `Chat with ${navigation.state.params.friend}`,
+  headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.goBack()} />  
+  });
+  
+
   constructor(props) {
     super(props); 
     this.state = {
       messages: [],
     };
+  }
+  
+  componentDidMount() {
+    // this.socket.emit('subscribe', this.props.room.toString());
+    // this.socket.emit('subscribe', '1');
+    // this.socket.on(this.props.room.toString(), message => {
+      //   this.setState({messages: this.state.messages.concat(message)})
+      // }); 
+    this.socket = io('http://localhost:3000') 
+      // roomId is just whatever you pass down to use as the room
+      // query: `roomId=${roomId}`
+
+    this.socket.on('message', (message) => {
+      this.setState({messages: this.state.messages.concat(message)})
+    })
+    // this.socket.on('1', message => {
+    //   this.setState({messages: this.state.messages.concat(message)})
+    // }); 
+    
+  }
+
+  componentWillUnmount() {
+    this.socket.disconnect;
   }
 
   componentWillMount() {
@@ -100,19 +139,25 @@ class Chat extends Component {
     });
   }
 
-  onSend(messages = []) {
+  onSend(message) {
+      // Any additional custom parameters are passed through
+    this.socket.emit('message', message);
     this.setState((previousState) => ({
-      messages: GiftedChat.append(previousState.messages, messages),
+      messages: GiftedChat.append(previousState.messages, message),
     }));
   }
 
   render() {
+    console.log('this is the chat key', this.props.navigation.state.key);
     return (
       <GiftedChat
         messages={this.state.messages}
-        onSend={(messages) => this.onSend(messages)}
+        onSend={(input) => this.onSend(input, '1')}
         user={{
           _id: 1,
+          name: "angie",
+          roomId: '1'
+          //id:this.screenProps
         }}
       />
     );
@@ -128,4 +173,4 @@ const chatStore = (store) => {
 }
 
 
-export default Chat;
+export default connect(chatStore)(Chat);
