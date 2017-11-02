@@ -3,9 +3,9 @@ import axios from 'axios';
 export const getComments = (imageId) => {
   return function(dispatch) {
     dispatch({type: "GETTING_COMMENT"})
-    axios.get('djfa' + imageId)
+    axios.get('http://localhost:5000/get_all_comments_by_image' + imageId)
       .then(data => {
-        console.log('I am data: ', data);
+        console.log('I am data: ', data.data);
         // dispatch({type: "GOT_COMMENT", payload: data.data})
       })
       .catch(err => {
@@ -18,7 +18,7 @@ export const getComments = (imageId) => {
 export const postComments = (commentObj) => {
   dispatch({type: "POSTING_COMMENT"});
   return function(dispatch) {
-    axios.post('asdlkfasdl', commentObj)
+    axios.post('http://localhost:5000/add_comment', commentObj)
       .then(data => {
         console.log('Successfully posted comment and got back: ', data);
         dispatch({type: "POSTED_COMMENT"});
