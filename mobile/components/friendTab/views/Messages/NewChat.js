@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, Button, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { SearchBar, List, ListItem, Icon } from 'react-native-elements'
+
 import { connect } from 'react-redux'
 
 import axios from 'axios'
 
-import MessageEntry from './MessageEntry'
-import { SearchBar, List, ListItem } from 'react-native-elements'
-
 import * as chatActions from '../../../../actions/chatActions'
 
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 20
+  }, 
+  component:{ 
+    backgroundColor: 'white'
+  }
+})
+
 class NewChat extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `New Message`, 
+    headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.goBack()}/>  
+  });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -54,12 +69,15 @@ class NewChat extends Component {
   }
 
   render() {
+    console.log('this is the newchat key', this.props.navigation.state.key)
     const {navigate} = this.props.navigation;
     if (this.state.results.length) {
       return (
         <View>
           <SearchBar 
-            placeholder="Search friends"
+            lightTheme
+            round
+            placeholder="Search"
             onChangeText={(text) => {
               if (text === '') {
                 this.setState({results: []})
@@ -80,7 +98,7 @@ class NewChat extends Component {
                 this.createRoom(result.id);
                 // this.props.actions.enterRoom(this.state.chatroom);
                 this.props.enterRoom(1);
-                navigate('Chat');
+                navigate('Chat', { friend: result.name});
               }}>
               </ListItem>
             )
@@ -92,11 +110,13 @@ class NewChat extends Component {
       return (
         <View>
         <SearchBar 
+          lightTheme
+          round
           placeholder="Search friends"
           onChangeText={(text) => this.setState({input: text})}
           onSubmitEditing={() => this.searchFriends()}
         />
-        <Text>No results</Text> 
+        <Text style={styles.text}>No results</Text> 
       </View> 
       )
     }

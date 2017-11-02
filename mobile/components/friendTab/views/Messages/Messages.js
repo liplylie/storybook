@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
+import { SearchBar, Icon, List, ListItem } from 'react-native-elements'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import MessageEntry from './MessageEntry'
-import { SearchBar, Icon } from 'react-native-elements'
-
 import * as chatActions from '../../../../actions/chatActions'
+
+const styles = StyleSheet.create({
+	headerRight: {
+    paddingRight: 10, 
+  }, 
+  search: {
+    marginTop:10
+  },
+  component: {
+    backgroundColor: 'white'
+  }
+})
 
 class Messages extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `Messages`,
-    headerRight: <Icon name='new-message' type='entypo' onPress={() => navigation.navigate('NewChat')} />  
+    headerRight: <Icon name='new-message' type='entypo' onPress={() => navigation.navigate('NewChat')} style={styles.headerRight}/>, 
+    headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.goBack()} />  
   });
 
 
@@ -19,7 +31,7 @@ class Messages extends Component {
     super(props);
     this.state = {
       results: [],
-      input: ''
+      input: '',
     }
   } 
 
@@ -32,7 +44,7 @@ class Messages extends Component {
   searchMessages() {
     this.setState({
       results: this.props.rooms.filter(room => {
-        if (room.sender.name.includes(this.state.input) || room.recipient.name.includes(this.state.input)) {
+        if (room.name.includes(this.state.input)) {
           return room; 
         }
       })
@@ -44,10 +56,48 @@ class Messages extends Component {
     let friend = '';
     let img = '';
     const {navigate} = this.props.navigation;
-    //if results.length use this.state.results
-    return (
+    console.log('this is the messages key', this.props.navigation.state.key);
+    if (this.state.results.length) {
+      return ( 
+        <View> 
+          <SearchBar 
+          lightTheme
+          round
+          placeholder="Search messages"
+          onChangeText={(text) => {
+            if (text === '') {
+              this.setState({results: []})
+            }
+            this.setState({input: text});
+          }}
+          onSubmitEditing={() => this.searchMessages()}
+          clearIcon={	{ color: '#86939e', name: 'clear' } }
+        /> 
+          <List>
+          {this.state.results.map((result) => {
+            return (
+              <ListItem 
+                roundAvatar
+                avatar={{uri: result.img}}
+                title={result.name}
+                subtitle={result.message}
+                onPress={() => {
+                // this.props.actions.enterRoom(this.state.chatroom);
+                this.props.enterRoom(1);
+                navigate('Chat', { friend: room.name});
+              }}>
+              </ListItem>
+            )
+          })}
+          </List> 
+        </View>
+       )
+    } else {
+      return (
       <View>
         <SearchBar 
+          lightTheme
+          round
           placeholder="Search messages"
           onChangeText={(text) => {
             if (text === '') {
@@ -59,7 +109,7 @@ class Messages extends Component {
           clearIcon={	{ color: '#86939e', name: 'clear' } }
         /> 
         {/* <Button title="Go back" onPress={() => navigate('Friends')} />   */}
-        {this.props.rooms.map((room) => {
+        {/* {this.props.rooms.map((room) => {
           if (room.chatroom_sender !== this.screenProps) {
             friend = room.sender.name; 
             // img = room.sender.img;
@@ -70,27 +120,34 @@ class Messages extends Component {
           //get most current message
           axios.get('' + room.id)
           .then(({ data }) => { 
-            return (
-              this.state.rooms.map(room => {
+            return ( */}
+              <List>
+              {this.props.rooms.map((room) => {
                 return (
-                  <MessageEntry 
-                    navigation={this.props.navigation} 
-                    roomId={room.id} 
-                    message={data} 
-                    friend={friend} 
-                    img={img}
-                  /> 
+                  <ListItem 
+                    roundAvatar
+                    avatar={{uri: room.img}}
+                    title={room.name}
+                    subtitle={room.message}
+                    onPress={() => {
+                    // this.props.actions.enterRoom(this.state.chatroom);
+                    this.props.actions.enterRoom(1);
+                    navigate('Chat', { friend: room.name});
+                  }}>
+                  </ListItem>
                 )
-              })
-            )
+              })}
+              </List> 
+            {/* )
           })
           .catch(err => {
             console.log('error getting previews', err);
           })
-        })}
+        })} */}
       </View> 
     )
   }
+}
 }
 
 const mapStateToProps = (store) => {

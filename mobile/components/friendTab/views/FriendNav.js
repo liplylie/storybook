@@ -17,10 +17,10 @@ class FriendNav extends Component {
   }
 
   render() {
-    const { friendState, dispatch } = this.props
+    const { friendState, dispatch, userId } = this.props
     return (
       <FriendNavigator
-        screenProps={this.props.userId}
+        screenProps={userId}
         navigation={
           addNavigationHelpers({
             dispatch: dispatch,

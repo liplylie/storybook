@@ -7,7 +7,7 @@ import * as chatActions from '../../../../actions/chatActions'
 const MessageEntry = (props) => {
   const {navigate} = this.props.navigate;
   return (
-    <View> 
+    <View style={{backgroundColor: 'white'}}> 
       <TouchableWithoutFeedback onPress={() => {
         this.props.actions.enterRoom(this.props.roomId);
         navigate('Chat');

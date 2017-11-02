@@ -4,14 +4,14 @@ import UserMap from './views/map.js'
 import PicturesFromMarker from './views/picturesFromMarker'
 import FriendRequests from './views/FriendRequests'
 //import NewChat from './views/Messages/NewChat'
-import ARView from '../homeTab/views/AR'
+// import ARView from '../homeTab/views/AR'
 //import FriendProfile from './views/Friends/FriendProfile'
 
 const routeConfig = {
   Profile: { screen: Profile},
   UserMap: { screen: UserMap },
   PicturesFromMarker: { screen: PicturesFromMarker },
-  ARView: {screen: ARView},
+  // ARView: {screen: ARView},
   //NewChat: { screen: NewChat },
   FriendRequests: { screen: FriendRequests }
 }

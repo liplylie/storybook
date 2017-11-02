@@ -7,27 +7,33 @@ import { bindActionCreators} from 'redux'
 
 import axios from 'axios'
 
-import * as friendActions from '../../../../actions/friendActions'
+import * as chatActions from '../../../../actions/chatActions'
 
 const styles = StyleSheet.create({
 	image: {
-			marginTop: .5,
-			marginLeft: 5, 
-			marginRight: 5, 
-			marginBottom: 5,
-			width: 110, 
-			height: 110,
-			borderRadius: 10
-		},
+    marginTop: .5,
+    marginLeft: 5, 
+    marginRight: 5, 
+    marginBottom: 5,
+    width: 110, 
+    height: 110,
+    borderRadius: 10
+	},
 	text: {
 		textAlign: 'center'
-	}
+  },
+  header: {
+    paddingRight: 10
+  },
+  component: {
+    backgroundColor: 'white'
+  }
 })
 
 class Friends extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `Friends`,
-    headerRight: <Icon name='message' type='entypo' style={{marginRight: 10}} onPress={() => navigation.navigate('Messages')} />  
+    headerRight: <Icon name='message' type='entypo' onPress={() => navigation.navigate('Messages')} style={styles.header} />  
   });
 
   constructor(props) {
@@ -41,7 +47,8 @@ class Friends extends Component {
   }
 
   componentDidMount() {
-    // this.props.actions.getFriends(this.screenProps);
+    // console.log('screen props to friends', this.props.screenProps); 
+    this.props.actions.getFriends(this.props.screenProps);
     // this.props.actions.getFriends(1);
   }
   
@@ -50,12 +57,12 @@ class Friends extends Component {
     const {navigate} = this.props.navigation; 
     console.log('props passed to friends', this.props);
       return (
-        <ScrollView>
+        <ScrollView style={styles.component}>
           {this.props.friends.map(friend => {
             return (
               <Card>
               <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: friend.id, type: "friend"})}>
-                <Image style={styles.image} resizeMode="cover" source={{uri: friend.img}}/>
+                <Image style={styles.image} resizeMode="cover" source={{uri: friend.profile_image_url}}/>
               </TouchableWithoutFeedback >
               <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {userId: friend.id, type: "friend"})}>
                 <Text style={styles.text}>{friend.name}</Text>
@@ -74,10 +81,11 @@ const mapStateToProps = (store) => {
    }
  }
 
- const friendDispatch = (dispatch) => {
+ const chatDispatch = (dispatch) => {
    return {
-     actions: bindActionCreators(friendActions, dispatch),
+     actions: bindActionCreators(chatActions, dispatch),
    }
  }
 
-export default connect(mapStateToProps, friendDispatch)(Friends);
+export default connect(mapStateToProps, chatDispatch)(Friends);
+
