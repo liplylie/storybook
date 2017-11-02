@@ -92,3 +92,10 @@ AWS_EC2_STORYBOOK.pem
 flask_server/.elasticbeanstalk/*
 flask_server/!.elasticbeanstalk/*.cfg.yml
 flask_server/!.elasticbeanstalk/*.global.yml
+flask_server/venv
+flask_server/*.pyc
+flask_server/staticfiles
+flask_server/.env
+flask_server/.gitignore
+
+.DS_Store
