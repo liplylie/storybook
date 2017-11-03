@@ -56,7 +56,9 @@ class Chat extends Component {
       // query: `roomId=${roomId}`
 
     this.socket.on('message', (message) => {
-      this.setState({messages: this.state.messages.concat(message)})
+        this.setState((previousState) => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }));
     })
 
     // this.socket.on('1', message => {
@@ -120,9 +122,6 @@ class Chat extends Component {
   onSend(message) {
       // Any additional custom parameters are passed through
     this.socket.emit('message', message);
-    this.setState((previousState) => ({
-      messages: GiftedChat.append(previousState.messages, message),
-    }));
   }
 
   render() {
