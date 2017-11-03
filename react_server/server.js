@@ -38,7 +38,7 @@ io.on('connection', socket => {
     // console.log('this is the message room', message.roomId);
     console.log('this is the message room', '1');
     // socket.broadcast.emit(message.roomId, message)
-    socket.to('1').emit('message', message);
+    socket.emit('message', message);
     // db.Messages.create({
       //message: message.message,
       //sender: message.sender,
