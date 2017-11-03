@@ -143,7 +143,7 @@ class Messages extends Component {
                     subtitle={room.message}
                     onPress={() => {
                     // this.props.actions.enterRoom(this.state.chatroom);
-                    this.props.actions.enterRoom(1);
+                    // this.props.actions.enterRoom(1);
                     navigate('Chat', { friend: room.name});
                   }}>
                   </ListItem>
