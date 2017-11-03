@@ -55,13 +55,13 @@ class Chat extends Component {
       // roomId is just whatever you pass down to use as the room
       // query: `roomId=${roomId}`
 
-    // this.socket.on('message', (message) => {
-    //   this.setState({messages: this.state.messages.concat(message)})
-    // })
-
-    this.socket.on('1', message => {
+    this.socket.on('message', (message) => {
       this.setState({messages: this.state.messages.concat(message)})
-    }); 
+    })
+
+    // this.socket.on('1', message => {
+    //   this.setState({messages: this.state.messages.concat(message)})
+    // }); 
 
 
   }
@@ -133,7 +133,7 @@ class Chat extends Component {
         onSend={(input) => this.onSend(input)}
         user={{
           _id: this.props.screenProps,
-          name: "angie",
+          name: this.props.name,
           roomId: '1'
           //id:this.screenProps
         }}
@@ -147,6 +147,7 @@ class Chat extends Component {
 const chatStore = (store) => {
   return {
     room: store.Chat.currentRoom,
+    name: store.Auth.name
   }
 }
 
