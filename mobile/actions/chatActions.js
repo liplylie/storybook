@@ -15,7 +15,7 @@ export const exitRoom = (roomId) => {
 
 export const getRooms = (userId) => {
   return function(dispatch) {
-    axios.get(key.flask_server + '/api/chat/' + userId)
+    axios.get(key.flask_server + 'api/chat/' + userId)
     .then(({ data }) => {
       dispatch({type: 'GET_ALL_ROOMS', payload: data});
     })
@@ -25,10 +25,10 @@ export const getRooms = (userId) => {
   }
 }
 
+
 export const getFriends = (userId) => {
   return function(dispatch) {
-    // axios.get('http://52.89.50.233' + 'api/get_all_friends?userId=' + userId)
-    axios.get(key.flask_server+'api/get_all_friends?userId=' + userId)
+    axios.get(key.flask_server + 'api/get_all_friends?userId=' + userId)
     .then((response) => {
       dispatch({type: 'GET_FRIEND_LIST', payload: response.data.data});
     })
@@ -39,8 +39,3 @@ export const getFriends = (userId) => {
 }
 
 
-export const clearSearch = () => {
-  return function(dispatch) {
-    dispatch({type: 'CLEAR_SEARCH', payload: []});
-  }
-}

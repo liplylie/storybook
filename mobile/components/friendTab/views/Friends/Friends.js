@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Button, TouchableWithoutFeedback, Text, Image, ScrollView, StyleSheet } from 'react-native'
-import { SearchBar, Card, Icon } from 'react-native-elements'
+import { SearchBar, Card, Icon, ListItem } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators} from 'redux'
@@ -47,15 +47,13 @@ class Friends extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getFriends(this.props.screenProps);
     console.log('screen props to friends', this.props); 
-    
+    this.props.actions.getFriends(this.props.screenProps);
     // this.props.actions.getFriends(1);
   }
   
 
   render() {
-    
     const {navigate} = this.props.navigation; 
     console.log('props passed to friends', this.props);
       return (
@@ -63,12 +61,12 @@ class Friends extends Component {
           {this.props.friends.map(friend => {
             return (
               <Card>
-              <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {friendId: friend.id, type: "friend", name: friend.name})}>
-                <Image style={styles.image} resizeMode="cover" source={{uri: friend.profile_image_url}}/>
-              </TouchableWithoutFeedback >
-              <TouchableWithoutFeedback onPress={() => navigate('FriendProfile', {friendId: friend.id, type: "friend", name: friend.name})}>
-                <Text style={styles.text}>{friend.name}</Text>
-              </TouchableWithoutFeedback> 
+                <ListItem
+                  onPress={() => navigate('FriendProfile', {friendId: friend.id, type: "friend", name: friend.name})}
+                  squareAvatar
+                  avatar={{uri: friend.profile_image_url}}
+                  title={friend.name}
+                ></ListItem>
               </Card>
             ) 
           })} 

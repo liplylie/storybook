@@ -33,8 +33,8 @@ class FriendRequests extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // requests: [{name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}]
-      requests: []
+      requests: [{name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}]
+      // requests: []
     }
   }
 
