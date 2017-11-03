@@ -54,9 +54,7 @@ class Chat extends Component {
     this.socket = io(key.react_server) 
       // roomId is just whatever you pass down to use as the room
       // query: `roomId=${roomId}`
-    console.log('this is the room okaokaokwef ', this.socket)
     this.socket.on('message', (message) => {
-      console.log('this is the message listener ', message)
         this.setState((previousState) => ({
         messages: GiftedChat.append(previousState.messages, message),
       }));

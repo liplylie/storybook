@@ -1,10 +1,7 @@
 const initialState = {
   currentRoom: '', 
   rooms: [
-    // {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Daniel: Please"}, 
-    // {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "How are you"}, 
-    // {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Please talk to me"}, 
-    // {name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg", message: "Please"}
+    {name: "Daniel Chong", img: "https://0.soompi.io/wp-content/uploads/2016/01/26035801/han-seung-yeon.png", message: "Please talk to me"}, 
   ],
   friends: [
   //   {name: "Daniel Chong", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}, 

@@ -41,16 +41,16 @@ class Messages extends Component {
   } 
 
   componentDidMount() {
-    const { friends, actions, screenProps, rooms } = this.props; 
-    for (let i = 0; i < friends.length; i++) {
-      actions.getPreview(screenProps, friends[i].id);
-      rooms.map(room => {
-        if (room.recipient_id === friends[i].id) {
-          room[name] === friend.name;
-          room[img] === friends.profile_image_url; 
-        }
-      })
-    }
+    // const { friends, actions, screenProps, rooms } = this.props; 
+    // for (let i = 0; i < friends.length; i++) {
+    //   actions.getPreview(screenProps, friends[i].id);
+    //   rooms.map(room => {
+    //     if (room.recipient_id === friends[i].id) {
+    //       room[name] === friend.name;
+    //       room[img] === friends.profile_image_url; 
+    //     }
+    //   })
+    // }
   }
 
   searchMessages() {
