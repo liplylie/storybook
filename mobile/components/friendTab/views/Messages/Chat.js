@@ -43,18 +43,17 @@ class Chat extends Component {
       //   this.setState({messages: this.state.messages.concat(message)})
       // }); 
 
-    axios.get(key.flask_server + '/api/get_convo?userId=' + this.props.screenProps) 
-      .then(({ data }) => {
-        this.setState({messages: data})
-      })
-      .catch(err => {
-        console.log('error getting chat', err);
-      })
+    // axios.get(key.flask_server + '/api/get_convo?userId=' + this.props.screenProps) 
+    //   .then(({ data }) => {
+    //     this.setState({messages: data})
+    //   })
+    //   .catch(err => {
+    //     console.log('error getting chat', err);
+    //   })
 
     this.socket = io(key.react_server) 
       // roomId is just whatever you pass down to use as the room
       // query: `roomId=${roomId}`
-
     this.socket.on('message', (message) => {
         this.setState((previousState) => ({
         messages: GiftedChat.append(previousState.messages, message),
@@ -122,6 +121,10 @@ class Chat extends Component {
   onSend(message) {
       // Any additional custom parameters are passed through
     this.socket.emit('message', message);
+    this.setState((previousState) => ({
+      messages: GiftedChat.append(previousState.messages, message),
+    }));
+    
   }
 
   render() {
