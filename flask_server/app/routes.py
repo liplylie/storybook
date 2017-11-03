@@ -40,10 +40,10 @@ def add_photo():
   
   #geolocation
   latitude = request_data["latitude"]
-  parsed_latitude = int(latitude)
+  parsed_latitude = float(latitude)
 
   longitude = request_data["longitude"]
-  parsed_longitude = int(longitude)
+  parsed_longitude = float(longitude)
 
   likes_count = 0
   parsed_likes_count = int(likes_count)
@@ -173,7 +173,7 @@ def get_imgs_by_loc():
     get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
 
     
-    # get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.01)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.01)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.01)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.01)))
+    get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.02)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.02)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.02)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.02)))
     get_imgs_by_loc_query = db.session.query(Images)
     all_images = []
     for i in get_imgs_by_loc_query:
