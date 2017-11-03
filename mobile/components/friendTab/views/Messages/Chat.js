@@ -51,7 +51,7 @@ class Chat extends Component {
         console.log('error getting chat', err);
       })
 
-    this.socket = io('http://localhost:3000') 
+    this.socket = io(key.react_server) 
       // roomId is just whatever you pass down to use as the room
       // query: `roomId=${roomId}`
 
@@ -67,54 +67,54 @@ class Chat extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.disconnect;
+    this.socket.disconnect();
   }
 
   componentWillMount() {
-    this.setState({
-      messages: [
-        {
-          _id: 4,
-          text: 'Please',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-        },
-        {
-          _id: 3,
-          text: 'Please talk to me',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-        },
-        {
-          _id: 1,
-          text: 'Hello',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-        },
-        {
-          _id: 2,
-          text: 'Hi',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-        },
-      ],
-    });
+    // this.setState({
+    //   messages: [
+    //     {
+    //       _id: 4,
+    //       text: 'Please',
+    //       createdAt: new Date(),
+    //       user: {
+    //         _id: 2,
+    //         name: 'React Native',
+    //         avatar: 'https://facebook.github.io/react/img/logo_og.png',
+    //       },
+    //     },
+    //     {
+    //       _id: 3,
+    //       text: 'Please talk to me',
+    //       createdAt: new Date(),
+    //       user: {
+    //         _id: 2,
+    //         name: 'React Native',
+    //         avatar: 'https://facebook.github.io/react/img/logo_og.png',
+    //       },
+    //     },
+    //     {
+    //       _id: 1,
+    //       text: 'Hello',
+    //       createdAt: new Date(),
+    //       user: {
+    //         _id: 2,
+    //         name: 'React Native',
+    //         avatar: 'https://facebook.github.io/react/img/logo_og.png',
+    //       },
+    //     },
+    //     {
+    //       _id: 2,
+    //       text: 'Hi',
+    //       createdAt: new Date(),
+    //       user: {
+    //         _id: 2,
+    //         name: 'React Native',
+    //         avatar: 'https://facebook.github.io/react/img/logo_og.png',
+    //       },
+    //     },
+    //   ],
+    // });
   }
 
   onSend(message) {
