@@ -3,7 +3,7 @@ from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 from sqlalchemy import Integer, Table, Column, ForeignKey
-from app import app, db, DropTable
+from app import app, db
 from schema import Images, Users, friendships, messages, Comments, Likes
 from config import app_config, basedir
 from azure_get_tags import get_tags
