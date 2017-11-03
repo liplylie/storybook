@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
   search: {
     marginTop:10
   },
+  text: {
+		fontSize: 20,
+    textAlign: 'center',
+    marginTop: 20
+  }, 
   component: {
     backgroundColor: 'white'
   }
@@ -99,7 +104,7 @@ class Messages extends Component {
           </List> 
         </View>
        )
-    } else {
+    } else if (this.props.rooms.length) {
       return (
       <View>
         <SearchBar 
@@ -152,6 +157,12 @@ class Messages extends Component {
           })
         })} */}
       </View> 
+    )
+  } else {
+    return( 
+      <View> 
+      <Text style={styles.text}>No messages</Text> 
+    </View> 
     )
   }
 }

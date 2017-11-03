@@ -91,7 +91,7 @@ class NewChat extends Component {
             return (
               <ListItem 
                 roundAvatar
-                avatar={{uri: result.img}}
+                avatar={{uri: result.profile_image_url}}
                 title={result.name}
                 onPress={() => {
                 // this.createRoom(result.id);
