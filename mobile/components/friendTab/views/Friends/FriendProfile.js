@@ -52,9 +52,7 @@ class FriendProfile extends Component {
       }
     }
     this.location = [];
-    this.viewTargetPictures = this.viewTargetPictures.bind(this)
-    this.viewUserMarkers = this.viewUserMarkers.bind(this)
-    this.viewWorldMarkers = this.viewWorldMarkers.bind(this)
+
   }
   
   markerID: ?number = null;
@@ -98,7 +96,7 @@ class FriendProfile extends Component {
     // change this with api/get_all_locations_for_user
       // add filter button that gets all locations
     var that = this
-    axios.get(`http://localhost:5000/api/get_all_locations`)
+    axios.get(`${PythonServer}/api/get_all_locations`)
     .then(function ({data}) {
       console.log(data, 'api map response');
       const locations = data.data
@@ -115,7 +113,7 @@ class FriendProfile extends Component {
   }
 
   sendRequest(friendId) {
-    axios.post('http://localhost:5000/api/add_friend', {
+    axios.post(PythonServer + '/api/add_friend', {
       friendId: friendId,
       // userId: this.screenProps,
       userId: 1
@@ -129,7 +127,7 @@ class FriendProfile extends Component {
   }
   
   addFriend() {
-    axios.post('http://localhost:5000/' + 'api/add_friend', {
+    axios.post(PythonServer + 'api/add_friend', {
       userId: this.props.navigation.state.params.friendId,
       friendId: this.screenProps
     })
@@ -137,7 +135,7 @@ class FriendProfile extends Component {
 
   deleteFriend() {
     //axios.post(key.flask_server + 'api/remove_friend', {
-    axios.post('http://localhost:5000/'+ 'api/remove_friend', {
+    axios.post(PythonServer+ 'api/remove_friend', {
       userId: this.screenProps,
       friendId: this.props.navigation.state.params.friendId
     })
@@ -145,39 +143,12 @@ class FriendProfile extends Component {
 
   blockFriend() {
     //axios.post(key.flask_server + 'api/block_friend', {
-    axios.post('http://localhost:5000/'+ 'api/block_friend', {
+    axios.post(PythonServer+ 'api/block_friend', {
       userId: this.screenProps,
       friendId: this.props.navigation.state.params.friendId
     })
   }
 
-  viewTargetPictures() {
-    // clicking here renders ar view. Leave commented unless ar kit is installed
-    this.props.navigation.navigate("ARView")
-  }
-
-  viewUserMarkers() {
-    console.log('userMarkers')
-    // send get request for all locations from user
-    // let userId = this.props.profileInfo.userId
-    // api/get_all_locations_for_user
-      // put user id in request
-
-  }
-
-  viewWorldMarkers() {
-    console.log('worldMarker')
-    // var that = this
-    // axios.get(`${PythonServer}api/get_all_locations`)
-    // .then(function (data) {
-    //   console.log(data, 'api map response');
-    //   // const locations = data.data
-    //   // that.location = [...locations]
-    // })
-    // .catch(function (error) {
-    //   console.log(error, 'api map response');
-    // })
-  }
 
   render() {
     if (!this.state.friend) {
@@ -205,16 +176,11 @@ class FriendProfile extends Component {
     } else {
       return (
         <View style={styles.container}>
-        <View style={styles.filterButtonContainer}>
-          <TouchableOpacity style={{flex:1}} onPress={this.viewUserMarkers}><Image style={styles.filterButtons} source={require('../../../../../mobile/image_icon.png')}/></TouchableOpacity>
-          <TouchableOpacity style= {{flex:1}} onPress={this.viewWorldMarkers}><Image style={styles.filterButtons} source={require('../../../../../mobile/worldIcon.png')}/></TouchableOpacity>
-        </View>
         <MapView
           style={styles.map}
            region={this.state.initialPosition}>
           <MapView.Marker
             id = 'userMarker'
-            onPress={this.viewTargetPictures}
             coordinate={this.state.markerPosition}>
               <View style={styles.radius}>
                 <View style={styles.marker}/>
@@ -263,7 +229,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    top: 40,
+    top: 0,
     position: 'absolute'
   },
   radius:{

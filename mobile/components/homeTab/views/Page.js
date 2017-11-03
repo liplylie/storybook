@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (store) => {
   return {
 		pageInfo: store,
-		userId: store.Auth.userId
+		userId: store.Auth.userId,
+		comments: store.Comment.comments
   }
 }
 
