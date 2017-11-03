@@ -5,14 +5,17 @@ import { connect } from 'react-redux'
 import UserMap from './map.js'
 import Login from '../../auth/Login'
 import secret from '../../../../sensitive.json'
+import key from '../../../../sensitive.json'
 
 const { width, height } =  Dimensions.get('window')
+const PythonServer = key.flask_server
 
 class Profile extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			friends:[]
+			friends:[],
+			photos:[],
 		}
 		this.viewRequests = this.viewRequests.bind(this)
 	}
@@ -22,9 +25,8 @@ class Profile extends Component {
 
   	componentDidMount(){
 			let userId = this.props.profileInfo.Auth.userId
-			console.log(userId, 'user id in profiel')
 			let that = this
-			axios.get(`${secret.flask_server}api/get_all_friends`, {
+			axios.get(`${PythonServer}/api/get_all_friends`, {
 				params:{
 					userId: userId
 				}
@@ -37,7 +39,25 @@ class Profile extends Component {
 			.catch(err =>{
 				console.log(err, 'response from getFriends')
 			})
+
+	    axios.get(PythonServer + 'api/get_all_images_by_user', {
+	      params:{
+	        userId: userId
+	      }
+	    })
+	    .then(function ({data}) {
+	      console.log( data, 'data from use rmap axios');
+	      that.setState({
+	        photos:[...data.data]
+	      })
+	     })
+	    .catch(function (error) {
+	      console.log(error, 'error from user map');
+	    });
+	    console.log(this.images, 'thisimages in componentDidMount')
 		}
+
+
 	
 	viewRequests(){
 		this.props.navigation.navigate("FriendRequests")
@@ -69,8 +89,8 @@ class Profile extends Component {
 				    			<Image source={{uri:picture}} style={styles.profilePicture}/>
 				    			<View style={{paddingLeft: 150, justifyContent: 'space-around', flexDirection: 'row'}}>
 				    				<View style={{marginRight: 20}}>
-					    				<Text> Photos </Text>
-					    				<Text style={{textAlign: 'center'}}> 0 </Text>
+					    				<TouchableHighlight onPress={() =>{navigation.navigate("UserPhotos")}}><Text> Photos </Text></TouchableHighlight>
+					    				<Text style={{textAlign: 'center'}}> {this.state.photos.length} </Text>
 					    			</View>
 					    			<View>
 						    			<Text> Friends </Text>
