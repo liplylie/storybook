@@ -1,15 +1,14 @@
 import axios from 'axios';
+import secret from '../../sensitive.json'
 
 export const getComments = (imageId) => {
   return function(dispatch) {
     dispatch({type: "GETTING_COMMENT"})
-    axios.get('http://localhost:5000/api/get_all_comments_by_image?imageId=' + imageId)
+    axios.get(secret.flask_server+'api/get_all_comments_by_image?imageId=' + imageId)
       .then(data => {
-        console.log('I am data: ', data.data);
         dispatch({type: "GOT_COMMENT", payload: data.data.data})
       })
       .catch(err => {
-        console.log('Error getting comments from server: ', err);
         dispatch({type: "GET_COMMENT_FAILED", payload: err});
       })
   }
@@ -18,7 +17,7 @@ export const getComments = (imageId) => {
 export const postComments = (commentObj) => {
   return function(dispatch) {
     dispatch({type: "POSTING_COMMENT"});
-    axios.post('http://localhost:5000/api/add_comment', commentObj, {
+    axios.post(secret.flask_server + 'api/add_comment', commentObj, {
       headers: {
         'Content-Type': 'application/json'
       }

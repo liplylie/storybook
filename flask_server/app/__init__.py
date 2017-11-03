@@ -34,8 +34,8 @@ assets.register('js_all', js)
 #############################
 #app configs:
 app.config.from_object('config')
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://"+username+":"+password+"@"+rds_endpoint+"/"+username
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://socyjgwo:QD38AgZgQutwEkRMyDW8-6bGdvPsMI1k@pellefant.db.elephantsql.com:5432/socyjgwo"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://"+username+":"+password+"@"+rds_endpoint+"/"+username
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://socyjgwo:QD38AgZgQutwEkRMyDW8-6bGdvPsMI1k@pellefant.db.elephantsql.com:5432/socyjgwo"
 
 #############################
 #load database:

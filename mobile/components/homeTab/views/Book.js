@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 
 
 const Book = (props) => {
-	console.log(props, 'book props')
 	const viewPage = ()=>{
 		props.navigation.navigate("Page", props.image)
   }

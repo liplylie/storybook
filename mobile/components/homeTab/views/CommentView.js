@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as commentActions from '../../../actions/commentActions';
-import CommentV from './Comment.js';
+import React, { Component } from 'react'
+import { Text, View, Button } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as commentActions from '../../../actions/commentActions'
+import CommentV from './Comment.js'
 
 class CommentView extends Component {
   constructor(props) {
@@ -22,8 +21,6 @@ class CommentView extends Component {
   render() {
     const { comments } = this.props;
     const { showAll } = this.props;
-    console.log('Theses are the comments: ', comments);
-
     return (
       <View>
         {comments.map(comment => (

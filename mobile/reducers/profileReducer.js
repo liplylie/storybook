@@ -1,5 +1,5 @@
 import { ProfileNavigator } from '../components/profileTab/navigationConfig'
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation'
 
 const initialState = {
 	profileInfo: [],

@@ -1,10 +1,11 @@
-import AWS from 'aws-sdk';
-import { Buffer } from 'buffer';
-import axios from 'axios';
+import AWS from 'aws-sdk'
+import { Buffer } from 'buffer'
+import axios from 'axios'
+import secret from '../../sensitive.json'
 
 export const saveImage = (image) => {
   return function(dispatch) {
-    dispatch({type: 'SAVE_IMAGE', payload: image});
+    dispatch({type: 'SAVE_IMAGE', payload: image})
   }
 }
 
@@ -42,9 +43,7 @@ export const postImage = (obj) => {
           caption: caption,
           image_tags: imageTags
         }
-
-        // get long and lat from store 
-        axios.post('http://localhost:5000/api/add_image', image_post, {
+        axios.post(secret.flask_server+'api/add_image', image_post, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -55,18 +54,8 @@ export const postImage = (obj) => {
         .catch(function (error) {
           console.log(error);
         });
-        //Send img url (data.Location) to database
       }
     })
   }
 }
 
-// {
-//   "url": "adsffad",
-//   "image_user_id":"afds",
-//   "latitude": 1,
-//   "longitude":1,
-//   "likes_count": 1,
-//   "caption": "afs",
-//    "image_tags": 'asdf'
-// }

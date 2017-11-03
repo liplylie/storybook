@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
 
 export default images = (props) => {
 	console.log(props,'image props')
-	// let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
 	return (
 				<View>
-					<Text > User Name </Text>
-					<Image style={styles.image} source={{uri:props.url}} alt='picture here'/>
+					<Text>{props.url.image_user_name}</Text>
+					<Image style={{height:30, width: 30}} source={{uri:props.url.image_user_url}}/>
+					<Image style={styles.image} source={{uri:props.url.imageUrl}} alt='picture here'/>
 				</View>
 			)
 }
