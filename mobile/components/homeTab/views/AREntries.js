@@ -8,10 +8,11 @@ export default class AREntries extends Component {
 	}
 
 	render(){
-		let x = this.props.x
+		let x = this.props.x * 10
+		console.log(x, 'xx')
 		let image = this.props.image
 		return(
-			<ARKit.Sprite position={{ x: x, y: 0, z: -2}}>
+			<ARKit.Sprite position={{ x: x, y: 0, z: -5}}>
         <Image source={{uri:image}} style={{height: 200, width: 200}}/>
       </ARKit.Sprite>
 		)

@@ -7,6 +7,7 @@ import FriendRequests from './views/FriendRequests'
 // import ARView from '../homeTab/views/AR'
 import Page from '../homeTab/views/Page.js'
 import images from './views/images'
+import UserPhotos from './views/UserPhotos'
 //import FriendProfile from './views/Friends/FriendProfile'
 
 const routeConfig = {
@@ -17,7 +18,8 @@ const routeConfig = {
   Page: {screen: Page},
   //NewChat: { screen: NewChat },
   FriendRequests: { screen: FriendRequests },
-  images: {screen: images}
+  images: {screen: images},
+  UserPhotos: {screen: UserPhotos}
 }
 
 const stackNavigatorConfig = {

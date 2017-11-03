@@ -88,7 +88,7 @@ class Page extends Component{
 								}
 								console.log(obj)
 								this.props.actions.postComments(obj);
-								this.forceUpdate();
+								this.props.actions.getComments(this.props.navigation.state.params.image_id)
 							}}
 						/>
 					</View>
