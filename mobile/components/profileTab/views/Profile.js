@@ -71,7 +71,7 @@ class Profile extends Component {
 			let picture = this.props.profileInfo.Auth.picture;
 			let id = this.props.profileInfo.Auth.id;
 			let navigation = this.props.navigation
-
+			console.log(this.state.friends, 'this state friends')
 			return (
 		    <ScrollView style={styles.profileContainer}>
 		    	<View style={{flex:.3, backgroundColor: 'white', marginTop:10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
@@ -89,11 +89,11 @@ class Profile extends Component {
 				    			<Image source={{uri:picture}} style={styles.profilePicture}/>
 				    			<View style={{paddingLeft: 150, justifyContent: 'space-around', flexDirection: 'row'}}>
 				    				<View style={{marginRight: 20}}>
-					    				<TouchableHighlight onPress={() =>{navigation.navigate("UserPhotos")}}><Text> Photos </Text></TouchableHighlight>
+					    				<TouchableHighlight onPress={() =>{navigation.navigate("UserPhotos")}}><Text style={{textDecorationLine:'underline'}}>Photos</Text></TouchableHighlight>
 					    				<Text style={{textAlign: 'center'}}> {this.state.photos.length} </Text>
 					    			</View>
 					    			<View>
-						    			<Text> Friends </Text>
+						    			<Text style={{textDecorationLine:'underline'}}>Friends</Text>
 					    				<Text style={{textAlign: 'center'}}> {this.state.friends.length} </Text>
 					    			</View>
 				    			</View>

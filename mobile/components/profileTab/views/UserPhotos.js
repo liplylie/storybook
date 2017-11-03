@@ -47,17 +47,25 @@ class UserPhotos extends Component {
 
 
 	render(){
-	console.log(this.state.images, 'this images in user map')
-	let navigation = this.props.navigation
-	  return (
-	    <View style={styles.container}>
-	    	<ScrollView >
-	    	<View style={styles.imageContainer}>
-	      	{this.state.images.map((img, i) => { return <Images key={i} url={img} navigation={navigation}/> }) }
-	      </View>
-	    	</ScrollView> 
-	    </View>
-	  )	
+		console.log(this.state.images, 'this images in user map')
+		let navigation = this.props.navigation
+		if ( this.state.images.length === 0 ){
+			return (
+				 <View style={styles.container}>
+				 		<Text>You currently have no images</Text>
+				 </View>
+			)
+		} else {
+		  return (
+		    <View style={styles.container}>
+		    	<ScrollView >
+		    	<View style={styles.imageContainer}>
+		      	{this.state.images.map((img, i) => { return <Images key={i} url={img} navigation={navigation}/> }) }
+		      </View>
+		    	</ScrollView> 
+		    </View>
+		  )	
+		}
 	}
 }
 
