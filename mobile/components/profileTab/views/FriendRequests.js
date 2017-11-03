@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
 			borderRadius: 10
 		},
 	text: {
-		textAlign: 'center'
+		fontSize: 20,
+    textAlign: 'center',
+    marginTop: 20
   }, 
   rightIcon: {
     marginLeft: 200
@@ -33,16 +35,17 @@ class FriendRequests extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requests: [{name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}]
-      // requests: []
+      // requests: [{id: 1, name: "Daniel", img: "https://cdn.pixabay.com/photo/2016/09/07/16/38/portrait-1652023_960_720.jpg"}]
+      requests: []
     }
   }
 
   componentDidMount() {
-    // axios.get(key.flask_server + 'api/get_friend_requests?userId=' + this.screenProps) 
-    axios.get(key.flask_server + 'api/get_friend_requests?userId=' + 1) 
+    console.log('screen props to friend request', this.props.screenProps)
+    axios.get(key.flask_server + 'api/get_friend_requests?userId=' + this.props.screenProps) 
     .then(({ data }) => {
-      this.setState({requests: data})
+      console.log('friend requests', data.data);
+      this.setState({requests: data.data})
     })
     .catch(err => {
       console.log('error getting friend requests', err); 
@@ -51,7 +54,6 @@ class FriendRequests extends Component {
   
   acceptRequest(friendId) {
     axios.post(key.flask_server + 'api/accept_friend_request', {
-      // userId: this.screenProps,
       userId: this.props.screenProps,
       friendId: friendId
     })
@@ -72,8 +74,14 @@ class FriendRequests extends Component {
     })
   }
 
-  removeRequest(request, key) {
-    this.setState({requests: this.state.requests.splice(key, 1)});
+  removeRequest(id) {
+    this.setState({
+      requests: this.state.requests.filter(request => {
+        if (request.id !== id) {
+          return request;
+        }
+      })
+    })
   }
 
   // deleteRequest(friendId) {
@@ -87,25 +95,24 @@ class FriendRequests extends Component {
 
   
   render() {
+    if (this.state.requests.length) {
     return ( 
       <List>
-        {this.state.requests.map((request, i) => {
-          console.log('inside map: ', request);
+        {this.state.requests.map(request => {
           return (
             <ListItem
               roundAvatar
-              key={i}
-              avatar={{uri:request.img}}
+              avatar={{uri:request.profile_image_url}}
               title={request.name}
-              leftIcon={{name:'delete'}}
+              /* leftIcon={{name:'delete'}}
                 onPressLeftIcon={() => {
                 this.deleteRequest(request.id);
-                this.removeRequest(request, this.key);
-              }}
+                this.removeRequest(request.id);
+              }} */
               rightIcon={{name:'check', style: styles.rightIcon}}
               onPressRightIcon={() => {
                 this.acceptRequest(request.id);
-                this.removeRequest(request, this.key);
+                this.removeRequest(request.id);
               }}
             > 
             </ListItem>
@@ -119,8 +126,14 @@ class FriendRequests extends Component {
           )
         })}
       </List>
-      
     )
+    } else {
+      return (
+        <View> 
+          <Text style={styles.text}>No results</Text> 
+        </View> 
+      )
+    }
   }
 }
 
