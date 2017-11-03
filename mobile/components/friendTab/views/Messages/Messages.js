@@ -134,9 +134,10 @@ class Messages extends Component {
           .then(({ data }) => { 
             return ( */}
               <List>
-              {this.props.rooms.map((room) => {
+              {this.props.rooms.map((room, i) => {
                 return (
                   <ListItem 
+                    key={i}
                     roundAvatar
                     avatar={{uri: room.img}}
                     title={room.name}
