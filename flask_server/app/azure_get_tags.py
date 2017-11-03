@@ -1,7 +1,7 @@
 import json
 
 # import api keys
-with open('../sensitive.json') as data_file:    
+with open('./sensitive.json') as data_file:    
     sensitive = json.load(data_file)
     azure_key = sensitive['AZURE_KEY']
 

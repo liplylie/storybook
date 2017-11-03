@@ -8,70 +8,7 @@ import { NavigationActions } from 'react-navigation'
 import axios from 'axios' 
 import io from 'socket.io-client'
 
-// import MessageInput from './MessageInput'
-// import ChatBubble from './ChatBubble'
-
-
-// class Chat extends Component { 
-//   static navigationOptions = ({ navigation }) => ({
-//     title: `Chat with`,
-//     headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.navigate('Messages')} />  
-//   });
-
-//   constructor(props) {
-//     super(props);
-//     this.state = { 
-//       messages: [{message: "hello", sender: "angie", roomId: "1"}, {message: "hello", sender: "daniel", roomId: "1"}],
-//     }
-//     this.socket = io('http://localhost:3000')
-//   }
-  
-//   componentDidMount() {
-//     // this.socket.emit('subscription', this.props.roomId.toString());
-//     // this.socket.emit('subscription', '1');
-//     this.socket.on(this.props.room.toString(), message => {
-//       this.setState({messages: this.state.messages.concat(message)})
-//     }); 
-    
-//   }
-
-//   componentWillUnmount() {
-//     this.socket.disconnect;
-//   }
-
-//   onSend(messages) {
-//     let message = {
-//       message: input,
-//       sender: 'angie',
-//       roomId: '1'
-//     }
-//     this.socket.emit('message', message);
-//     this.setState({messages: this.state.messages.concat(message)});
-//   }
-
-//   render () {
-//     const {navigate} = this.props.navigation;
-//     console.log(this.state.messages);
-//     return (
-//       <GiftedChat
-//         messages={this.state.messages}
-//         user={{
-//           id: 1, 
-//           name: "Angie"
-//         }}
-//         /* {this.state.messages.map(message => {
-//           return  ( 
-//             <Text>{message.sender}:{message.message}</Text> 
-//           )
-//         })} */
-//         /* <MessageInput handleSubmit={this.handleSubmit.bind(this)}/>  */
-//       ></GiftedChat>
-//     )
-//   }
-// }
-
-
-// export default connect(chatStore)(Chat);
+import key from '../../../../../sensitive.json'
 
 import { GiftedChat } from 'react-native-gifted-chat';
 
@@ -105,6 +42,15 @@ class Chat extends Component {
     // this.socket.on(this.props.room.toString(), message => {
       //   this.setState({messages: this.state.messages.concat(message)})
       // }); 
+
+    axios.get(key.flask_server + '/api/get_convo?userId=' + this.props.screenProps) 
+      .then(({ data }) => {
+        this.setState({messages: data})
+      })
+      .catch(err => {
+        console.log('error getting chat', err);
+      })
+
     this.socket = io('http://localhost:3000') 
       // roomId is just whatever you pass down to use as the room
       // query: `roomId=${roomId}`
@@ -112,10 +58,11 @@ class Chat extends Component {
     this.socket.on('message', (message) => {
       this.setState({messages: this.state.messages.concat(message)})
     })
+
     // this.socket.on('1', message => {
     //   this.setState({messages: this.state.messages.concat(message)})
     // }); 
-    
+
   }
 
   componentWillUnmount() {
@@ -204,3 +151,68 @@ const chatStore = (store) => {
 
 
 export default connect(chatStore)(Chat);
+
+// import MessageInput from './MessageInput'
+// import ChatBubble from './ChatBubble'
+
+
+// class Chat extends Component { 
+//   static navigationOptions = ({ navigation }) => ({
+//     title: `Chat with`,
+//     headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.navigate('Messages')} />  
+//   });
+
+//   constructor(props) {
+//     super(props);
+//     this.state = { 
+//       messages: [{message: "hello", sender: "angie", roomId: "1"}, {message: "hello", sender: "daniel", roomId: "1"}],
+//     }
+//     this.socket = io('http://localhost:3000')
+//   }
+  
+//   componentDidMount() {
+//     // this.socket.emit('subscription', this.props.roomId.toString());
+//     // this.socket.emit('subscription', '1');
+//     this.socket.on(this.props.room.toString(), message => {
+//       this.setState({messages: this.state.messages.concat(message)})
+//     }); 
+    
+//   }
+
+//   componentWillUnmount() {
+//     this.socket.disconnect;
+//   }
+
+//   onSend(messages) {
+//     let message = {
+//       message: input,
+//       sender: 'angie',
+//       roomId: '1'
+//     }
+//     this.socket.emit('message', message);
+//     this.setState({messages: this.state.messages.concat(message)});
+//   }
+
+//   render () {
+//     const {navigate} = this.props.navigation;
+//     console.log(this.state.messages);
+//     return (
+//       <GiftedChat
+//         messages={this.state.messages}
+//         user={{
+//           id: 1, 
+//           name: "Angie"
+//         }}
+//         /* {this.state.messages.map(message => {
+//           return  ( 
+//             <Text>{message.sender}:{message.message}</Text> 
+//           )
+//         })} */
+//         /* <MessageInput handleSubmit={this.handleSubmit.bind(this)}/>  */
+//       ></GiftedChat>
+//     )
+//   }
+// }
+
+
+// export default connect(chatStore)(Chat);

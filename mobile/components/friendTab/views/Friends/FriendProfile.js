@@ -32,8 +32,7 @@ import key from '../../../../../sensitive.json'
 
 class FriendProfile extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.name}'s Map`,
-    headerRight: <Icon name='message' type='entypo' onPress={() => navigation.goBack()} style={styles.header} />  
+    title: `${navigation.state.params.name}'s Map`  
   });
 
   constructor(props) {

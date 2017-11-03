@@ -3,7 +3,7 @@ from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 from sqlalchemy import Integer, Table, Column, ForeignKey
-from app import app, db, DropTable
+from app import app, db
 from schema import Images, Users, friendships, messages, Comments, Likes
 from config import app_config, basedir
 from azure_get_tags import get_tags
@@ -16,19 +16,14 @@ import os
 import unittest
 
 
-
 @app.route('/')
 def index():
   """This module renders main page"""
   return render_template('index.html')
 
-
-#add image
 @app.route('/api/add_image', methods=['POST'])
 def add_photo():
-  #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
-
   url = request_data["url"]
   parsed_url = url.encode('utf-8')
 
@@ -56,17 +51,14 @@ def add_photo():
   image_caption = request_data["caption"]
   parsed_image_caption = image_caption.encode('utf-8')
 
-  db.session.add(Images(parsed_url,parsed_scn_code, parsed_image_user_id, parsed_latitude, parsed_longitude, parsed_likes_count, parsed_image_caption, image_tags)) #replace later with actual values
+  db.session.add(Images(parsed_url,parsed_scn_code, parsed_image_user_id, parsed_latitude, parsed_longitude, parsed_likes_count, parsed_image_caption, image_tags)) 
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
 
-
 @app.route('/api/add_comment', methods=['POST'])
 def add_comment():
-  #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
-
   text = request_data["text"]
   parsed_text = text.encode('utf-8')
   comment_user_id = request_data["comment_user_id"]
@@ -74,33 +66,28 @@ def add_comment():
   comment_image_id = request_data["comment_image_id"]
   parsed_comment_image_id = int(comment_image_id)
 
-  db.session.add(Comments(parsed_text, parsed_comment_user_id, parsed_comment_image_id)) #replace later with actual values
+  db.session.add(Comments(parsed_text, parsed_comment_user_id, parsed_comment_image_id))
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
-
 
 @app.route('/api/add_like', methods=['POST'])
 def add_like():
-  #request.args, .forms, .files, .values also exist. look them up in the docs
   request_data = dict(request.json)
-
   like_user_id = request_data["like_user_id"]
   parsed_like_user_id = int(like_user_id)
-  
   like_image_id = request_data["like_image_id"]
   parsed_like_image_id = int(like_image_id)
 
-  db.session.add(Likes(parsed_like_user_id, parsed_like_image_id)) #replace later with actual values
+  db.session.add(Likes(parsed_like_user_id, parsed_like_image_id)) 
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp
-
 
 @app.route('/api/get_all_locations', methods=['GET'])
 def grab_all_locations():
   request_data = dict(request.args)
-  get_all_locations_query = db.session.query(Images) #returns all images
+  get_all_locations_query = db.session.query(Images)
   coords = []
   for i in get_all_locations_query:
     new_loc = {
@@ -117,9 +104,8 @@ def grab_all_locations():
 def get_all_locations_for_user():
   request_data = dict(request.args)
   get_all_locations_for_user_user_id = request_data["userId"][0]
-  print(get_all_locations_for_user_user_id)
   parsed_get_all_locations_for_user_user_id = int(get_all_locations_for_user_user_id)
-  get_all_locations_for_user_query = db.session.query(Images).filter(Images.image_user_id == parsed_get_all_locations_for_user_user_id) #returns all images
+  get_all_locations_for_user_query = db.session.query(Images).filter(Images.image_user_id == parsed_get_all_locations_for_user_user_id)
   coords = []
   for i in get_all_locations_for_user_query:
     new_loc = {
@@ -180,20 +166,17 @@ def add_user_info():
 
 @app.route('/api/get_imgs_by_loc', methods=['GET'])
 def get_imgs_by_loc():
-    print("grabbing photos by specific location...")
     request_data = dict(request.args)
     get_imgs_by_loc_latitude = request_data["latitude"][0]
     get_imgs_by_loc_latitude = float(get_imgs_by_loc_latitude)
     get_imgs_by_loc_longitude = request_data["longitude"][0]
     get_imgs_by_loc_longitude = float(get_imgs_by_loc_longitude)
 
-    print("longitude: ", get_imgs_by_loc_longitude)
     
-    # get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.002)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.01)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.01)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.002)))
+    # get_imgs_by_loc_query = db.session.query(Images).filter((Images.latitude > (get_imgs_by_loc_latitude - 0.01)) & (Images.latitude < (get_imgs_by_loc_latitude + 0.01)) & (Images.longitude > (get_imgs_by_loc_longitude - 0.01)) & (Images.longitude < (get_imgs_by_loc_longitude + 0.01)))
     get_imgs_by_loc_query = db.session.query(Images)
     all_images = []
     for i in get_imgs_by_loc_query:
-      print('Jeff says hello')
       image_to_post = {
         "image_user_id": i.image_user_id,
         "image_id": i.id,
@@ -211,10 +194,8 @@ def get_imgs_by_loc():
     resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp
 
-
 @app.route('/api/get_imgs_by_frs_at_loc', methods=['GET'])
 def get_imgs_by_frs_at_loc():
-    print("grabbing most recent photo from each friend within a 10 mile radius at OP's location...")
     request_data = dict(request.args)
 
     get_imgs_by_frs_at_loc_latitude = request_data["latitude"][0]
@@ -230,20 +211,14 @@ def get_imgs_by_frs_at_loc():
 
     list_of_photos = []
     for i in get_list_of_friends_query:
-      print(i.related_user_id)
       parsed_user_id = int(i.related_user_id)
       most_recent_image_at_loc = Images.query.filter_by(image_user_id=parsed_user_id).filter((Images.latitude > (parsed_get_imgs_by_frs_at_loc_latitude - 0.01)) & (Images.latitude < (parsed_get_imgs_by_frs_at_loc_latitude + 0.01)) & (Images.longitude > (parsed_get_imgs_by_frs_at_loc_longitude - 0.001)) & (Images.longitude < (parsed_get_imgs_by_frs_at_loc_longitude + 0.001))).order_by(Images.id.desc()).first()
-      print('Hello')
       if (most_recent_image_at_loc):
-        # list_of_photos.append(most_recent_image_at_loc.image_url)
-        print('Hi')
         list_of_photos.append({
           "image_user_id": most_recent_image_at_loc.image_user_id,
           "image_id": most_recent_image_at_loc.id,
           "imageUrl": most_recent_image_at_loc.image_url
         })
-      print("list of photos...", list_of_photos)
-    
     result = {}
     result["data"] = list_of_photos
 
@@ -253,12 +228,9 @@ def get_imgs_by_frs_at_loc():
 
 @app.route('/api/get_all_friends', methods=['GET'])
 def get_all_friends():
-    print("grabbing list of user's friends...")
     request_data = dict(request.args)
-    
     get_all_friends_user_id = request_data["userId"][0]
     parsed_get_all_friends_user_id = int(get_all_friends_user_id)
-    
     get_all_relating_friends_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_all_friends_user_id))
     
     list_of_friends = []
@@ -281,11 +253,9 @@ def get_all_friends():
 
 @app.route('/api/get_friend_requests', methods=['GET'])
 def get_friend_requests():
-    print("grabbing all friend requests for specific user...")
     request_data = dict(request.args)
     get_friend_requests_user_id = request_data["userId"][0]
     parsed_get_friend_requests_user_id = int(get_friend_requests_user_id)
-
     get_friend_requests_query = db.session.execute('SELECT * FROM users RIGHT JOIN friendships ON users.id = friendships.relating_user_id WHERE id = ' + str(parsed_get_friend_requests_user_id))
     list_of_requests = []
     for i in get_friend_requests_query:
@@ -299,24 +269,18 @@ def get_friend_requests():
             "profile_image_url": j[3]
           }
           list_of_requests.append(temp)
-
     result = {}
     result["data"] = list_of_requests
     resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
     return resp
-
-# get all friend requests using req.params.userId along with name and profile pic
-  #DONE
 
 @app.route('/api/add_friend', methods=['POST'])
 def add_friend():
     request_data = dict(request.json)
     add_friend_relating_user_id = request_data["userId"]
     parsed_add_friend_relating_user_id = str(add_friend_relating_user_id)
-
     add_friend_related_user_id = request_data["friendId"]
     parsed_add_friend_related_user_id = str(add_friend_related_user_id)
-
     db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_relating_user_id + ", " + parsed_add_friend_related_user_id + ", 'pending')")
     db.session.execute("insert into friendships (relating_user_id, related_user_id, friendship_type) values (" + parsed_add_friend_related_user_id + ", " + parsed_add_friend_relating_user_id + ", 'pending')")
     db.session.commit()
@@ -324,17 +288,13 @@ def add_friend():
     resp = make_response('added successfully!', 201)
     return resp
 
-
 @app.route('/api/accept_friend_request', methods=['POST'])
 def accept_friend_request():
-    print("accepting friend request...")
     request_data = dict(request.json)
     accept_friend_request_relating_user_id = request_data["userId"]
     parsed_accept_friend_request_relating_user_id = str(accept_friend_request_relating_user_id)
-
     accept_friend_request_related_user_id = request_data["friendId"]
     parsed_accept_friend_request_related_user_id = str(accept_friend_request_related_user_id)
-
     db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_related_user_id + " AND related_user_id=" + parsed_accept_friend_request_relating_user_id)
     db.session.execute("UPDATE friendships SET friendship_type='friend' WHERE relating_user_id=" + parsed_accept_friend_request_relating_user_id + " AND related_user_id=" + parsed_accept_friend_request_related_user_id)
     db.session.commit()
@@ -345,36 +305,25 @@ def accept_friend_request():
 
 @app.route('/api/remove_friend', methods=['POST'])
 def remove_friend():
-    print("removing friend...")
     request_data = dict(request.json)
     remove_friend_relating_user_id = request_data["userId"]
     parsed_remove_friend_relating_user_id = str(remove_friend_relating_user_id)
-
     remove_friend_related_user_id = request_data["friendId"]
     parsed_remove_friend_related_user_id = str(remove_friend_related_user_id)
-
     db.session.execute("DELETE FROM friendships WHERE relating_user_id=" + parsed_remove_friend_relating_user_id + " AND related_user_id=" + parsed_remove_friend_related_user_id)
     db.session.commit()
-
     db.session.execute("DELETE FROM friendships WHERE relating_user_id=" + parsed_remove_friend_related_user_id + " AND related_user_id=" + parsed_remove_friend_relating_user_id)
     db.session.commit()
-
     resp = make_response('removed successfully!', 201)
     return resp
 
 @app.route('/api/get_convo', methods=['GET'])
 def get_convo():
-  print('getting conversation...')
   request_data = dict(request.args)
   get_convo_sender_id = request_data["senderId"][0]
   parsed_get_convo_sender_id = str(get_convo_sender_id)
-  print(parsed_get_convo_sender_id)
-
   get_convo_recipient_id = request_data["recipientId"][0]
   parsed_get_convo_recipient_id = str(get_convo_recipient_id)
-  print(parsed_get_convo_recipient_id)
-  print("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
-
   convo_query = db.session.execute("select * from messages where (sender_id=" + parsed_get_convo_sender_id + "and recipient_id=" + parsed_get_convo_recipient_id + ") OR (sender_id=" + parsed_get_convo_recipient_id + "and recipient_id=" + parsed_get_convo_sender_id + ")")
   
   convo_array = []
@@ -394,15 +343,12 @@ def get_convo():
 
 @app.route('/api/get_last_message', methods=['GET'])
 def get_last_message():
-  print('getting most recent message...')
   request_data = dict(request.args)
   get_last_message_sender_id = request_data["senderId"][0]
   parsed_get_last_message_sender_id = str(get_last_message_sender_id)
-  print(parsed_get_last_message_sender_id)
 
   get_last_message_recipient_id = request_data["recipientId"][0]
   parsed_get_last_message_recipient_id = str(get_last_message_recipient_id)
-  print(parsed_get_last_message_recipient_id)
 
   last_message_query = db.session.execute("select * from messages where ((sender_id=" + parsed_get_last_message_sender_id + "and recipient_id=" + parsed_get_last_message_recipient_id + ") OR (sender_id=" + parsed_get_last_message_recipient_id + "and recipient_id=" + parsed_get_last_message_sender_id + ")) AND date_created IN (SELECT max(date_created) FROM messages)")
   
@@ -420,7 +366,6 @@ def get_last_message():
 #get all likes for a specific image
 @app.route('/api/get_all_likes_by_image', methods=['GET'])
 def get_all_likes_by_image():
-  print('getting all likes for specific image')
   request_data = dict(request.args)
   get_all_likes_image_id = request_data["imageId"][0]
   parsed_get_all_likes_image_id = str(get_all_likes_image_id)
@@ -441,7 +386,6 @@ def get_all_likes_by_image():
 #get all images for a specific user
 @app.route('/api/get_all_images_by_user', methods=['GET'])
 def get_all_images_by_user():
-  print('getting all images for specific user')
   request_data = dict(request.args)
   get_all_images_user_id = request_data["userId"][0]
   parsed_get_all_images_user_id = str(get_all_images_user_id)
@@ -463,7 +407,6 @@ def get_all_images_by_user():
 #getting all comments for a specific image. make this a join table with the users
 @app.route('/api/get_all_comments_by_image', methods=['GET'])
 def get_all_comments_by_image():
-  print('getting all comments by image')
   request_data = dict(request.args)
   get_all_comments_image_id = request_data["imageId"][0]
   parsed_get_all_comments_image_id = str(get_all_comments_image_id)
@@ -487,7 +430,6 @@ def get_all_comments_by_image():
 #retrieve all photos for specific user
 @app.route('/api/get_all_photos_loc_by_user', methods=['GET'])
 def get_all_photos_loc_by_user():
-  print('getting all image locations by user')
   request_data = dict(request.args)
   get_all_images_by_user_id = request_data["userId"][0]
   parsed_get_all_images_by_user_id = str(get_all_images_by_user_id)
@@ -510,12 +452,9 @@ def get_all_photos_loc_by_user():
 #search friends
 @app.route('/api/get_user_name', methods=['GET'])
 def get_user_name():
-  print('searching for user...')
   request_data = dict(request.args)
   search_user_name = request_data["name"][0]
-  print(search_user_name)
   parsed_search_user_name = str(search_user_name)
-  print("SELECT * FROM users WHERE name = " + parsed_search_user_name)
   search_user_name_query = db.session.execute("SELECT * FROM users WHERE name = '" + parsed_search_user_name + "'")
 
   names_list  = []
@@ -529,6 +468,3 @@ def get_user_name():
 
   resp = make_response(json.dumps(result, sort_keys=True, separators=(',', ':')), 200)
   return resp
-
-
-###############
