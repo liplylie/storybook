@@ -20,11 +20,6 @@ app = Flask(__name__, instance_relative_config=True)
 
 app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://"+username+":"+password+"@"+rds_endpoint+"/"+username
-<<<<<<< HEAD
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://socyjgwo:QD38AgZgQutwEkRMyDW8-6bGdvPsMI1k@pellefant.db.elephantsql.com:5432/socyjgwo"
-=======
-
->>>>>>> 9cc991e16e9ac0b27797939f8b94694e38974128
 
 db = SQLAlchemy()
 db.init_app(app)
