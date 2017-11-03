@@ -75,7 +75,6 @@ class Users(db.Model):
   email = db.Column(db.String(250), unique=True)
   profile_image_url = db.Column(db.String(250))
   friends_count = db.Column(db.Integer, nullable=True)
-  # user_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
   #database relationships (this table has many...)
   user_images = db.relationship("Images", backref='users', lazy=True)
@@ -91,7 +90,6 @@ class Users(db.Model):
     self.email = email
     self.profile_image_url = profile_image_url
     self.friends_count = friends_count
-    # self.user_tags_array = user_tags_array
 
   def __repr__(self):
     return json.dumps({
@@ -100,7 +98,6 @@ class Users(db.Model):
       "email": self.email,
       "profile_image_url": self.profile_image_url,
       "friends_count": self.friends_count,
-      # "user_tags_array": self.user_tags_array
     })
 
 
