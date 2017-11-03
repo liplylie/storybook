@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
-import { ARKit } from 'react-native-arkit';
+// import { ARKit } from 'react-native-arkit';
 import { connect } from 'react-redux';
 import AREntries from './AREntries';
 import axios from 'axios';

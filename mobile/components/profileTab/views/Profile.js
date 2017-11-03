@@ -24,7 +24,7 @@ class Profile extends Component {
 			let userId = this.props.profileInfo.Auth.userId
 			console.log(userId, 'user id in profiel')
 			let that = this
-			axios.get(`http://localhost:5000/api/get_all_friends`, {
+			axios.get(`${secret.flask_server}api/get_all_friends`, {
 				params:{
 					userId: userId
 				}
