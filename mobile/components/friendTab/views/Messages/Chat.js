@@ -132,7 +132,7 @@ class Chat extends Component {
         messages={this.state.messages}
         onSend={(input) => this.onSend(input)}
         user={{
-          _id: 1,
+          _id: this.props.screenProps,
           name: "angie",
           roomId: '1'
           //id:this.screenProps
