@@ -5,26 +5,30 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableHighlight } from 'r
 const styles = StyleSheet.create({
 	image:{
 		marginTop: .5,
-			marginLeft: 5, 
-			marginRight: 5, 
-			marginBottom: 5,
-			width: 100, 
-			height: 100,
-			borderRadius: 10,
-			borderColor: 'black'
+		marginLeft: 5, 
+		marginRight: 5, 
+		marginBottom: 5,
+		width: 100, 
+		height: 100,
+		borderRadius: 10,
+		borderColor: 'black'
 		},
 	text:{
 		textAlign: 'center'
 	}
 })
-
+//<Image style={{height:30, width: 30}} source={{uri:props.url.image_user_pic}}/>
 export default images = (props) => {
 	console.log(props,'image props')
-	// let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
+	const viewPage = ()=>{
+		props.navigation.navigate("Page", props.url)
+  }
 	return (
 				<View>
-					<Text > User Name </Text>
-					<Image style={styles.image} source={{uri:props.url}} alt='picture here'/>
+					<Text style={styles.text}>{props.url.image_user_name}</Text>
+					<TouchableHighlight onPress={viewPage}>
+						<Image style={styles.image} source={{uri:props.url.imageUrl}} alt='picture here'/>
+					</TouchableHighlight>
 				</View>
 			)
 }

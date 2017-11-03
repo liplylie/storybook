@@ -14,10 +14,8 @@ var routeConfig = {
 var tabBarConfig = {
   initialRouteName: 'HomeNav', 
   tabBarOptions: {
-  // tint color is passed to text and icons (if enabled) on the tab bar
     activeTintColor: 'white',
     inactiveTintColor: 'blue',
-  // background color is for the tab component
     activeBackgroundColor: 'skyblue',
     inactiveBackgroundColor: 'lavender',
     labelStyle: {
@@ -27,7 +25,4 @@ var tabBarConfig = {
   }
 }
 
-
-
-//export default TabBarNavigator
 export const TabBarNavigator = TabNavigator(routeConfig,tabBarConfig)

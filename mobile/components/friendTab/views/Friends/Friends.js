@@ -46,7 +46,8 @@ class Friends extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.props.actions.getFriends(this.props.screenProps);
     console.log('screen props to friends', this.props); 
     
     // this.props.actions.getFriends(1);
@@ -54,7 +55,7 @@ class Friends extends Component {
   
 
   render() {
-    this.props.actions.getFriends(this.props.screenProps);
+    
     const {navigate} = this.props.navigation; 
     console.log('props passed to friends', this.props);
       return (

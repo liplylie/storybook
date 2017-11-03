@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    width: 400,
+    width: 350,
     height: 200
   }
 });

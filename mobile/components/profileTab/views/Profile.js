@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native';
-import axios from 'axios';
-import { connect } from 'react-redux';
-import UserMap from './map.js';
+import React, { Component } from 'react'
+import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableHighlight } from 'react-native'
+import axios from 'axios'
+import { connect } from 'react-redux'
+import UserMap from './map.js'
 import Login from '../../auth/Login'
 import secret from '../../../../sensitive.json'
 
-
-const { width, height } =  Dimensions.get('window');
+const { width, height } =  Dimensions.get('window')
 
 class Profile extends Component {
 	constructor(props){
@@ -15,7 +14,6 @@ class Profile extends Component {
 		this.state = {
 			friends:[]
 		}
-		console.log(props, 'profile props')
 		this.viewRequests = this.viewRequests.bind(this)
 	}
 	static navigationOptions = {
@@ -23,30 +21,23 @@ class Profile extends Component {
   }
 
   	componentDidMount(){
-		// change to component did mount
-		let userId = this.props.profileInfo.Auth.userId
-		console.log(userId, 'user id in profiel')
-		let that = this
-		axios.get(`http://localhost:5000/api/get_all_friends`, {
-			params:{
-				userId: userId
-			}
-		})
-		.then(({data}) =>{
-			console.log(data, 'response from getFriends')
-			that.setState({
-				friends:[...data.data]
+			let userId = this.props.profileInfo.Auth.userId
+			console.log(userId, 'user id in profiel')
+			let that = this
+			axios.get(`http://localhost:5000/api/get_all_friends`, {
+				params:{
+					userId: userId
+				}
 			})
-			console.log(that.state.friends, 'that friends')
-
-		})
-		.catch(err =>{
-			console.log(err, 'response from getFriends')
-		})
-		// get all friends, count them all, return count
-		// put user id in get request params
-		//'/api/get_all_friends'
-	}
+			.then(({data}) =>{
+				that.setState({
+					friends:[...data.data]
+				})
+			})
+			.catch(err =>{
+				console.log(err, 'response from getFriends')
+			})
+		}
 	
 	viewRequests(){
 		this.props.navigation.navigate("FriendRequests")
@@ -104,13 +95,11 @@ class Profile extends Component {
 			    <View>
 			    </View> 
 		  	)
+			}
 		}
 	}
-}
 
 const mapStateToProps = (store) =>{
-  console.log(store, 'profile js state')
- 
   return {
     profileInfo: store
   }
@@ -161,6 +150,5 @@ const styles = StyleSheet.create({
 		width: width,
 	}
 })
-
 
 export default connect(mapStateToProps, null)(Profile);

@@ -1,11 +1,10 @@
-import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk';
-import axios from 'axios';
+import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
+import AWS, { Config, CognitoIdentityCredentials } from 'aws-sdk'
+import axios from 'axios'
 import { fetch } from 'react-native'
+import secret from '../../sensitive.json'
 
-import secret from '../../sensitive.json';
-
-AWS.config.region = "us-west-2";
+AWS.config.region = "us-west-2"
 
 export const getFBToken = () => {
   return function(dispatch) {
@@ -48,8 +47,7 @@ export const getFBToken = () => {
               email: res.email,
               profile_image_url: res.picture.data.url
             }
-            console.log(dispatchUser, 'dispatchUser')
-            axios.post('http://localhost:5000/' + 'api/add_user_info', dispatchUser, {
+            axios.post(secret.flask_server + 'api/add_user_info', dispatchUser, {
               headers: {
                 'Content-Type': 'application/json'
               }
@@ -59,7 +57,7 @@ export const getFBToken = () => {
                 dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
               })
               .catch(err => {
-                axios.get('http://localhost:5000/' + 'api/get_user_info', {
+                axios.get(secret.flask_server + 'api/get_user_info', {
                   params: {
                     email: dispatchUser.email
                   }
@@ -69,13 +67,10 @@ export const getFBToken = () => {
                     dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
                   })
                   .catch(err => {
-                    console.log(err, 'last err')
+                    console.log(err, 'err')
                     dispatch({type: 'USER_INFO_FAIL', payload: err});
                   })
               });
-           
-            // }).then(response => {console.log('this is fetch response: ', response)})
-            // .catch(err => {console.log('this is error fetching: ', err)})
           }
         });
     
@@ -93,9 +88,3 @@ export const logoutUser = () => {
     dispatch({type: 'USER_LOGOUT_FULFILLED'});
   }
 }
-
-   //fetch(secret.flask_server + 'api/get_all_locations', {
-              // method: 'GET',
-              // headers: {
-              //   'Accept': 'application/json'
-              // }

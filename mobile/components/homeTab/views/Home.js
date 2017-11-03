@@ -12,10 +12,7 @@ import {
 import Collection from './Collection';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
-
 import axios from 'axios'
-
-//import Login from '../../auth/Login.js'
 
 const styles = StyleSheet.create({
   container: {
@@ -30,8 +27,6 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 30,
-    // margin: 2,
-    // marginTop: 10,
   },
   header: { 
     height: 70,
@@ -117,8 +112,7 @@ class Home extends Component {
         </View> 
       )
     } else if (this.props.profileInfo.userLocation) {
-      console.log(this.props, 'home props')
-      let location = this.props.profileInfo.userLocation;
+      let location = this.props.profileInfo.userLocation
       let navigation = this.props.navigation
       return (
           <View style={{flex:1}}>
@@ -155,7 +149,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = (store) =>{
-  console.log(store, 'home store')
   return {
     profileInfo: store.Profile,
     friends: store.Chat.friends

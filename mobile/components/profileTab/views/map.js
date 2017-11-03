@@ -45,9 +45,9 @@ class UserMap extends Component {
       markerPosition: {
         latitude: 0,
         longitude: 0,
-      }
+      },
+      locations: []
     }
-    this.location = [];
     this.viewTargetPictures = this.viewTargetPictures.bind(this)
     this.viewUserMarkers = this.viewUserMarkers.bind(this)
     this.viewWorldMarkers = this.viewWorldMarkers.bind(this)
@@ -88,12 +88,14 @@ class UserMap extends Component {
     // change this with api/get_all_locations_for_user
       // add filter button that gets all locations
     var that = this
-    axios.get(`http://localhost:5000/api/get_all_locations`)
+    axios.get(`${PythonServer}api/get_all_locations`)
     .then(function ({data}) {
       console.log(data, 'api map response');
       const locations = data.data
       console.log(locations, 'location from api')
-      that.location = [...locations]
+      that.setState({
+        locations: [...locations]
+      })
     })
     .catch(function (error) {
       console.log(error, 'api map response');
@@ -111,30 +113,44 @@ class UserMap extends Component {
   }
 
   viewUserMarkers(){
-    console.log('userMarkers')
-    // send get request for all locations from user
-    // let userId = this.props.profileInfo.userId
-    // api/get_all_locations_for_user
-      // put user id in request
+    let userId = this.props.profileInfo.Auth.userId
+    var that = this
+    axios.get(`${PythonServer}api/get_all_locations_for_user`, {
+      params: {
+        userId: userId
+      }
+    })
+    .then(function (data) {
+      console.log(data, 'data from viewUserMarkers')
+      const locations = data.data
+      that.setState({
+        locations: [...locations]
+      })
+    })
+    .catch(function (error) {
+      console.log(error, 'api map response for get user locations');
+    })
+
 
   }
 
   viewWorldMarkers(){
-    console.log('worldMarker')
-    // var that = this
-    // axios.get(`${PythonServer}api/get_all_locations`)
-    // .then(function (data) {
-    //   console.log(data, 'api map response');
-    //   // const locations = data.data
-    //   // that.location = [...locations]
-    // })
-    // .catch(function (error) {
-    //   console.log(error, 'api map response');
-    // })
+    var that = this
+    axios.get(`${PythonServer}api/get_all_locations`)
+    .then(function (data) {
+      console.log(data, 'data from viewWorldMarkers')
+      const locations = data.data.data
+      that.setState({
+        locations: [...locations]
+      }) 
+    })
+    .catch(function (error) {
+      console.log(error, 'api map response for get all locations');
+    })
   }
 
   render() {
-     console.log(this.location, 'this location')
+     console.log(this.state.locations, 'this location')
     return (
       <View style={styles.container}>
         <View style={styles.filterButtonContainer}>
@@ -152,7 +168,7 @@ class UserMap extends Component {
                 <View style={styles.marker}/>
               </View>
           </MapView.Marker>
-         {this.location.map((element, i) => {
+         {this.state.locations.map((element, i) => {
           return <Marker key={i} location={element} navigation={this.props.navigation}/>
          })}
         </MapView>
