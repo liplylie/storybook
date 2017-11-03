@@ -48,7 +48,6 @@ class Friends extends Component {
 
   componentDidMount() {
     console.log('screen props to friends', this.props); 
-    this.props.actions.getFriends(this.props.screenProps);
     // this.props.actions.getFriends(1);
   }
   
@@ -56,6 +55,7 @@ class Friends extends Component {
   render() {
     const {navigate} = this.props.navigation; 
     console.log('props passed to friends', this.props);
+    this.props.actions.getFriends(this.props.screenProps);
       return (
         <ScrollView style={styles.component}>
           {this.props.friends.map(friend => {

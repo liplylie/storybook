@@ -30,7 +30,7 @@ class NewChat extends Component {
     this.state = {
       results: [],
       input: '',
-      chatroom: ''
+      room: ''
     }
   } 
 
@@ -46,20 +46,19 @@ class NewChat extends Component {
         }
       })
     })
-    console.log('new chat search results', this.state.results);
   }
 
   createRoom(friendId) {
     this.props.rooms.map(room => {
-      if (room.chatroom_sender === friendId || room.chatroom_recipient === friendId) {
-        this.setState({chatroom: room.id})
+      if (room.recipient_id === friendId) {
+        this.setState({room: room.id})
       } else {
         axios.post('', {
-          userId: this.screenProps, 
+          userId: this.props.screenProps, 
           friendId: friendId
         })
         .then(({ data }) => {
-          this.setState({chatroom: data.id})
+          this.setState({room: data.id})
         })
         .catch(err => {
           console.log('error creating room', err)
@@ -95,9 +94,9 @@ class NewChat extends Component {
                 avatar={{uri: result.img}}
                 title={result.name}
                 onPress={() => {
-                this.createRoom(result.id);
-                // this.props.actions.enterRoom(this.state.chatroom);
-                this.props.enterRoom(1);
+                // this.createRoom(result.id);
+                // this.props.actions.enterRoom(this.state.room);
+                // this.props.enterRoom(1);
                 navigate('Chat', { friend: result.name});
               }}>
               </ListItem>

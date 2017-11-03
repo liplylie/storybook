@@ -36,9 +36,16 @@ class Messages extends Component {
   } 
 
   componentDidMount() {
-    // this.props.actions.getRooms(this.screenProps);
-    this.props.actions.getRooms(1);
-    
+    const { friends, actions, screenProps, rooms } = this.props; 
+    for (let i = 0; i < friends.length; i++) {
+      actions.getPreview(screenProps, friends[i].id);
+      rooms.map(room => {
+        if (room.recipient_id === friends[i].id) {
+          room[name] === friend.name;
+          room[img] === friends.profile_image_url; 
+        }
+      })
+    }
   }
 
   searchMessages() {
@@ -53,8 +60,8 @@ class Messages extends Component {
 
 
   render() {
-    let friend = '';
-    let img = '';
+    // let friend = '';
+    // let img = '';
     const {navigate} = this.props.navigation;
     console.log('this is the messages key', this.props.navigation.state.key);
     if (this.state.results.length) {
@@ -74,7 +81,7 @@ class Messages extends Component {
           clearIcon={	{ color: '#86939e', name: 'clear' } }
         /> 
           <List>
-          {this.state.results.map((result) => {
+          {this.state.results.map(result => {
             return (
               <ListItem 
                 roundAvatar
@@ -152,7 +159,8 @@ class Messages extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    rooms: store.Chat.rooms
+    rooms: store.Chat.rooms,
+    friends: store.Chat.friends
    }
  }
 
