@@ -40,10 +40,10 @@ def add_photo():
   
   #geolocation
   latitude = request_data["latitude"]
-  parsed_latitude = int(latitude)
+  parsed_latitude = float(latitude)
 
   longitude = request_data["longitude"]
-  parsed_longitude = int(longitude)
+  parsed_longitude = float(longitude)
 
   likes_count = 0
   parsed_likes_count = int(likes_count)
