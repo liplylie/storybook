@@ -20,7 +20,6 @@ class Images(db.Model):
   latitude = db.Column(db.Float)
   likes_count = db.Column(db.Integer, nullable=True)
   caption = db.Column(db.String(250), nullable=True)
-  image_tags_array = db.Column(postgresql.ARRAY(db.String(250)), nullable=True)
 
   #foreign keys (this table belongs to...)
   image_user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))  
