@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TextInput, Touch
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Icon } from 'react-native-elements'
 
 import CommentView from './CommentView'
 import * as commentActions from '../../../actions/commentActions'
@@ -12,6 +13,9 @@ let visibleHeight = 0
 let visibleWidth = 0
 
 class Page extends Component{
+	static navigationOptions = ({ navigation }) => ({
+     headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.goBack()} />  
+  });
 	constructor(props){
 		super(props)
 		console.log(props, 'page props')
@@ -37,7 +41,6 @@ class Page extends Component{
 	}
 
 	render(){
-		let img1 = "https://timedotcom.files.wordpress.com/2014/08/t100_tv_spongebob_free1.jpg?quality=85"
 		console.log('this should be image id: ', this.props.navigation.state.params.image_id)
 		const { refresh } = this.state;
 

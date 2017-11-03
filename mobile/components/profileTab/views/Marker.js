@@ -23,7 +23,7 @@ class Marker extends Component {
     console.log(e.nativeEvent.coordinate, ' second marker pressed')
     let lat = e.nativeEvent.coordinate.latitude;
     let long = e.nativeEvent.coordinate.longitude;
-    this.props.navigation.navigate("PicturesFromMarker")
+    this.props.navigation.navigate("PicturesFromMarker", this.props.navigation)
     this.props.actions({latitude: lat, longitude: long})
   }
 

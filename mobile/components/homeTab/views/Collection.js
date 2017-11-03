@@ -22,7 +22,7 @@ class Collection extends Component {
 		let latitude = this.props.location.latitude
 		let longitude = this.props.location.longitude
 		let userId = this.props.profileInfo.userId
-		axios.get('http://localhost:5000/api/get_imgs_by_loc', {
+		axios.get(PythonServer + '/api/get_imgs_by_loc', {
 			params:{
 				latitude: latitude,
 				longitude: longitude

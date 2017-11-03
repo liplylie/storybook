@@ -5,8 +5,10 @@ import axios from 'axios'
 import Images from './images'
 import { connect } from 'react-redux'
 import parser from '../../../parser.js'
+import key from '../../../../sensitive.json'
+import { Icon } from 'react-native-elements'
 
-
+const PythonServer = key.flask_server
 const { width, height } =  Dimensions.get('window');
 class PicturesFromMarker extends Component {
 	constructor(props){
@@ -17,13 +19,16 @@ class PicturesFromMarker extends Component {
 	this.backAction = NavigationActions.navigate({routeName:'Profile'});
 	console.log(props, 'PicturesFromMarker props')
 	}
+	static navigationOptions = ({ navigation }) => ({
+     headerLeft: <Icon name='chevron-left' type='MaterialIcons' onPress={() => navigation.goBack()} />  
+  });
 
 	// make get request, get photos from location
 	componentDidMount(){
 		let that = this;
 		let latitude = this.props.markerLocation.latitude
 		let longitude = this.props.markerLocation.longitude
-		axios.get('http://localhost:5000/api/get_imgs_by_loc', {
+		axios.get(PythonServer + 'api/get_imgs_by_loc', {
 			params:{
 				latitude: latitude,
 				longitude: longitude
@@ -53,11 +58,12 @@ class PicturesFromMarker extends Component {
 
 	render(){
 	console.log(this.state.images, 'this images in render')
+	let navigation = this.props.navigation
 	  return (
 	    <View style={styles.container}>
 	    	<ScrollView >
 	    	<View style={styles.imageContainer}>
-	      	{this.state.images.map((img, i) => { return <Images key={i} url={img}/> }) }
+	      	{this.state.images.map((img, i) => { return <Images key={i} url={img} navigation={navigation}/> }) }
 	      </View>
 	    	</ScrollView> 
 	    </View>
@@ -72,10 +78,10 @@ const styles = StyleSheet.create({
   },
 	imageContainer: {
     width: width,
-    marginTop: 15,
     flexDirection:'row', 
 		flexWrap:'wrap',
-		backgroundColor: 'skyblue'
+		backgroundColor: 'skyblue',
+		justifyContent: 'center'
   },
   backNav:{
 		flexDirection: 'row',
