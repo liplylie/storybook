@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
 import axios from 'axios'
 
+import key from '../../../../sensitive.json'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -64,7 +66,7 @@ class Home extends Component {
   }
 
   searchUsers(input) {
-    axios.get('http://localhost:5000/' + 'api/get_user_name?name=' + input)
+    axios.get(key.flask_server + 'api/get_user_name?name=' + input)
     .then(({ data }) => {
       this.setState({results: [...this.state.results, data]}, () => {
         console.log('this is the state ', this.state.results)

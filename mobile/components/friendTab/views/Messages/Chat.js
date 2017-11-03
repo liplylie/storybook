@@ -55,13 +55,14 @@ class Chat extends Component {
       // roomId is just whatever you pass down to use as the room
       // query: `roomId=${roomId}`
 
-    this.socket.on('message', (message) => {
-      this.setState({messages: this.state.messages.concat(message)})
-    })
-
-    // this.socket.on('1', message => {
+    // this.socket.on('message', (message) => {
     //   this.setState({messages: this.state.messages.concat(message)})
-    // }); 
+    // })
+
+    this.socket.on('1', message => {
+      this.setState({messages: this.state.messages.concat(message)})
+    }); 
+
 
   }
 
@@ -129,7 +130,7 @@ class Chat extends Component {
     return (
       <GiftedChat
         messages={this.state.messages}
-        onSend={(input) => this.onSend(input, '1')}
+        onSend={(input) => this.onSend(input)}
         user={{
           _id: 1,
           name: "angie",
