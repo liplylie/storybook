@@ -56,10 +56,10 @@ io.on('connection', socket => {
 //   })
   console.log('user connected', io.engine.clientsCount);
 // })
+}) 
 
-  io.on('disconnect', socket => {
-    console.log('user disconnected', io.engine.clientsCount);
-  })
+io.on('disconnect', socket => {
+  console.log('user disconnected', io.engine.clientsCount);
 })
 
 // User.sync()
