@@ -34,8 +34,6 @@ class Chat extends Component {
     this.state = {
       messages: [],
     };
-    this.onSend = this.onSend.bind(this)
-
   }
   
   componentDidMount() {
@@ -55,9 +53,8 @@ class Chat extends Component {
 
     this.socket = io(key.react_server) 
       // roomId is just whatever you pass down to use as the room
-      // query: `roomId=${roomId}`]
+      // query: `roomId=${roomId}`
     this.socket.on('message', (message) => {
-      console.log(message, 'message from user')
         this.setState((previousState) => ({
         messages: GiftedChat.append(previousState.messages, message),
       }));
@@ -123,7 +120,6 @@ class Chat extends Component {
 
   onSend(message) {
       // Any additional custom parameters are passed through
-      console.log(message,'chat message')
     this.socket.emit('message', message);
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, message),
