@@ -4,7 +4,7 @@ import axios from 'axios'
 import { fetch } from 'react-native'
 import secret from '../../sensitive.json'
 
-AWS.config.region = "us-west-2"
+AWS.config.region = "us-east-2"
 
 export const getFBToken = () => {
   return function(dispatch) {
@@ -15,11 +15,12 @@ export const getFBToken = () => {
           IdentityPoolId: secret.AWS_IDENTITY_ID,
           Logins: {
             'graph.facebook.com': accessToken
-          }
+          },
         });
       })
       .then(() => {
         dispatch({type: 'USER_AUTHORIZATION_PENDING'});
+       
         AWS.config.credentials.get(() => {
           const authCreds = {
             sessionToken: AWS.config.credentials.sessionToken,

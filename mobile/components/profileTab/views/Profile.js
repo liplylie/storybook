@@ -6,6 +6,7 @@ import UserMap from './map.js'
 import Login from '../../auth/Login'
 import secret from '../../../../sensitive.json'
 import key from '../../../../sensitive.json'
+import Spinner from 'react-native-spinkit'
 
 const { width, height } =  Dimensions.get('window')
 const PythonServer = key.flask_server
@@ -112,8 +113,9 @@ class Profile extends Component {
 		  )
 		}	else {
 			  return (
-			    <View>
-			    </View> 
+			    <View style={styles.spinnerContainer}>
+          	<Spinner type='FadingCircle' style={styles.spinner}/>
+        	</View>
 		  	)
 			}
 		}
@@ -168,7 +170,16 @@ const styles = StyleSheet.create({
 		flex: 3,
 		flexDirection: 'column',
 		width: width,
-	}
+	},
+	 spinnerContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+	spinner:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
 export default connect(mapStateToProps, null)(Profile);

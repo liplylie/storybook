@@ -10,14 +10,14 @@ export const saveImage = (image) => {
 }
 
 export const postImage = (obj) => {
+  console.log(obj, 'obj image')
   return function(dispatch) {
     let s3 = new AWS.S3({
-      params: {Bucket: 'storybooknativeapp'}
+      params: {Bucket: "storybooknativeapp-2"}
     })
-  
+    console.log(s3, 's3')
     let albumPhotosKey = encodeURIComponent('pictures') + '/' + obj.userId + '/';
     let photoKey = albumPhotosKey + obj.name;
-    
     s3.upload({
       Key: photoKey + '.jpg',
       Body: new Buffer(obj.image.data, 'base64'),
