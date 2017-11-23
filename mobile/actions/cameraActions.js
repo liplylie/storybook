@@ -10,12 +10,10 @@ export const saveImage = (image) => {
 }
 
 export const postImage = (obj) => {
-  console.log(obj, 'obj image')
   return function(dispatch) {
     let s3 = new AWS.S3({
       params: {Bucket: "storybooknativeapp-2"}
     })
-    console.log(s3, 's3')
     let albumPhotosKey = encodeURIComponent('pictures') + '/' + obj.userId + '/';
     let photoKey = albumPhotosKey + obj.name;
     s3.upload({
@@ -28,6 +26,7 @@ export const postImage = (obj) => {
         console.log('Error uploading photo to AWS: ', err)
       } else if(data) {
         console.log('Successfully uploaded photo: ', data);
+        console.log(obj, 'obj post')
         let url = data.Location
         let id = obj.userId
         let caption = obj.description
@@ -43,6 +42,7 @@ export const postImage = (obj) => {
           caption: caption,
           image_tags: imageTags
         }
+        console.log(image_post, 'image_post')
         axios.post(secret.flask_server+'api/add_image', image_post, {
           headers: {
             'Content-Type': 'application/json'

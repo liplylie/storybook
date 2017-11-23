@@ -25,7 +25,7 @@ class Page extends Component{
 			commentText: '',
 			refresh: true
 		}
-		
+		this.hex2a=this.hex2a.bind(this)
 	}
 	componentDidMount(){
 		// send get request for all images from clicked user
@@ -40,9 +40,18 @@ class Page extends Component{
 		})
 	}
 
+	hex2a(hexx){
+    var hex = hexx.toString();//force conversion
+    var str = '';
+    for (var i = 0; i < hex.length; i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+   }
+
 	render(){
 		console.log('this should be image id: ', this.props.navigation.state.params.image_id)
 		const { refresh } = this.state;
+		let comm = String(this.props.navigation.state.params.caption.substr(1))
 
 		return (
 			<View style={styles.container}>
@@ -61,7 +70,7 @@ class Page extends Component{
 							<Text> {this.props.navigation.state.params.image_user_name} </Text>
 						</View>
 						<Image style={styles.image} source={{uri:this.props.navigation.state.params.imageUrl}}/>
-						<Text style={styles.caption}> {this.props.navigation.state.params.caption} </Text>
+						<Text style={styles.caption}> {this.hex2a(comm.substr(1))} </Text>
 						<Text style={styles.likes}> Likes: 0 </Text>
 						<View>
 							<CommentView imageId={this.props.navigation.state.params.image_id} />
@@ -72,6 +81,7 @@ class Page extends Component{
 						<TextInput
 							style={{borderColor: 'gray', borderWidth: .8, borderRadius: 10, fontSize: 10, height: this.state.visibleHeight, width: this.state.visibleWidth}}
 							onChangeText={(text) => {
+								console.log(text, 'text')
 								this.setState({
 									commentText: text
 								})
@@ -86,7 +96,7 @@ class Page extends Component{
 									comment_user_id: this.props.userId,
 									comment_image_id: this.props.navigation.state.params.image_id
 								}
-								console.log(obj)
+								console.log(obj, 'obj')
 								this.props.actions.postComments(obj);
 								this.props.actions.getComments(this.props.navigation.state.params.image_id)
 							}}

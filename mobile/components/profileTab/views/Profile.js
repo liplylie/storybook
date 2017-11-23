@@ -27,12 +27,13 @@ class Profile extends Component {
   	componentDidMount(){
 			let userId = this.props.profileInfo.Auth.userId
 			let that = this
-			axios.get(`${PythonServer}/api/get_all_friends`, {
+			axios.get(`${PythonServer}api/get_all_friends`, {
 				params:{
 					userId: userId
 				}
 			})
 			.then(({data}) =>{
+				console.log(data, 'get all friends')
 				that.setState({
 					friends:[...data.data]
 				})
@@ -66,6 +67,7 @@ class Profile extends Component {
 
 
 	render(){
+		console.log(this.props, 'profile props')
 		if (this.props.profileInfo.Auth.name){
 			let name = this.props.profileInfo.Auth.name;
 			let email = this.props.profileInfo.Auth.email;

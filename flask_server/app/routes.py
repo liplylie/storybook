@@ -51,7 +51,7 @@ def add_photo():
   image_caption = request_data["caption"]
   parsed_image_caption = image_caption.encode('utf-8')
 
-  db.session.add(Images(parsed_url,parsed_scn_code, parsed_image_user_id, parsed_latitude, parsed_longitude, parsed_likes_count, parsed_image_caption, image_tags)) 
+  db.session.add(Images(parsed_url,parsed_scn_code, parsed_image_user_id, parsed_latitude, parsed_longitude, parsed_likes_count, parsed_image_caption)) 
   db.session.commit()
   resp = make_response('added successfully!', 201)
   return resp

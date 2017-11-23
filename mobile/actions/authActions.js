@@ -58,6 +58,7 @@ export const getFBToken = () => {
                 dispatch({type: 'USER_INFO_RETRIEVED', payload: dispatchUser});
               })
               .catch(err => {
+                console.log(err, "within get user info")
                 axios.get(secret.flask_server + 'api/get_user_info', {
                   params: {
                     email: dispatchUser.email

@@ -28,7 +28,7 @@ class Images(db.Model):
   image_comments = db.relationship("Comments", backref='images', lazy=True)
   image_likes = db.relationship("Likes", backref='images', lazy=True)
 
-  def __init__(self, image_url, scn_code, image_user_id, latitude, longitude, likes_count, caption, image_tags_array):
+  def __init__(self, image_url, scn_code, image_user_id, latitude, longitude, likes_count, caption):
     self.image_url = image_url
     self.scn_code = scn_code
     self.image_user_id = image_user_id
@@ -36,7 +36,6 @@ class Images(db.Model):
     self.longitude = longitude
     self.likes_count = likes_count
     self.caption = caption
-    self.image_tags_array = image_tags_array
 
   def __repr__(self):
     return json.dumps({

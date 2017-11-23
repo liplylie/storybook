@@ -21,10 +21,11 @@ class CommentView extends Component {
   render() {
     const { comments } = this.props;
     const { showAll } = this.props;
+    
     return (
       <View>
-        {comments.map(comment => (
-          <CommentV comment={comment} />
+        {comments.map((comment, i) => (
+          <CommentV key={i} comment={comment} />
         ))}
       </View>
     )
